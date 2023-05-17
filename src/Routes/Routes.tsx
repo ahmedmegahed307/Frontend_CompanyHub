@@ -5,6 +5,7 @@ import App from "../App";
 import { Table } from "@chakra-ui/react";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
+import CheckLists from "../Pages/Auth/CheckLists";
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
   {
     path: "/forgotPassword",
     element: <ForgotPassword />,
+   
+  },
+  {
+    path: "/checklists",
+    element: <CheckLists />,
    
   },
 

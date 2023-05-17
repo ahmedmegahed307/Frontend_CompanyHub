@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { MdSettings } from 'react-icons/md'
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { NavLink } from "react-router-dom";
 
 function TopNav() {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
@@ -38,7 +39,7 @@ function TopNav() {
     variant='outline'
   />
   <MenuList>
-    <MenuItem>Download</MenuItem>
+    <MenuItem as={NavLink}  to='/checklists' >Checklists</MenuItem>
     <MenuItem>Create a Copy</MenuItem>
     <MenuItem>Mark as Draft</MenuItem>
     <MenuItem>Delete</MenuItem>
