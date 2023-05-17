@@ -39,7 +39,9 @@ function TopNav() {
           variant="outline"
         />
         <MenuList>
-          <MenuItem>Download</MenuItem>
+          <MenuItem as={NavLink} to="/clients/clientsList">
+            Clients
+          </MenuItem>
           <MenuItem>Create a Copy</MenuItem>
           <MenuItem>Mark as Draft</MenuItem>
           <MenuItem>Delete</MenuItem>

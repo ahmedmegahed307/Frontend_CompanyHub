@@ -5,6 +5,7 @@ import App from "../App";
 import { Table } from "@chakra-ui/react";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
+import ClientList from "../components/Clients/ClientList";
 
 const router = createBrowserRouter([
   //   {
