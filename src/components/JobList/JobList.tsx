@@ -69,7 +69,7 @@ const JobList = () => {
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
             New Order
           </Button> */}
-          <Button as={NavLink}  to='/addJob' my={10} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}>
+          <Button as={NavLink}  to='/jobs/addJob' my={10} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}>
             New Order
           </Button>
         </Flex>
@@ -94,7 +94,7 @@ const JobList = () => {
         </Flex>
           <TabPanels pt={5}  h={"50vh"}>
           <TabPanel>
-              <TableContainer>
+              <TableContainer borderRadius={'xl'}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple">
                     <TableCaption>

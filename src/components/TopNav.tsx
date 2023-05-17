@@ -38,7 +38,7 @@ function TopNav() {
            <Image
         p={1}
         w={150}
-        src="src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
+        src="../src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
         alt="Dan Abramov"
       />
           <Spacer />

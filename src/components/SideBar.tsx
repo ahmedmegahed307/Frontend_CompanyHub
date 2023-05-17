@@ -28,7 +28,7 @@ function TopNav() {
     <>
     <Link px={5}>Operational Dashboard</Link>
     <Link px={5}>Statistical Dashboard</Link>
-    <Link as={NavLink} to='/jobs' px={5}>Jobs </Link>
+    <Link as={NavLink} _activeLink={{ fontWeight:"bold",color:'#294c58'}} to='/jobs' px={5}>Jobs </Link>
     <Link px={5}>PPM </Link>
     <Link px={5}>Scheduler </Link>
     <Link px={5}>Map </Link>

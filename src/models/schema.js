@@ -1,5 +1,278 @@
 export const schema = {
     "models": {
+        "CheckListModule": {
+            "name": "CheckListModule",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "visibleOn": {
+                    "name": "visibleOn",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "JobTypes": {
+                    "name": "JobTypes",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isReq": {
+                    "name": "isReq",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "items": {
+                    "name": "items",
+                    "isArray": true,
+                    "type": {
+                        "nonModel": "CheckListItems"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "connectionId": {
+                    "name": "connectionId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "CheckListModules",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Sessions": {
+            "name": "Sessions",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SessionType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "startTime": {
+                    "name": "startTime",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "endTime": {
+                    "name": "endTime",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobId": {
+                    "name": "jobId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "userId": {
+                    "name": "userId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Sessions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "PartsList": {
+            "name": "PartsList",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "quantity": {
+                    "name": "quantity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cost": {
+                    "name": "cost",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "code": {
+                    "name": "code",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "PartsLists",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "UserType": {
             "name": "UserType",
             "fields": {
@@ -371,12 +644,13 @@ export const schema = {
                 },
                 "JobParts": {
                     "name": "JobParts",
-                    "isArray": false,
+                    "isArray": true,
                     "type": {
                         "nonModel": "Part"
                     },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "partsFiles": {
                     "name": "partsFiles",
@@ -399,22 +673,6 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
-                },
-                "JobsEngs": {
-                    "name": "JobsEngs",
-                    "isArray": true,
-                    "type": {
-                        "model": "JobsUsersObject"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "jobs"
-                        ]
-                    }
                 },
                 "adress": {
                     "name": "adress",
@@ -444,6 +702,25 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
+                },
+                "attachmentList": {
+                    "name": "attachmentList",
+                    "isArray": true,
+                    "type": {
+                        "nonModel": "Attachment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "sessionType": {
+                    "name": "sessionType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SessionType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -546,22 +823,6 @@ export const schema = {
                         ]
                     }
                 },
-                "jobss": {
-                    "name": "jobss",
-                    "isArray": true,
-                    "type": {
-                        "model": "JobsUsersObject"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "usersObject"
-                        ]
-                    }
-                },
                 "type": {
                     "name": "type",
                     "isArray": false,
@@ -610,108 +871,128 @@ export const schema = {
                     }
                 }
             ]
+        }
+    },
+    "enums": {
+        "CheckListItemType": {
+            "name": "CheckListItemType",
+            "values": [
+                "HEADER",
+                "SUBHEADER",
+                "CHECKBOX",
+                "TEXTBOX",
+                "DROPBOX",
+                "IMAGE"
+            ]
         },
-        "JobsUsersObject": {
-            "name": "JobsUsersObject",
+        "SessionType": {
+            "name": "SessionType",
+            "values": [
+                "TRAVEL",
+                "WORK",
+                "REMOTE",
+                "NONE"
+            ]
+        }
+    },
+    "nonModels": {
+        "CheckListItems": {
+            "name": "CheckListItems",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "jobsId": {
-                    "name": "jobsId",
-                    "isArray": false,
-                    "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
-                "usersObjectId": {
-                    "name": "usersObjectId",
+                "lable": {
+                    "name": "lable",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "jobs": {
-                    "name": "jobs",
+                "type": {
+                    "name": "type",
                     "isArray": false,
                     "type": {
-                        "model": "Jobs"
+                        "enum": "CheckListItemType"
                     },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "jobsId"
-                        ]
-                    }
+                    "isRequired": false,
+                    "attributes": []
                 },
-                "usersObject": {
-                    "name": "usersObject",
+                "isReq": {
+                    "name": "isReq",
                     "isArray": false,
-                    "type": {
-                        "model": "UsersObject"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "usersObjectId"
-                        ]
-                    }
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
                 },
-                "createdAt": {
-                    "name": "createdAt",
+                "initData": {
+                    "name": "initData",
                     "isArray": false,
-                    "type": "AWSDateTime",
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "dataset": {
+                    "name": "dataset",
+                    "isArray": true,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "isReadOnly": true
+                    "isArrayNullable": true
                 },
-                "updatedAt": {
-                    "name": "updatedAt",
+                "value": {
+                    "name": "value",
                     "isArray": false,
-                    "type": "AWSDateTime",
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "JobsUsersObjects",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
+                    "attributes": []
                 },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byJobs",
-                        "fields": [
-                            "jobsId"
-                        ]
-                    }
+                "order": {
+                    "name": "order",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
                 },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUsersObject",
-                        "fields": [
-                            "usersObjectId"
-                        ]
-                    }
+                "comment": {
+                    "name": "comment",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 }
-            ]
-        }
-    },
-    "enums": {},
-    "nonModels": {
+            }
+        },
+        "Attachment": {
+            "name": "Attachment",
+            "fields": {
+                "Id": {
+                    "name": "Id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        },
         "Signature": {
             "name": "Signature",
             "fields": {
@@ -920,7 +1201,7 @@ export const schema = {
                 "quantity": {
                     "name": "quantity",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -941,6 +1222,6 @@ export const schema = {
             }
         }
     },
-    "codegenVersion": "3.4.2",
-    "version": "a53603f6e1d45c6b328d95bd6fe41fdb"
+    "codegenVersion": "3.4.3",
+    "version": "a074c8494de28aee39e2fe820b79f9fa"
 };

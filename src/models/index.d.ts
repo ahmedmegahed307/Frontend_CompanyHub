@@ -1,8 +1,66 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
+export enum CheckListItemType {
+  HEADER = "HEADER",
+  SUBHEADER = "SUBHEADER",
+  CHECKBOX = "CHECKBOX",
+  TEXTBOX = "TEXTBOX",
+  DROPBOX = "DROPBOX",
+  IMAGE = "IMAGE"
+}
 
+export enum SessionType {
+  TRAVEL = "TRAVEL",
+  WORK = "WORK",
+  REMOTE = "REMOTE",
+  NONE = "NONE"
+}
+
+type EagerCheckListItems = {
+  readonly id?: string | null;
+  readonly lable?: string | null;
+  readonly type?: CheckListItemType | keyof typeof CheckListItemType | null;
+  readonly isReq?: boolean | null;
+  readonly initData?: string | null;
+  readonly dataset?: (string | null)[] | null;
+  readonly value?: string | null;
+  readonly order?: number | null;
+  readonly comment?: string | null;
+}
+
+type LazyCheckListItems = {
+  readonly id?: string | null;
+  readonly lable?: string | null;
+  readonly type?: CheckListItemType | keyof typeof CheckListItemType | null;
+  readonly isReq?: boolean | null;
+  readonly initData?: string | null;
+  readonly dataset?: (string | null)[] | null;
+  readonly value?: string | null;
+  readonly order?: number | null;
+  readonly comment?: string | null;
+}
+
+export declare type CheckListItems = LazyLoading extends LazyLoadingDisabled ? EagerCheckListItems : LazyCheckListItems
+
+export declare const CheckListItems: (new (init: ModelInit<CheckListItems>) => CheckListItems)
+
+type EagerAttachment = {
+  readonly Id: string;
+  readonly url?: string | null;
+  readonly type?: string | null;
+}
+
+type LazyAttachment = {
+  readonly Id: string;
+  readonly url?: string | null;
+  readonly type?: string | null;
+}
+
+export declare type Attachment = LazyLoading extends LazyLoadingDisabled ? EagerAttachment : LazyAttachment
+
+export declare const Attachment: (new (init: ModelInit<Attachment>) => Attachment)
 
 type EagerSignature = {
   readonly id: string;
@@ -96,14 +154,14 @@ export declare const JobType: (new (init: ModelInit<JobType>) => JobType)
 
 type EagerPart = {
   readonly name?: string | null;
-  readonly quantity?: string | null;
+  readonly quantity?: number | null;
   readonly cost?: string | null;
   readonly code?: string | null;
 }
 
 type LazyPart = {
   readonly name?: string | null;
-  readonly quantity?: string | null;
+  readonly quantity?: number | null;
   readonly cost?: string | null;
   readonly code?: string | null;
 }
@@ -111,6 +169,116 @@ type LazyPart = {
 export declare type Part = LazyLoading extends LazyLoadingDisabled ? EagerPart : LazyPart
 
 export declare const Part: (new (init: ModelInit<Part>) => Part)
+
+type EagerCheckListModule = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CheckListModule, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly visibleOn?: string | null;
+  readonly JobTypes?: string | null;
+  readonly isReq?: boolean | null;
+  readonly items?: (CheckListItems | null)[] | null;
+  readonly connectionId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCheckListModule = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CheckListModule, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly visibleOn?: string | null;
+  readonly JobTypes?: string | null;
+  readonly isReq?: boolean | null;
+  readonly items?: (CheckListItems | null)[] | null;
+  readonly connectionId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CheckListModule = LazyLoading extends LazyLoadingDisabled ? EagerCheckListModule : LazyCheckListModule
+
+export declare const CheckListModule: (new (init: ModelInit<CheckListModule>) => CheckListModule) & {
+  copyOf(source: CheckListModule, mutator: (draft: MutableModel<CheckListModule>) => MutableModel<CheckListModule> | void): CheckListModule;
+}
+
+type EagerSessions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Sessions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly type?: SessionType | keyof typeof SessionType | null;
+  readonly startTime?: string | null;
+  readonly endTime?: string | null;
+  readonly isActive?: boolean | null;
+  readonly jobId?: string | null;
+  readonly userId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySessions = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Sessions, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly type?: SessionType | keyof typeof SessionType | null;
+  readonly startTime?: string | null;
+  readonly endTime?: string | null;
+  readonly isActive?: boolean | null;
+  readonly jobId?: string | null;
+  readonly userId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Sessions = LazyLoading extends LazyLoadingDisabled ? EagerSessions : LazySessions
+
+export declare const Sessions: (new (init: ModelInit<Sessions>) => Sessions) & {
+  copyOf(source: Sessions, mutator: (draft: MutableModel<Sessions>) => MutableModel<Sessions> | void): Sessions;
+}
+
+type EagerPartsList = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PartsList, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly quantity?: number | null;
+  readonly cost?: string | null;
+  readonly code?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPartsList = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PartsList, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly quantity?: number | null;
+  readonly cost?: string | null;
+  readonly code?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PartsList = LazyLoading extends LazyLoadingDisabled ? EagerPartsList : LazyPartsList
+
+export declare const PartsList: (new (init: ModelInit<PartsList>) => PartsList) & {
+  copyOf(source: PartsList, mutator: (draft: MutableModel<PartsList>) => MutableModel<PartsList> | void): PartsList;
+}
 
 type EagerUserType = {
   readonly [__modelMeta__]: {
@@ -252,14 +420,15 @@ type EagerJobs = {
   readonly bill?: string | null;
   readonly contractId?: string | null;
   readonly Instruction?: string | null;
-  readonly JobParts?: Part | null;
+  readonly JobParts?: (Part | null)[] | null;
   readonly partsFiles?: (string | null)[] | null;
   readonly jobNumber?: string | null;
   readonly usersID: string;
-  readonly JobsEngs?: (JobsUsersObject | null)[] | null;
   readonly adress?: Address | null;
   readonly resolutions?: (ResolutionItem | null)[] | null;
   readonly signatures?: (Signature | null)[] | null;
+  readonly attachmentList?: (Attachment | null)[] | null;
+  readonly sessionType?: SessionType | keyof typeof SessionType | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -282,14 +451,15 @@ type LazyJobs = {
   readonly bill?: string | null;
   readonly contractId?: string | null;
   readonly Instruction?: string | null;
-  readonly JobParts?: Part | null;
+  readonly JobParts?: (Part | null)[] | null;
   readonly partsFiles?: (string | null)[] | null;
   readonly jobNumber?: string | null;
   readonly usersID: string;
-  readonly JobsEngs: AsyncCollection<JobsUsersObject>;
   readonly adress?: Address | null;
   readonly resolutions?: (ResolutionItem | null)[] | null;
   readonly signatures?: (Signature | null)[] | null;
+  readonly attachmentList?: (Attachment | null)[] | null;
+  readonly sessionType?: SessionType | keyof typeof SessionType | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -310,7 +480,6 @@ type EagerUsersObject = {
   readonly email?: string | null;
   readonly adresses?: (Address | null)[] | null;
   readonly JobsClint?: (Jobs | null)[] | null;
-  readonly jobss?: (JobsUsersObject | null)[] | null;
   readonly type?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -326,7 +495,6 @@ type LazyUsersObject = {
   readonly email?: string | null;
   readonly adresses?: (Address | null)[] | null;
   readonly JobsClint: AsyncCollection<Jobs>;
-  readonly jobss: AsyncCollection<JobsUsersObject>;
   readonly type?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -336,38 +504,4 @@ export declare type UsersObject = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const UsersObject: (new (init: ModelInit<UsersObject>) => UsersObject) & {
   copyOf(source: UsersObject, mutator: (draft: MutableModel<UsersObject>) => MutableModel<UsersObject> | void): UsersObject;
-}
-
-type EagerJobsUsersObject = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobsUsersObject, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobsId?: string | null;
-  readonly usersObjectId?: string | null;
-  readonly jobs: Jobs;
-  readonly usersObject: UsersObject;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyJobsUsersObject = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobsUsersObject, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobsId?: string | null;
-  readonly usersObjectId?: string | null;
-  readonly jobs: AsyncItem<Jobs>;
-  readonly usersObject: AsyncItem<UsersObject>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type JobsUsersObject = LazyLoading extends LazyLoadingDisabled ? EagerJobsUsersObject : LazyJobsUsersObject
-
-export declare const JobsUsersObject: (new (init: ModelInit<JobsUsersObject>) => JobsUsersObject) & {
-  copyOf(source: JobsUsersObject, mutator: (draft: MutableModel<JobsUsersObject>) => MutableModel<JobsUsersObject> | void): JobsUsersObject;
 }

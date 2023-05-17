@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     children:[
         {index:true,     element: <Table />,
     },  {
-        path: "/addJob",
+        path: "/jobs/addJob",
         element: <AddJob />,
       },
       {
