@@ -13,10 +13,15 @@ import {
   useDisclosure,
   VStack,
   Spacer,
-  Image
+  Image,
+  MenuButton,
+  Button,
+  Menu,
+  MenuItem,
+  MenuList
 } from "@chakra-ui/react";
 import { MdSettings } from 'react-icons/md'
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 function TopNav() {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
@@ -24,8 +29,25 @@ function TopNav() {
 
   const NavItems = () => (
     <>
-     <IconButton aria-label='Search database' icon={<MdSettings />} />
+     {/* <IconButton aria-label='Search database' icon={<MdSettings />} /> */}
+     <Menu>
+     <MenuButton
+    as={IconButton}
+    aria-label='Options'
+    icon={<MdSettings />}
+    variant='outline'
+  />
+  <MenuList>
+    <MenuItem>Download</MenuItem>
+    <MenuItem>Create a Copy</MenuItem>
+    <MenuItem>Mark as Draft</MenuItem>
+    <MenuItem>Delete</MenuItem>
+    <MenuItem>Attend a Workshop</MenuItem>
+  </MenuList>
+</Menu>
     </>
+
+
   );
 
   return (
