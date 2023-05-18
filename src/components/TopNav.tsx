@@ -18,9 +18,9 @@ import {
   Button,
   Menu,
   MenuItem,
-  MenuList
+  MenuList,
 } from "@chakra-ui/react";
-import { MdSettings } from 'react-icons/md'
+import { MdSettings } from "react-icons/md";
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 
@@ -30,25 +30,31 @@ function TopNav() {
 
   const NavItems = () => (
     <>
-     {/* <IconButton aria-label='Search database' icon={<MdSettings />} /> */}
-     <Menu>
-     <MenuButton
-    as={IconButton}
-    aria-label='Options'
-    icon={<MdSettings />}
-    variant='outline'
-  />
-  <MenuList>
-    <MenuItem as={NavLink}  to='/checklists' >Checklists</MenuItem>
-    <MenuItem>Create a Copy</MenuItem>
-    <MenuItem>Mark as Draft</MenuItem>
-    <MenuItem>Delete</MenuItem>
-    <MenuItem>Attend a Workshop</MenuItem>
-  </MenuList>
-</Menu>
+      {/* <IconButton aria-label='Search database' icon={<MdSettings />} /> */}
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          aria-label="Options"
+          icon={<MdSettings />}
+          variant="outline"
+        />
+        <MenuList>
+          <MenuItem as={NavLink} to="/clients/clientsList">
+            Clients
+          </MenuItem>
+          <MenuItem as={NavLink} to="/jobtype/list">
+            Job Types
+          </MenuItem>
+          <MenuItem as={NavLink} to="/users/usersList">
+            Users
+          </MenuItem>
+          <MenuItem as={NavLink} to="/resolution/list">
+            Standard Resolutions
+          </MenuItem>
+          <MenuItem>Attend a Workshop</MenuItem>
+        </MenuList>
+      </Menu>
     </>
-
-
   );
 
   return (
@@ -58,12 +64,12 @@ function TopNav() {
           {/* <Text fontSize="2xl" fontWeight="bold">
           <Link href="/">YourLogo</Link>
         </Text> */}
-           <Image
-        p={1}
-        w={150}
-        src="../src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
-        alt="Dan Abramov"
-      />
+          <Image
+            p={1}
+            w={150}
+            src="../src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
+            alt="Dan Abramov"
+          />
           <Spacer />
           {isMobileNav ? (
             <>
