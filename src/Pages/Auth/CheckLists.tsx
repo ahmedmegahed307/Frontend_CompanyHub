@@ -10,10 +10,11 @@ import { DataStore } from "aws-amplify";
 
 
 
-const [checklists, setCheckLists] = useState<CheckListModule[]>();
 
 
 const CheckLists = () => {
+  const [checklists, setCheckLists] = useState<CheckListModule[]>();
+
     // get CLients
     useEffect(() => {
       /**
@@ -85,17 +86,17 @@ const CheckLists = () => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {/* {jobsList &&
-                        jobsList!.map((item, index) => (
+                      {checklists &&
+                        checklists!.map((item, index) => (
                           <Tr key={item.id} >
-                            <Td>{item.jobNumber ?? "00" + index}</Td>
-                            <Td>Clint1</Td>
-                            <Td>inches</Td>
-                            <Td>{item.adress?.name}</Td>
-                            <Td>{item.createdAt}</Td>
+                            <Td>{item.name ?? "00" + index}</Td>
+                            <Td>{item.visibleOn ?? ''}</Td>
+                            <Td>{item.JobTypes ?? ''}</Td>
+                            <Td>{item.isReq ?? ''}</Td>
+                            <Td></Td>
                             <Td> </Td>
                           </Tr>
-                        ))} */}
+                        ))}
                     </Tbody>
                   </Table>
                 </Card>
