@@ -18,26 +18,22 @@ import {
   Spacer,
   Button,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { DataStore } from "aws-amplify";
-import { UsersObject } from "../../models";
+import { Resolutions } from "../../models";
+import { NavLink } from "react-router-dom";
 import { FaEdit, FaTimes } from "react-icons/fa";
-
-const ClientList = () => {
-  const [clientsList, setClientsLists] = useState<UsersObject[]>();
+const StandardResolutionList = () => {
+  const [resolutionList, setResolutionLists] = useState<Resolutions[]>();
   useEffect(() => {
-    const clientList = DataStore.observeQuery(UsersObject, (c) =>
-      c.type.eq("client")
-    ).subscribe(({ items }) => {
-      console.log(items);
-
-      setClientsLists(items);
+    const lists = DataStore.observeQuery(Resolutions).subscribe(({ items }) => {
+      setResolutionLists(items);
     });
 
     return () => {
-      clientList.unsubscribe();
+      lists.unsubscribe();
     };
   }, []);
 
@@ -48,18 +44,17 @@ const ClientList = () => {
         alignItems="center"
         maxW="7xl"
         mx="auto"
-        px="4"
+        px="5"
         w={"full"}
       >
         <Flex w={"full"} direction={"row"}>
           <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
-            Clients List
+            Standard Resolution List
           </Heading>
           <Spacer />
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
-            New Order
-          </Button> */}
-
+              New Order
+            </Button> */}
           <Button
             as={NavLink}
             to="#"
@@ -70,7 +65,7 @@ const ClientList = () => {
             size={"sm"}
             bg={"#294c58"}
           >
-            add Client
+            Add Resolution
           </Button>
         </Flex>
 
@@ -83,26 +78,23 @@ const ClientList = () => {
                   <Table variant="simple">
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
-                        <Th>Name</Th>
-                        <Th>Address</Th>
-                        <Th>Contact Name</Th>
-                        <Th>Contact Phone</Th>
-                        <Th>Client Portal Access</Th>
+                        <Th>Resolution</Th>
+                        <Th></Th>
+                        <Th></Th>
+                        <Th></Th>
                         <Th>Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {clientsList &&
-                        clientsList.map((client) => (
-                          <Tr key={client.id}>
-                            <Td>{client.name}</Td>
-                            <Td>{client.adresses![0]?.city}</Td>
-                            <Td>{client.adresses![0]?.contactName}</Td>
-                            <Td>{client.adresses![0]?.tel}</Td>
-                            <Td>Not yet in Database</Td>
+                      {resolutionList &&
+                        resolutionList.map((resolution) => (
+                          <Tr key={resolution.id}>
+                            <Td>{resolution.name}</Td>
+                            <Td></Td>
+                            <Td></Td> <Td></Td>
                             <Box margin={2}>
                               <Button
-                                colorScheme="blue"
+                                colorScheme={"blue"}
                                 variant="outline"
                                 size={"sm"}
                                 leftIcon={<FaEdit />}
@@ -133,4 +125,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default StandardResolutionList;

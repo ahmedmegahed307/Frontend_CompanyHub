@@ -18,26 +18,24 @@ import {
   Spacer,
   Button,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { DataStore } from "aws-amplify";
-import { UsersObject } from "../../models";
+import { JobTypesList } from "../../models";
+import { NavLink } from "react-router-dom";
 import { FaEdit, FaTimes } from "react-icons/fa";
-
-const ClientList = () => {
-  const [clientsList, setClientsLists] = useState<UsersObject[]>();
+const JobTypeList = () => {
+  const [jobTypeList, setJobTypeLists] = useState<JobTypesList[]>();
   useEffect(() => {
-    const clientList = DataStore.observeQuery(UsersObject, (c) =>
-      c.type.eq("client")
-    ).subscribe(({ items }) => {
-      console.log(items);
-
-      setClientsLists(items);
-    });
+    const lists = DataStore.observeQuery(JobTypesList).subscribe(
+      ({ items }) => {
+        setJobTypeLists(items);
+      }
+    );
 
     return () => {
-      clientList.unsubscribe();
+      lists.unsubscribe();
     };
   }, []);
 
@@ -53,13 +51,12 @@ const ClientList = () => {
       >
         <Flex w={"full"} direction={"row"}>
           <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
-            Clients List
+            JobType List
           </Heading>
           <Spacer />
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
             New Order
           </Button> */}
-
           <Button
             as={NavLink}
             to="#"
@@ -70,7 +67,7 @@ const ClientList = () => {
             size={"sm"}
             bg={"#294c58"}
           >
-            add Client
+            Add Job Type
           </Button>
         </Flex>
 
@@ -84,25 +81,20 @@ const ClientList = () => {
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Name</Th>
-                        <Th>Address</Th>
-                        <Th>Contact Name</Th>
-                        <Th>Contact Phone</Th>
-                        <Th>Client Portal Access</Th>
+                        <Th>Associated job subtypes</Th>
+
                         <Th>Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {clientsList &&
-                        clientsList.map((client) => (
-                          <Tr key={client.id}>
-                            <Td>{client.name}</Td>
-                            <Td>{client.adresses![0]?.city}</Td>
-                            <Td>{client.adresses![0]?.contactName}</Td>
-                            <Td>{client.adresses![0]?.tel}</Td>
-                            <Td>Not yet in Database</Td>
+                      {jobTypeList &&
+                        jobTypeList.map((jobtype) => (
+                          <Tr key={jobtype.id}>
+                            <Td>{jobtype.name}</Td>
+                            <Td>{jobtype.subTypeList}</Td>
                             <Box margin={2}>
                               <Button
-                                colorScheme="blue"
+                                colorScheme={"blue"}
                                 variant="outline"
                                 size={"sm"}
                                 leftIcon={<FaEdit />}
@@ -133,4 +125,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default JobTypeList;

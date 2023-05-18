@@ -23,21 +23,19 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { DataStore } from "aws-amplify";
 import { UsersObject } from "../../models";
-import { FaEdit, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTimes, FaUser } from "react-icons/fa";
 
-const ClientList = () => {
-  const [clientsList, setClientsLists] = useState<UsersObject[]>();
+const UsersList = () => {
+  const [usersList, setUsersLists] = useState<UsersObject[]>();
   useEffect(() => {
-    const clientList = DataStore.observeQuery(UsersObject, (c) =>
-      c.type.eq("client")
-    ).subscribe(({ items }) => {
-      console.log(items);
-
-      setClientsLists(items);
-    });
+    const userslist = DataStore.observeQuery(UsersObject).subscribe(
+      ({ items }) => {
+        setUsersLists(items);
+      }
+    );
 
     return () => {
-      clientList.unsubscribe();
+      userslist.unsubscribe();
     };
   }, []);
 
@@ -53,13 +51,26 @@ const ClientList = () => {
       >
         <Flex w={"full"} direction={"row"}>
           <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
-            Clients List
+            Users List
           </Heading>
           <Spacer />
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
-            New Order
-          </Button> */}
-
+              New Order
+            </Button> */}
+          <Button
+            marginRight={2}
+            as={NavLink}
+            to="#"
+            my={10}
+            onClick={() => {}}
+            colorScheme="blue"
+            variant={"solid"}
+            size={"sm"}
+            bg={"#294c58"}
+            leftIcon={<FaUser />}
+          >
+            My Profile
+          </Button>
           <Button
             as={NavLink}
             to="#"
@@ -69,8 +80,9 @@ const ClientList = () => {
             variant={"solid"}
             size={"sm"}
             bg={"#294c58"}
+            leftIcon={<FaUser />}
           >
-            add Client
+            add User
           </Button>
         </Flex>
 
@@ -84,31 +96,23 @@ const ClientList = () => {
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Name</Th>
-                        <Th>Address</Th>
+                        <Th>Email</Th>
                         <Th>Contact Name</Th>
                         <Th>Contact Phone</Th>
-                        <Th>Client Portal Access</Th>
+                        <Th>Role</Th>
                         <Th>Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {clientsList &&
-                        clientsList.map((client) => (
-                          <Tr key={client.id}>
-                            <Td>{client.name}</Td>
-                            <Td>{client.adresses![0]?.city}</Td>
-                            <Td>{client.adresses![0]?.contactName}</Td>
-                            <Td>{client.adresses![0]?.tel}</Td>
+                      {usersList &&
+                        usersList.map((usersList) => (
+                          <Tr key={usersList.id}>
+                            <Td>{usersList.name}</Td>
+                            <Td>{usersList?.email}</Td>
+                            <Td>{usersList.adresses![0]?.contactName}</Td>
+                            <Td>{usersList.adresses![0]?.tel}</Td>
                             <Td>Not yet in Database</Td>
                             <Box margin={2}>
-                              <Button
-                                colorScheme="blue"
-                                variant="outline"
-                                size={"sm"}
-                                leftIcon={<FaEdit />}
-                              >
-                                Edit
-                              </Button>
                               <Button
                                 colorScheme="red"
                                 variant="outline"
@@ -116,7 +120,7 @@ const ClientList = () => {
                                 size={"sm"}
                                 leftIcon={<FaTimes />}
                               >
-                                Delete
+                                Deactivate
                               </Button>
                             </Box>
                           </Tr>
@@ -133,4 +137,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default UsersList;

@@ -6,6 +6,9 @@ import { Table } from "@chakra-ui/react";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import ClientList from "../components/Clients/ClientList";
+import JobTypeList from "../components/JobType/JobTypeList";
+import UsersList from "../components/Users/UsersList";
+import StandardResolutionList from "../components/StandardResolution/StandardResolutionList";
 
 const router = createBrowserRouter([
   //   {
@@ -26,8 +29,20 @@ const router = createBrowserRouter([
         element: <JobList />,
       },
       {
-        path: "/clients/clientslist",
+        path: "/clients/clientsList",
         element: <ClientList />,
+      },
+      {
+        path: "/users/usersList",
+        element: <UsersList />,
+      },
+      {
+        path: "/jobtype/list",
+        element: <JobTypeList />,
+      },
+      {
+        path: "/resolution/list",
+        element: <StandardResolutionList />,
       },
     ],
   },

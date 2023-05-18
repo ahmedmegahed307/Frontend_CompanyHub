@@ -42,9 +42,15 @@ function TopNav() {
           <MenuItem as={NavLink} to="/clients/clientsList">
             Clients
           </MenuItem>
-          <MenuItem>Create a Copy</MenuItem>
-          <MenuItem>Mark as Draft</MenuItem>
-          <MenuItem>Delete</MenuItem>
+          <MenuItem as={NavLink} to="/jobtype/list">
+            Job Types
+          </MenuItem>
+          <MenuItem as={NavLink} to="/users/usersList">
+            Users
+          </MenuItem>
+          <MenuItem as={NavLink} to="/resolution/list">
+            Standard Resolutions
+          </MenuItem>
           <MenuItem>Attend a Workshop</MenuItem>
         </MenuList>
       </Menu>
