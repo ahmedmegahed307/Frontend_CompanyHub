@@ -20,15 +20,36 @@ import {
   Box,
   Input,
   IconButton,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  AbsoluteCenter,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Resolutions } from "../../models";
 import { NavLink } from "react-router-dom";
-import { FaEdit, FaTimes } from "react-icons/fa";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 const StandardResolutionList = () => {
   const [resolutionList, setResolutionLists] = useState<Resolutions[]>();
+  const [createResolution, setResolution] = useState({
+    name: "",
+  });
+
+  const handleCreate = (event: FormEvent) => {
+    event.preventDefault();
+    console.log(createResolution);
+    onClose();
+
+    setResolution({ name: "" });
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     const lists = DataStore.observeQuery(Resolutions).subscribe(({ items }) => {
       setResolutionLists(items);
@@ -59,12 +80,13 @@ const StandardResolutionList = () => {
             </Button> */}
 
           <Button
-            as={NavLink}
+            onClick={() => {
+              onOpen();
+            }}
             leftIcon={<AddIcon />}
             my={10}
             px={10}
             py={5}
-            onClick={() => {}}
             colorScheme="blue"
             variant={"solid"}
             size={"sm"}
@@ -84,7 +106,7 @@ const StandardResolutionList = () => {
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Resolution</Th>
-                     
+
                         <Th>Actions</Th>
                       </Tr>
                     </Thead>
@@ -93,10 +115,10 @@ const StandardResolutionList = () => {
                         resolutionList.map((resolution) => (
                           <Tr key={resolution.id}>
                             <Td>{resolution.name}</Td>
-                        
+
                             <Td>
-                            <IconButton
-                              aria-label='Search database' 
+                              <IconButton
+                                aria-label="Search database"
                                 as={NavLink}
                                 icon={<EditIcon />}
                                 onClick={() => {}}
@@ -104,9 +126,10 @@ const StandardResolutionList = () => {
                                 variant={"solid"}
                                 size={"sm"}
                                 bg={"#294c58"}
-                       m={1}      />
-                                 <IconButton
-                              aria-label='Search database' 
+                                m={1}
+                              />
+                              <IconButton
+                                aria-label="Search database"
                                 as={NavLink}
                                 icon={<DeleteIcon />}
                                 onClick={() => {}}
@@ -114,14 +137,8 @@ const StandardResolutionList = () => {
                                 variant={"solid"}
                                 size={"sm"}
                                 bg={"#294c58"}
-                             />
-                            
-
+                              />
                             </Td>
-
-                           
-                        
-                        
                           </Tr>
                         ))}
                     </Tbody>
@@ -132,6 +149,48 @@ const StandardResolutionList = () => {
           </TabPanels>
         </Tabs>
       </Flex>
+
+      <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+
+          <DrawerBody>
+            <AbsoluteCenter>
+              <form onSubmit={handleCreate}>
+                <Heading my={5} size={"md"}>
+                  Create Resolution
+                </Heading>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel>Name</FormLabel>
+                  <Input
+                    className="FormControl"
+                    placeholder=""
+                    value={createResolution.name}
+                    onChange={(e) =>
+                      setResolution({
+                        ...createResolution,
+                        name: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </FormControl>
+
+                <Button
+                  type="submit"
+                  colorScheme="blue"
+                  w={"full"}
+                  bg={"#294c58"}
+                  my={10}
+                >
+                  Create
+                </Button>
+              </form>
+            </AbsoluteCenter>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
