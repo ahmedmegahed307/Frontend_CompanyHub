@@ -39,7 +39,9 @@ function TopNav() {
           variant="outline"
         />
         <MenuList>
-          <MenuItem as={NavLink} to="/clients/clientsList">
+        <MenuItem as={NavLink} to="/checkLists">
+        CheckLists
+          </MenuItem>  <MenuItem as={NavLink} to="/clients/clientsList">
             Clients
           </MenuItem>
           <MenuItem as={NavLink} to="/jobtype/list">

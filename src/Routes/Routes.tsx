@@ -9,6 +9,7 @@ import ClientList from "../components/Clients/ClientList";
 import JobTypeList from "../components/JobType/JobTypeList";
 import UsersList from "../components/Users/UsersList";
 import StandardResolutionList from "../components/StandardResolution/StandardResolutionList";
+import CheckLists from "../Pages/Auth/CheckLists";
 
 const router = createBrowserRouter([
   //   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: "/resolution/list",
         element: <StandardResolutionList />,
       },
+      {
+        path: "/checkLists",
+        element: <CheckLists />,
+      }
     ],
   },
   {

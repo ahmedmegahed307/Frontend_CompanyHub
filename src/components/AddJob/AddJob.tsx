@@ -264,14 +264,15 @@ const AddJob = () => {
         </Stepper>
         <Flex h={"full"} w={"full"} direction={"column"}>
           <Box></Box>
-          <HStack>
+       
+          <AbsoluteCenter>
+            <Box>
+            <HStack>
             <Heading my={10} size={"md"}>
               Add new job
             </Heading>
             <Text> {"> " + steps[activeStep].title}</Text>
           </HStack>
-          <AbsoluteCenter>
-            <Box>
               {activeStep == 0 && (
                 <>
                   <Flex w={"full"}>
@@ -480,7 +481,7 @@ const AddJob = () => {
                       </FormControl>
                       <FormControl pb={10} w={"lg"}>
                         <FormLabel> Est. Duration</FormLabel>
-                        <Input className="FormControl" placeholder="1h" />
+                        <Input className="FormControl" placeholder="" />
                       </FormControl>
 
                       <Button
@@ -530,17 +531,17 @@ const AddJob = () => {
                               </Tbody>
                             </Table>
                           </Card>
-                        </TableContainer>{" "}
+                        </TableContainer>
                       </Box>
                     </Flex>
                   </Flex>
                 </>
               )}
 
-{activeStep == 3 && (
+{activeStep == 4 && (
                 <>
                   <Flex w={"full"}>
-                    <Flex mx={20} w={"full"} direction={"column"}>
+                    {/* <Flex mx={20} w={"full"} direction={"column"}>
                       <FormControl pb={10} w={"lg"}>
                         <FormLabel>Engineer</FormLabel>
                         <Select
@@ -570,7 +571,7 @@ const AddJob = () => {
                       </FormControl>
                       <FormControl pb={10} w={"lg"}>
                         <FormLabel> Est. Duration</FormLabel>
-                        <Input className="FormControl" placeholder="1h" />
+                        <Input className="FormControl" placeholder="" />
                       </FormControl>
 
                       <Button
@@ -582,9 +583,10 @@ const AddJob = () => {
                       >
                         Next
                       </Button>
-                    </Flex>
+                    </Flex> */}
 
-                    <Flex w={"full"} direction={"column"}>
+
+                    <Flex mr={10} w={"full"} direction={"column"}>
                       
                       <Box height={"50vh"} w={"50vh"}>
                       
@@ -653,10 +655,35 @@ const AddJob = () => {
                         </TableContainer>{" "}
                       </Box>
                     </Flex>
+                    <Flex w={'full'}>
+    
+    <TableContainer>
+                          <Card>
+                            <FormLabel> Parts List</FormLabel>
+
+                            <Table variant="simple">
+                              {/* <TableCaption>
+                                Choose the engineer that is perfect for the job{" "}
+                              </TableCaption> */}
+                              <Thead bg={"gray.100"} rounded={"xl"}>
+                                <Tr>
+                                <Th>#Code </Th>
+                                <Th>Part Name </Th>
+                                  <Th>Quntity</Th>
+                                  <Th>Cost</Th>
+                                </Tr>
+                              </Thead>
+                              <Tbody>
+                         
+                              </Tbody>
+                            </Table>
+                          </Card>
+                        </TableContainer>
+</Flex>
                   </Flex>
                 </>
               )}
-              {activeStep == 4 && (
+              {activeStep == 3 && (
                 <>
                   <Flex w={"full"}>
                     <Flex mr={20} w={"full"} direction={"column"}>
@@ -756,11 +783,11 @@ const AddJob = () => {
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel>Client Code</FormLabel>
 
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel>Client Name</FormLabel>
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
 
                     <Button
@@ -783,11 +810,11 @@ const AddJob = () => {
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel> Financial Contact Name </FormLabel>
 
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel> Financial Contact Email </FormLabel>
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
 
                     <FormControl pb={10} w={"lg"}>
@@ -834,12 +861,12 @@ const AddJob = () => {
 
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel> VAT Value </FormLabel>
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
 
                     <FormControl pb={5} w={"lg"}>
                       <FormLabel> VAT Number </FormLabel>
-                      <Input className="FormControl" placeholder="1h" />
+                      <Input className="FormControl" placeholder="" />
                     </FormControl>
 
                     <Button
@@ -880,34 +907,34 @@ const AddJob = () => {
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Site Name </FormLabel>
 
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Site Email </FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
 
                   <FormControl pb={10} w={"lg"}>
                     <FormLabel> Phone </FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
 
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Address Line 1 </FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
 
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Address Line 2 </FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> City </FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Postcode</FormLabel>
-                    <Input className="FormControl" placeholder="1h" />
+                    <Input className="FormControl" placeholder="" />
                   </FormControl>
                   <Button
                     onClick={() => setModelSection("financialDetails")}

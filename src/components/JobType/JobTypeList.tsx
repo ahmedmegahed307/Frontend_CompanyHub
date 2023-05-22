@@ -19,12 +19,14 @@ import {
   Button,
   Box,
   Input,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
 import { JobTypesList } from "../../models";
 import { NavLink } from "react-router-dom";
 import { FaEdit, FaTimes } from "react-icons/fa";
+import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 const JobTypeList = () => {
   const [jobTypeList, setJobTypeLists] = useState<JobTypesList[]>();
   useEffect(() => {
@@ -57,18 +59,12 @@ const JobTypeList = () => {
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
             New Order
           </Button> */}
-          <Button
-            as={NavLink}
-            to="#"
-            my={10}
-            onClick={() => {}}
-            colorScheme="blue"
-            variant={"solid"}
-            size={"sm"}
-            bg={"#294c58"}
-          >
-            Add Job Type
-          </Button>
+
+          <Button as={NavLink}  leftIcon={<AddIcon  />}  my={10} px={10} py={5} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}> 
+
+          Add Job Type
+
+</Button>
         </Flex>
 
         <Tabs w={"full"}>
@@ -92,25 +88,30 @@ const JobTypeList = () => {
                           <Tr key={jobtype.id}>
                             <Td>{jobtype.name}</Td>
                             <Td>{jobtype.subTypeList}</Td>
-                            <Box margin={2}>
-                              <Button
-                                colorScheme={"blue"}
-                                variant="outline"
+                            <Td>
+                            <IconButton
+                              aria-label='Search database' 
+                                as={NavLink}
+                                icon={<EditIcon />}
+                                onClick={() => {}}
+                                colorScheme="blue"
+                                variant={"solid"}
                                 size={"sm"}
-                                leftIcon={<FaEdit />}
-                              >
-                                Edit
-                              </Button>
-                              <Button
-                                colorScheme="red"
-                                variant="outline"
-                                marginLeft={2}
+                                bg={"#294c58"}
+                       m={1}      />
+                                 <IconButton
+                              aria-label='Search database' 
+                                as={NavLink}
+                                icon={<DeleteIcon />}
+                                onClick={() => {}}
+                                colorScheme="blue"
+                                variant={"solid"}
                                 size={"sm"}
-                                leftIcon={<FaTimes />}
-                              >
-                                Delete
-                              </Button>
-                            </Box>
+                                bg={"#294c58"}
+                             />
+                            
+
+                            </Td>
                           </Tr>
                         ))}
                     </Tbody>

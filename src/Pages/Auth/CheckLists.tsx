@@ -47,7 +47,7 @@ const CheckLists = () => {
           </Heading>
           <Spacer />
         
-          <Button as={NavLink}  leftIcon={<AddIcon  />}  to='/jobs/addJob' my={10} px={10} py={5} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}> 
+          <Button as={NavLink}  leftIcon={<AddIcon  />}  my={10} px={10} py={5} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}> 
 
 
  Create Check List          </Button>

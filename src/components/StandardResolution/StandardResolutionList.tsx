@@ -19,12 +19,14 @@ import {
   Button,
   Box,
   Input,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Resolutions } from "../../models";
 import { NavLink } from "react-router-dom";
 import { FaEdit, FaTimes } from "react-icons/fa";
+import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 const StandardResolutionList = () => {
   const [resolutionList, setResolutionLists] = useState<Resolutions[]>();
   useEffect(() => {
@@ -55,10 +57,13 @@ const StandardResolutionList = () => {
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
               New Order
             </Button> */}
+
           <Button
             as={NavLink}
-            to="#"
+            leftIcon={<AddIcon />}
             my={10}
+            px={10}
+            py={5}
             onClick={() => {}}
             colorScheme="blue"
             variant={"solid"}
@@ -79,9 +84,7 @@ const StandardResolutionList = () => {
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Resolution</Th>
-                        <Th></Th>
-                        <Th></Th>
-                        <Th></Th>
+                     
                         <Th>Actions</Th>
                       </Tr>
                     </Thead>
@@ -90,27 +93,35 @@ const StandardResolutionList = () => {
                         resolutionList.map((resolution) => (
                           <Tr key={resolution.id}>
                             <Td>{resolution.name}</Td>
-                            <Td></Td>
-                            <Td></Td> <Td></Td>
-                            <Box margin={2}>
-                              <Button
-                                colorScheme={"blue"}
-                                variant="outline"
+                        
+                            <Td>
+                            <IconButton
+                              aria-label='Search database' 
+                                as={NavLink}
+                                icon={<EditIcon />}
+                                onClick={() => {}}
+                                colorScheme="blue"
+                                variant={"solid"}
                                 size={"sm"}
-                                leftIcon={<FaEdit />}
-                              >
-                                Edit
-                              </Button>
-                              <Button
-                                colorScheme="red"
-                                variant="outline"
-                                marginLeft={2}
+                                bg={"#294c58"}
+                       m={1}      />
+                                 <IconButton
+                              aria-label='Search database' 
+                                as={NavLink}
+                                icon={<DeleteIcon />}
+                                onClick={() => {}}
+                                colorScheme="blue"
+                                variant={"solid"}
                                 size={"sm"}
-                                leftIcon={<FaTimes />}
-                              >
-                                Delete
-                              </Button>
-                            </Box>
+                                bg={"#294c58"}
+                             />
+                            
+
+                            </Td>
+
+                           
+                        
+                        
                           </Tr>
                         ))}
                     </Tbody>
