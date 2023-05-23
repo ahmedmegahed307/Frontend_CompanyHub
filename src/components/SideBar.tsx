@@ -14,11 +14,10 @@ import {
   VStack,
   Spacer,
   Image,
-  Link
-  
+  Link,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function TopNav() {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
@@ -26,24 +25,35 @@ function TopNav() {
 
   const NavItems = () => (
     <>
-    <Link px={5}>Operational Dashboard</Link>
-    <Link px={5}>Statistical Dashboard</Link>
-    <Link as={NavLink} _activeLink={{ fontWeight:"bold",color:'#294c58'}} to='/jobs' px={5}>Jobs </Link>
-    <Link px={5}>PPM </Link>
-    <Link px={5}>Scheduler </Link>
-    <Link px={5}>Map </Link>
-    <Link px={5}>Chat </Link>
-    <Link px={5}>Reports </Link>
-    
+      <Link px={5}>Operational Dashboard</Link>
+      <Link
+        as={NavLink}
+        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
+        to="/statistical"
+        px={5}
+      >
+        Statistical Dashboard
+      </Link>
+      <Link
+        as={NavLink}
+        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
+        to="/jobs"
+        px={5}
+      >
+        Jobs{" "}
+      </Link>
+      <Link px={5}>PPM </Link>
+      <Link px={5}>Scheduler </Link>
+      <Link px={5}>Map </Link>
+      <Link px={5}>Chat </Link>
+      <Link px={5}>Reports </Link>
     </>
   );
 
   return (
     <>
-    
-      <Box boxShadow={'lg'}  as="nav" py={2}>
+      <Box boxShadow={"lg"} as="nav" py={2}>
         <Flex alignItems="center" maxW="7xl" mx="auto" px="4">
-        
           {isMobileNav ? (
             <>
               <IconButton

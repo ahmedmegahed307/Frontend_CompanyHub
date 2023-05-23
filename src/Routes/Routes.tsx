@@ -10,6 +10,7 @@ import JobTypeList from "../components/JobType/JobTypeList";
 import UsersList from "../components/Users/UsersList";
 import StandardResolutionList from "../components/StandardResolution/StandardResolutionList";
 import CheckLists from "../Pages/Auth/CheckLists";
+import Statistical from "../components/StatisticalDashboard/Statistical";
 
 const router = createBrowserRouter([
   //   {
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
       {
         path: "/checkLists",
         element: <CheckLists />,
-      }
+      },
+      {
+        path: "/statistical",
+        element: <Statistical />,
+      },
     ],
   },
   {
