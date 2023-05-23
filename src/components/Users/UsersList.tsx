@@ -34,8 +34,8 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { DataStore } from "aws-amplify";
-import { UsersObject } from "../../models";
+import { Auth, DataStore } from "aws-amplify";
+import { Address, UserType, UsersObject } from "../../models";
 import { FaEdit, FaTimes, FaUser } from "react-icons/fa";
 import { AddIcon } from "@chakra-ui/icons";
 
@@ -49,9 +49,45 @@ const UsersList = () => {
     role: "",
   });
 
-  const handleCreate = (event: FormEvent) => {
+  const handleCreate = async (event: FormEvent) => {
     event.preventDefault();
     console.log(createUser);
+
+    var username = createUser.email;
+    var password = 'Ukfs2019???';
+    
+
+      try {
+        const { user } = await Auth.signUp({
+          username,
+          password,
+          attributes: {
+          name:  username       
+          },
+          autoSignIn: { // optional - enables auto sign in after user is confirmed
+            enabled: true,
+          }
+        });
+        console.log(user);
+        const post = await DataStore.save(
+          new UsersObject({
+            name: createUser.name,
+            email: createUser.email,
+            type: createUser.role,
+            adresses: [
+              new Address({
+                contactName: createUser.contactName,
+                tel: createUser.phoneNumber,
+              }),
+            ],
+          })
+        );
+    
+      } catch (error) {
+        console.log('error signing up:', error);
+      }
+    
+
     onClose();
 
     setCreateUser({
@@ -152,18 +188,18 @@ const UsersList = () => {
                             <Td>{usersList?.email}</Td>
                             <Td>{usersList.adresses![0]?.contactName}</Td>
                             <Td>{usersList.adresses![0]?.tel}</Td>
-                            <Td>Not yet in Database</Td>
-                            <Box margin={2}>
+                            <Td>{usersList.type}</Td>
+                            <Td>
                               <Button
                                 colorScheme="red"
                                 variant="outline"
-                                marginLeft={2}
+                                m={2}
                                 size={"sm"}
                                 leftIcon={<FaTimes />}
                               >
                                 Deactivate
                               </Button>
-                            </Box>
+                            </Td>
                           </Tr>
                         ))}
                     </Tbody>
