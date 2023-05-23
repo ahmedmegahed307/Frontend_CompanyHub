@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
-import { Resolutions } from "../../models";
+import { Resolutions, UsersObject } from "../../models";
 import { NavLink } from "react-router-dom";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 const StandardResolutionList = () => {
@@ -41,9 +41,14 @@ const StandardResolutionList = () => {
     name: "",
   });
 
-  const handleCreate = (event: FormEvent) => {
+  const handleCreate = async (event: FormEvent) => {
     event.preventDefault();
     console.log(createResolution);
+
+    const post = await DataStore.save(
+      new Resolutions({isActive:true,name:createResolution.name})
+    );
+
     onClose();
 
     setResolution({ name: "" });
