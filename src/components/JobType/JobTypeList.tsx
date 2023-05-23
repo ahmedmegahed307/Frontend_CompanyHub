@@ -31,6 +31,9 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Tag,
+  TagLabel,
+  TagCloseButton,
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
@@ -42,16 +45,16 @@ const JobTypeList = () => {
   const [jobTypeList, setJobTypeLists] = useState<JobTypesList[]>([]);
   const [createJobType, setCreateJobType] = useState({
     name: "",
-    subTypeList: "",
+    subTypeList: [] as string[],
+    newSubType: "",
   });
-  console.log(jobTypeList);
 
   const handleCreate = (event: FormEvent) => {
     event.preventDefault();
     console.log(createJobType);
     onClose();
 
-    setCreateJobType({ name: "", subTypeList: "" });
+    setCreateJobType({ name: "", subTypeList: [], newSubType: "" });
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,6 +70,29 @@ const JobTypeList = () => {
       lists.unsubscribe();
     };
   }, []);
+
+  const handleAddSubType = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && createJobType.newSubType) {
+      event.preventDefault(); // Prevent form submission
+      setCreateJobType((prevJobType) => ({
+        ...prevJobType,
+        subTypeList: [...prevJobType.subTypeList, prevJobType.newSubType],
+        newSubType: "",
+      }));
+    }
+  };
+
+  const handleRemoveSubType = (index: number) => {
+    setCreateJobType((prevJobType) => {
+      const updatedSubTypeList = [...prevJobType.subTypeList];
+      updatedSubTypeList.splice(index, 1);
+
+      return {
+        ...prevJobType,
+        subTypeList: updatedSubTypeList,
+      };
+    });
+  };
 
   return (
     <>
@@ -164,52 +190,72 @@ const JobTypeList = () => {
         <DrawerContent>
           <DrawerCloseButton />
 
+          <DrawerHeader>Create JobType</DrawerHeader>
+
           <DrawerBody>
-            <AbsoluteCenter>
-              <form onSubmit={handleCreate}>
-                <Heading my={5} size={"md"}>
-                  Create JobType
-                </Heading>
-                <FormControl pb={5} w={"lg"}>
-                  <FormLabel>Name</FormLabel>
-                  <Input
-                    className="FormControl"
-                    placeholder=""
-                    value={createJobType.name}
-                    onChange={(e) =>
-                      setCreateJobType({
-                        ...createJobType,
-                        name: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                </FormControl>
-                <FormControl pb={5} w={"lg"}>
-                  <FormLabel>Associated Job SubTypes</FormLabel>
-                  <Input
-                    className="FormControl"
-                    placeholder=""
-                    value={createJobType.subTypeList}
-                    onChange={(e) =>
-                      setCreateJobType({
-                        ...createJobType,
-                        subTypeList: e.target.value,
-                      })
-                    }
-                  />
-                </FormControl>
-                <Button
-                  type="submit"
-                  colorScheme="blue"
-                  w={"full"}
-                  bg={"#294c58"}
-                  my={10}
-                >
-                  Create
-                </Button>
-              </form>
-            </AbsoluteCenter>
+            <form onSubmit={handleCreate}>
+              <Heading my={5} size={"md"}>
+                Create JobType
+              </Heading>
+              <FormControl pb={5} w={"lg"}>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  className="FormControl"
+                  placeholder=""
+                  value={createJobType.name}
+                  onChange={(e) =>
+                    setCreateJobType({
+                      ...createJobType,
+                      name: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </FormControl>
+
+              <FormControl pb={5} w={"lg"}>
+                <FormLabel>Associated Job SubTypes</FormLabel>
+                <Flex wrap="wrap">
+                  {createJobType.subTypeList.map((subType, index) => (
+                    <Tag
+                      key={index}
+                      borderRadius="full"
+                      variant="solid"
+                      colorScheme="blue"
+                      mr={2}
+                      mb={2}
+                    >
+                      <TagLabel>{subType}</TagLabel>
+                      <TagCloseButton
+                        onClick={() => handleRemoveSubType(index)}
+                      />
+                    </Tag>
+                  ))}
+                </Flex>
+                <Input
+                  className="FormControl"
+                  placeholder="Click Enter to add more than one subtype"
+                  value={createJobType.newSubType}
+                  onChange={(e) =>
+                    setCreateJobType({
+                      ...createJobType,
+                      newSubType: e.target.value,
+                    })
+                  }
+                  onKeyDown={(e) => handleAddSubType(e)}
+                />
+              </FormControl>
+
+              <Button
+                type="submit"
+                colorScheme="blue"
+                w={"full"}
+                bg={"#294c58"}
+                my={10}
+              >
+                Create
+              </Button>
+            </form>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
