@@ -50,11 +50,19 @@ import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
 
 import { useState, useEffect } from "react";
-import { UsersObject, Address, JobTypesList, PartsList } from "../../models";
+import {
+  UsersObject,
+  Address,
+  JobTypesList,
+  PartsList,
+  Jobs,
+  JobType,
+} from "../../models";
 import GoogleMapReact from "google-map-react";
 import GoogleMap from "../GoogleMap";
 import { SearchIcon } from "@chakra-ui/icons";
 import { MdAdd, MdArrowBack, MdPlusOne } from "react-icons/md";
+import { Temporal } from "@js-temporal/polyfill";
 const steps = [
   { title: "Client", description: "Contact Info" },
   { title: "Job", description: "Date & Time" },
@@ -67,17 +75,17 @@ const creatClientsteps = [
   { title: "Financial details", description: "Date & Time" },
 ];
 
-const username:string  ='bariqa@afsgo.com'
-const password:string  ='bariq1991'
+const username: string = "bariqa@afsgo.com";
+const password: string = "bariq1991";
 
 async function signIn() {
   try {
     const user = await Auth.signIn(username, password);
     console.log(user);
 
-    console.log('logIn done ..');
+    console.log("logIn done ..");
   } catch (error) {
-    console.log('error signing in', error);
+    console.log("error signing in", error);
   }
 }
 
@@ -122,7 +130,9 @@ const AddJob = () => {
   const [jobSubType, setJobSubType] = useState<string>();
   const [priority, setPriority] = useState<string>();
   const [duration, setDuration] = useState<string>();
-  const [schedule, setSchedule] = useState<string>();
+  const [schedule, setSchedule] = useState<Date>();
+  const [desc, setDesc] = useState<string>();
+  const [instruction, setInstruction] = useState<string>();
 
   // get CLients
   useEffect(() => {
@@ -144,39 +154,31 @@ const AddJob = () => {
 
   // get Engineers
   useEffect(() => {
-
-    console.log('start 333 ');
+    console.log("start 333 ");
     try {
-        /**
-     * This keeps `post` fresh.
-     */
-        console.log('start start1 ');
+      /**
+       * This keeps `post` fresh.
+       */
+      console.log("start start1 ");
 
-    const sub =  DataStore.observeQuery(UsersObject, (c) =>
-    c.type.eq("engineer")
-  ).subscribe(({ items }) => {
-    console.log(items);
-    console.log('start adasd ');
+      const sub = DataStore.observeQuery(UsersObject, (c) =>
+        c.type.eq("engineer")
+      ).subscribe(({ items }) => {
+        console.log(items);
+        console.log("start adasd ");
 
-    setEngineersList(items);
-    return () => {
-      sub.unsubscribe();
-    };
-  });
-
-
-
-      
+        setEngineersList(items);
+        return () => {
+          sub.unsubscribe();
+        };
+      });
     } catch (error) {
-      console.log('start adasd ');
+      console.log("start adasd ");
 
-      console.log('errorr .. ');
+      console.log("errorr .. ");
       console.log(error);
-      return   console.log(error);
-      
+      return console.log(error);
     }
-  
-   
   }, []);
 
   // get job Types
@@ -195,25 +197,65 @@ const AddJob = () => {
     };
   }, []);
 
-    // get parts List
-    useEffect(() => {
-      /**
-       * This keeps `post` fresh.
-       */
-      const sub = DataStore.observeQuery(PartsList
-      ).subscribe(({ items }) => {
-        console.log(items);
-  
-        setPartsList(items);
-      });
-  
-      return () => {
-        sub.unsubscribe();
-      };
-    }, []);
+  // get parts List
+  useEffect(() => {
+    /**
+     * This keeps `post` fresh.
+     */
+    const sub = DataStore.observeQuery(PartsList).subscribe(({ items }) => {
+      console.log(items);
+
+      setPartsList(items);
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
+  }, []);
 
   // new Client
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  /**
+   * Create a new Post
+   */
+  async function onCreate() {
+
+    console.log('xxx');
+    console.log( new Jobs({
+      usersID: "738dff20-24be-4d12-9cbc-96187442cc1c",
+      type: new JobType({ name: jobType?.name, subType: jobSubType }),
+      proirty: priority,
+      enginer: [engineer?.id!],
+      status: "stats test",
+      schadule:Temporal.Instant.from(schedule!.toISOString()).toString(), 
+      estDuration: duration,
+      disc: desc,
+      notifyClint: false,
+      getBill: false,
+      Instruction: instruction,
+      adress: site,
+
+    }));
+    const post = await DataStore.save(
+      new Jobs({
+        usersID: "738dff20-24be-4d12-9cbc-96187442cc1c",
+        type: new JobType({ name: jobType?.name, subType: jobSubType }),
+        proirty: priority,
+        enginer: [engineer?.id!],
+        status: "stats test",
+schadule:Temporal.Instant.from(schedule!.toISOString()).toString(), 
+       estDuration: duration,
+        disc: desc,
+        notifyClint: false,
+        getBill: false,
+        Instruction: instruction,
+        adress: site,
+
+      })
+    );
+  }
+
   return (
     <>
       <Flex
@@ -254,7 +296,7 @@ const AddJob = () => {
                 <StepDescription>
                   {client && index == 0 ? client.name ?? "" : ""}
                   {jobType && index == 1 ? jobType.name ?? "" : ""}
-                  {engineer && index == 2 ? engineer.name ?? "" : ""}
+                  {engineer && index == 2 ? engineer.id ?? "" : ""}
                 </StepDescription>
               </Box>
 
@@ -264,15 +306,15 @@ const AddJob = () => {
         </Stepper>
         <Flex h={"full"} w={"full"} direction={"column"}>
           <Box></Box>
-       
+
           <AbsoluteCenter>
             <Box>
-            <HStack>
-            <Heading my={10} size={"md"}>
-              Add new job
-            </Heading>
-            <Text> {"> " + steps[activeStep].title}</Text>
-          </HStack>
+              <HStack>
+                <Heading my={10} size={"md"}>
+                  Add new job
+                </Heading>
+                <Text> {"> " + steps[activeStep].title}</Text>
+              </HStack>
               {activeStep == 0 && (
                 <>
                   <Flex w={"full"}>
@@ -388,63 +430,82 @@ const AddJob = () => {
               )}
 
               {/* /////////////// job  */}
+
               {activeStep == 1 && (
                 <>
-                  <FormControl pb={10} w={"lg"}>
-                    <FormLabel>Job Type</FormLabel>
-                    <Select
-                      onChange={(e) =>
-                        setJobType(jobTypeList![parseInt(e.target.value)])
-                      }
-                      variant="outline"
-                      placeholder="Select the job type"
-                    >
-                      {jobTypeList &&
-                        jobTypeList!.map((item, index) => (
-                          <option value={index} key={item.id}>
-                            {item.name}
-                          </option>
-                        ))}
-                    </Select>{" "}
-                  </FormControl>
-                  <FormControl pb={10} w={"lg"}>
-                    <FormLabel>Sub Type</FormLabel>
-                    <Select
-                      onChange={(e) => setJobSubType(e.target.value)}
-                      variant="outline"
-                      placeholder="Select the job sub-type"
-                    >
-                      {jobType &&
-                        jobType.subTypeList!.map((item, index) => (
-                          <option value={item ?? 0} key={item}>
-                            {item}
-                          </option>
-                        ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl pb={10} w={"lg"}>
-                    <FormLabel>Priority</FormLabel>
-                    <Select
-                      onChange={(e) => setPriority(e.target.value)}
-                      variant="outline"
-                      placeholder="Select the job priority"
-                    >
-                      <option value="low">Low</option>
-                      <option value="normal">Normal</option>
-                      <option value="hight">Hight</option>
-                    </Select>
-                  </FormControl>
+                  <Flex w={"full"}>
+                    <Flex w={"full"} mr={20} direction={"column"}>
+                      <FormControl pb={10} w={"lg"}>
+                        <FormLabel>Job Type</FormLabel>
+                        <Select
+                          onChange={(e) =>
+                            setJobType(jobTypeList![parseInt(e.target.value)])
+                          }
+                          variant="outline"
+                          placeholder="Select the job type"
+                        >
+                          {jobTypeList &&
+                            jobTypeList!.map((item, index) => (
+                              <option value={index} key={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                        </Select>{" "}
+                      </FormControl>
+                      <FormControl pb={10} w={"lg"}>
+                        <FormLabel>Sub Type</FormLabel>
+                        <Select
+                          onChange={(e) => setJobSubType(e.target.value)}
+                          variant="outline"
+                          placeholder="Select the job sub-type"
+                        >
+                          {jobType &&
+                            jobType.subTypeList!.map((item, index) => (
+                              <option value={item ?? 0} key={item}>
+                                {item}
+                              </option>
+                            ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl pb={10} w={"lg"}>
+                        <FormLabel>Priority</FormLabel>
+                        <Select
+                          onChange={(e) => setPriority(e.target.value)}
+                          variant="outline"
+                          placeholder="Select the job priority"
+                        >
+                          <option value="low">Low</option>
+                          <option value="normal">Normal</option>
+                          <option value="hight">Hight</option>
+                        </Select>
+                      </FormControl>
 
-                  <Button
-                    onClick={() => setActiveStep(activeStep + 1)}
-                    colorScheme="blue"
-                    w={"full"}
-                    bg={"#294c58"}
-                    my={10}
-                    isDisabled={priority == null || jobType == null}
-                  >
-                    Next
-                  </Button>
+                      <Button
+                        onClick={() => setActiveStep(activeStep + 1)}
+                        colorScheme="blue"
+                        w={"full"}
+                        bg={"#294c58"}
+                        my={10}
+                        isDisabled={priority == null || jobType == null}
+                      >
+                        Next
+                      </Button>
+                    </Flex>
+                    <Flex w={"full"} direction={"column"}>
+                      <FormControl pb={10} w={"lg"}>
+                        <FormLabel> Description</FormLabel>
+                        <Textarea className="FormControl" placeholder="" />
+                      </FormControl>
+                      <FormControl pb={10} w={"lg"}>
+                        <FormLabel> Instruction</FormLabel>
+                        <Textarea
+                          size={"lg"}
+                          className="FormControl"
+                          placeholder=""
+                        />
+                      </FormControl>
+                    </Flex>{" "}
+                  </Flex>
                 </>
               )}
               {/* /////////////// Engineer  */}
@@ -473,7 +534,8 @@ const AddJob = () => {
                       </FormControl>
                       <FormControl pb={10} w={"lg"}>
                         <FormLabel> Schedule Date</FormLabel>
-                        <Input
+                        
+                        <Input onChange={(e)=>setSchedule(new Date(e.target.value))}
                           type="datetime-local"
                           className="FormControl"
                           placeholder="Select Schedule Date"
@@ -538,7 +600,7 @@ const AddJob = () => {
                 </>
               )}
 
-{activeStep == 4 && (
+              {activeStep == 3 && (
                 <>
                   <Flex w={"full"}>
                     {/* <Flex mx={20} w={"full"} direction={"column"}>
@@ -585,37 +647,46 @@ const AddJob = () => {
                       </Button>
                     </Flex> */}
 
-
                     <Flex mr={10} w={"full"} direction={"column"}>
-                      
                       <Box height={"50vh"} w={"50vh"}>
-                      
-                        <TableContainer >
-                          <Card maxH={'50vh'} overflowY={'auto'} >
-
+                        <TableContainer>
+                          <Card maxH={"50vh"} overflowY={"auto"}>
                             <Table variant="simple" maxH={10}>
                               <TableCaption>
                                 Choose the engineer that is perfect for the job{" "}
                               </TableCaption>
-                              <Thead zIndex={'1000'} bg={"gray.100"} rounded={"xl"} position="sticky" top={0} >
+                              <Thead
+                                zIndex={"1000"}
+                                bg={"gray.100"}
+                                rounded={"xl"}
+                                position="sticky"
+                                top={0}
+                              >
                                 <Tr>
-                                  <Th colSpan={3}>     <HStack>
-                        <Input borderRadius={'md'} bg={'white'} className="FormControl" placeholder="Search for parts .." />
+                                  <Th colSpan={3}>
+                                    {" "}
+                                    <HStack>
+                                      <Input
+                                        borderRadius={"md"}
+                                        bg={"white"}
+                                        className="FormControl"
+                                        placeholder="Search for parts .."
+                                      />
 
-                          <  IconButton
-                    
-                          bg={'transparent'}
-                            onClick={() => {
-                              onOpen();
-                              setActiveDrower("createClient");
-                            }}
-                            aria-label="Search database"
-                            icon={<SearchIcon />}
-                          />
-                        </HStack> </Th>
+                                      <IconButton
+                                        bg={"transparent"}
+                                        onClick={() => {
+                                          onOpen();
+                                          setActiveDrower("createClient");
+                                        }}
+                                        aria-label="Search database"
+                                        icon={<SearchIcon />}
+                                      />
+                                    </HStack>{" "}
+                                  </Th>
                                 </Tr>
                               </Thead>
-                              <Tbody h={10}  maxH={10}>
+                              <Tbody h={10} maxH={10}>
                                 {partsList &&
                                   partsList!.map((item, index) => (
                                     <Tr key={item.id}>
@@ -640,12 +711,13 @@ const AddJob = () => {
                                         </Text>
                                       </Td>
                                       <Td>
-                                      <IconButton
-                                      
-                  onClick={() => setModelSection("newClint")}
-                  aria-label="Search database"
-                  icon={<MdAdd />}
-                />
+                                        <IconButton
+                                          onClick={() =>
+                                            setModelSection("newClint")
+                                          }
+                                          aria-label="Search database"
+                                          icon={<MdAdd />}
+                                        />
                                       </Td>
                                     </Tr>
                                   ))}
@@ -655,35 +727,41 @@ const AddJob = () => {
                         </TableContainer>{" "}
                       </Box>
                     </Flex>
-                    <Flex w={'full'}>
-    
-    <TableContainer>
-                          <Card>
-                            <FormLabel> Parts List</FormLabel>
+                    <Flex w={"full"} direction={"column"}>
+                      <TableContainer>
+                        <Card>
+                          <FormLabel> Parts List</FormLabel>
 
-                            <Table variant="simple">
-                              {/* <TableCaption>
+                          <Table variant="simple">
+                            {/* <TableCaption>
                                 Choose the engineer that is perfect for the job{" "}
                               </TableCaption> */}
-                              <Thead bg={"gray.100"} rounded={"xl"}>
-                                <Tr>
+                            <Thead bg={"gray.100"} rounded={"xl"}>
+                              <Tr>
                                 <Th>#Code </Th>
                                 <Th>Part Name </Th>
-                                  <Th>Quntity</Th>
-                                  <Th>Cost</Th>
-                                </Tr>
-                              </Thead>
-                              <Tbody>
-                         
-                              </Tbody>
-                            </Table>
-                          </Card>
-                        </TableContainer>
-</Flex>
+                                <Th>Quntity</Th>
+                                <Th>Cost</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody></Tbody>
+                          </Table>
+                        </Card>
+                      </TableContainer>
+                      <Button
+                        onClick={() => setActiveStep(activeStep + 1)}
+                        colorScheme="blue"
+                        w={"full"}
+                        bg={"#294c58"}
+                        my={10}
+                      >
+                        Next
+                      </Button>
+                    </Flex>
                   </Flex>
                 </>
               )}
-              {activeStep == 3 && (
+              {activeStep == 4 && (
                 <>
                   <Flex w={"full"}>
                     <Flex mr={20} w={"full"} direction={"column"}>
@@ -712,28 +790,13 @@ const AddJob = () => {
                           </Heading>
                           <Text>{engineer?.name}</Text>
                           <Text>
-                            {schedule} - {duration}
+                            {/* {schedule!.toString() ?? ''} - {duration} */}
                           </Text>
                         </FormControl>
                       </Card>
                       <hr />
-                    </Flex>
-                    <Flex w={"full"} direction={"column"}>
-                      <FormControl pb={10} w={"lg"}>
-                        <FormLabel> Description</FormLabel>
-                        <Textarea className="FormControl" placeholder="" />
-                      </FormControl>
-                      <FormControl pb={10} w={"lg"}>
-                        <FormLabel> Instruction</FormLabel>
-                        <Textarea
-                          size={"lg"}
-                          className="FormControl"
-                          placeholder=""
-                        />
-                      </FormControl>
-
                       <Button
-                        // onClick={() => setActiveStep(activeStep + 1)}
+                        onClick={() => onCreate()}
                         colorScheme="blue"
                         w={"full"}
                         bg={"#294c58"}
