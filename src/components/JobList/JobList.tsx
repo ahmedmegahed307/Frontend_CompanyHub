@@ -28,9 +28,7 @@ import {
   Button,
   Spacer,
 } from "@chakra-ui/react";
-import {  NavLink } from "react-router-dom";
-
-
+import { NavLink } from "react-router-dom";
 
 const JobList = () => {
   const [jobsList, setJobsList] = useState<Jobs[]>();
@@ -69,7 +67,16 @@ const JobList = () => {
           {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
             New Order
           </Button> */}
-          <Button as={NavLink}  to='/jobs/addJob' my={10} onClick={() => {}} colorScheme="blue" variant={'solid'} size={'sm'}  bg={"#294c58"}>
+          <Button
+            as={NavLink}
+            to="/jobs/addJob"
+            my={10}
+            onClick={() => {}}
+            colorScheme="blue"
+            variant={"solid"}
+            size={"sm"}
+            bg={"#294c58"}
+          >
             New Order
           </Button>
         </Flex>
@@ -84,17 +91,17 @@ const JobList = () => {
             <Tab>Cancelled ({jobsList?.length})</Tab>
           </TabList>
           <Flex w={"full"} direction={"row"}>
-          {/* <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
+            {/* <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
             Jobs List
           </Heading> */}
-          <Spacer />
-          {/* <Button mt={5} onClick={() => {}} variant={'outline'} size={'xs'} colorScheme="blue" color={"#294c58"}>
+            <Spacer />
+            {/* <Button mt={5} onClick={() => {}} variant={'outline'} size={'xs'} colorScheme="blue" color={"#294c58"}>
          Export
           </Button> */}
-        </Flex>
-          <TabPanels pt={5}  h={"50vh"}>
-          <TabPanel>
-              <TableContainer borderRadius={'xl'}>
+          </Flex>
+          <TabPanels pt={5} h={"50vh"}>
+            <TabPanel>
+              <TableContainer borderRadius={"xl"}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple">
                     <TableCaption>
@@ -113,7 +120,7 @@ const JobList = () => {
                     <Tbody>
                       {jobsList &&
                         jobsList!.map((item, index) => (
-                          <Tr key={item.id} >
+                          <Tr key={item.id}>
                             <Td>{item.jobNumber ?? "00" + index}</Td>
                             <Td>Clint1</Td>
                             <Td>inches</Td>
@@ -128,14 +135,10 @@ const JobList = () => {
               </TableContainer>
             </TabPanel>
             <TabPanel>
-              <TableContainer>
-        tap 2
-              </TableContainer>
+              <TableContainer>tap 2</TableContainer>
             </TabPanel>
             <TabPanel>
-              <TableContainer>
-        tap 3
-              </TableContainer>
+              <TableContainer>tap 3</TableContainer>
             </TabPanel>
           </TabPanels>
         </Tabs>
