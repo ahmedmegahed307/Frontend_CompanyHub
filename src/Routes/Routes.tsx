@@ -11,6 +11,7 @@ import UsersList from "../components/Users/UsersList";
 import StandardResolutionList from "../components/StandardResolution/StandardResolutionList";
 import CheckLists from "../Pages/Auth/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
+import Scheduler from "../components/Scheduler/Scheduler";
 
 const router = createBrowserRouter([
   //   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/scheduler",
+    element: <Scheduler />,
+  },
+
   {
     path: "/login",
     element: <Login />,
