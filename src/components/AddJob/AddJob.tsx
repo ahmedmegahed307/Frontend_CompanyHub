@@ -58,12 +58,14 @@ import {
   PartsList,
   Jobs,
   JobType,
+  UserType,
 } from "../../models";
 import GoogleMapReact from "google-map-react";
 import GoogleMap from "../GoogleMap";
 import { SearchIcon } from "@chakra-ui/icons";
 import { MdAdd, MdArrowBack, MdPlusOne } from "react-icons/md";
 import { Temporal } from "@js-temporal/polyfill";
+import ClientList from "../Clients/ClientList";
 const steps = [
   { title: "Client", description: "Contact Info" },
   { title: "Job", description: "Date & Time" },
@@ -75,10 +77,6 @@ const creatClientsteps = [
   { title: "Create New Client", description: "Contact Info" },
   { title: "Financial details", description: "Date & Time" },
 ];
-
-
-
-
 
 const username: string = "bariqa@afsgo.com";
 const password: string = "bariq1991";
@@ -96,6 +94,7 @@ async function signIn() {
 
 const AddJob = () => {
   const [createClient, setCreateClient] = useState({
+    id: "",
     name: "",
     code: "",
     financialContactName: "",
@@ -108,36 +107,50 @@ const AddJob = () => {
     newSubType: "",
   });
 
-
+  const [createSite, setCreateSite] = useState<Address>();
   const handleCreate = async () => {
     try {
       console.log(createClient);
-  
-  
-      const post = await DataStore.save(
-        new UsersObject({
-          name: createClient.name,
-          // email: createClient.email,
-          type: "client",
-  
-          financialContactEmail: createClient.financialContactEmail,
-          financialContactName: createClient.financialContactName,
-          currencyCode: createClient.currencyCode,
-          siteType: createClient.siteType,
-          vatRate: createClient.vatValue,
-          vatNumber: createClient.vatNumber,
-          vatValue: createClient.vatValue,
-        })
-      );
-  
-      Swal.fire({
-        title: "Congratulations",
-        text: "Resolutions have been saved successfully",
-        icon: "success",
+
+      var newUser = new UsersObject({
+        name: createClient.name,
+        // email: createClient.email,
+        type: "client",
+
+        financialContactEmail: createClient.financialContactEmail,
+        financialContactName: createClient.financialContactName,
+        currencyCode: createClient.currencyCode,
+        siteType: createClient.siteType,
+        vatRate: createClient.vatValue,
+        vatNumber: createClient.vatNumber,
+        vatValue: createClient.vatValue,
       });
+
+      const post = await DataStore.save(newUser).then(async (res) => {
+        createClientModal.onClose();
+
+        const _clintList = await DataStore.query(UsersObject, (c) =>
+          c.type.eq("client")
+        );
+
+        setSelectClientIndex(_clintList.length - 1);
+
+        setClient(res);
+
+        Swal.fire({
+          title: "Congratulations",
+          text: "Client have been Created successfully",
+          icon: "success",
+        }).then(() => {
+          setModelSection("newClint");
+          return createSiteModal.onOpen();
+        });
+      });
+
       // createModal.onClose();
-  
+
       setCreateClient({
+        id: "",
         name: "",
         code: "",
         financialContactName: "",
@@ -157,7 +170,57 @@ const AddJob = () => {
       });
     }
   };
-  
+
+  const handleSiteCreate = async () => {
+    try {
+      // sites.push(site!);
+
+      console.log('site created .. ');
+      console.log(createSite);
+      setClient({ ...client!, adresses: [...client!.adresses??[], createSite!] });
+
+      const original = await DataStore.query(UsersObject, client!.id);
+      console.log(original);
+      if (original) {
+        const updatedPost = await DataStore.save(
+          UsersObject.copyOf(original, (updated) => {
+            updated.adresses = client?.adresses;
+          })
+        ).then((e) => {
+          console.log("site done");
+          console.log(e);
+          console.log(client);
+console.log(client?.adresses?.length??0);
+          setSelectSiteIndex(client?.adresses?.length??0);
+          createSiteModal.onClose();
+          setClientSite(e);
+          // setClientSite(
+          //   e?.adresses![e?.adresses!.length -1] ?? client
+          // );
+          Swal.fire({
+            title: "Congratulations",
+            text: "Address have been added successfully",
+            icon: "success",
+          }).then(() => {
+            console.log("dasdadada");
+
+            console.log(client?.adresses);
+
+            setCreateSite(new Address({}));
+
+            return createSiteModal.onClose();
+          });
+        });
+        console.log(updatedPost);
+      }
+    } catch (error: any) {
+      Swal.fire({
+        title: "Oops",
+        text: error,
+        icon: "error",
+      });
+    }
+  };
   // signIn();
   console.log("start");
   Geocode.setApiKey("AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ");
@@ -184,7 +247,6 @@ const AddJob = () => {
   });
 
   const [modelSection, setModelSection] = useState<String>("newClint");
-  const [activeDrower, setActiveDrower] = useState<String>("createClient");
 
   const [client, setClient] = useState<UsersObject>();
   const [site, setClientSite] = useState<Address>();
@@ -202,6 +264,10 @@ const AddJob = () => {
   const [desc, setDesc] = useState<string>();
   const [instruction, setInstruction] = useState<string>();
 
+  //select Index
+  const [selectClientIndex, setSelectClientIndex] = useState<number>();
+  const [selectSiteIndex, setSelectSiteIndex] = useState<number>();
+
   // get CLients
   useEffect(() => {
     /**
@@ -211,6 +277,8 @@ const AddJob = () => {
       c.type.eq("client")
     ).subscribe(({ items }) => {
       console.log(items);
+      console.log("items lenght");
+      console.log(items.length);
 
       setClientList(items);
     });
@@ -282,29 +350,31 @@ const AddJob = () => {
   }, []);
 
   // new Client
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const createClientModal = useDisclosure();
+  const createSiteModal = useDisclosure();
 
   /**
    * Create a new Post
    */
   async function onCreate() {
-
-    console.log('xxx');
-    console.log( new Jobs({
-      usersID: "738dff20-24be-4d12-9cbc-96187442cc1c",
-      type: new JobType({ name: jobType?.name, subType: jobSubType }),
-      proirty: priority,
-      enginer: [engineer?.id!],
-      status: "stats test",
-      schadule:Temporal.Instant.from(schedule!.toISOString()).toString(), 
-      estDuration: duration,
-      disc: desc,
-      notifyClint: false,
-      getBill: false,
-      Instruction: instruction,
-      adress: site,
-
-    }));
+    console.log("xxx");
+    console.log(
+      new Jobs({
+        usersID: "738dff20-24be-4d12-9cbc-96187442cc1c",
+        type: new JobType({ name: jobType?.name, subType: jobSubType }),
+        proirty: priority,
+        enginer: [engineer?.id!],
+        status: "stats test",
+        schadule: Temporal.Instant.from(schedule!.toISOString()).toString(),
+        estDuration: duration,
+        disc: desc,
+        notifyClint: false,
+        getBill: false,
+        Instruction: instruction,
+        adress: site,
+      })
+    );
     const post = await DataStore.save(
       new Jobs({
         usersID: "738dff20-24be-4d12-9cbc-96187442cc1c",
@@ -312,14 +382,13 @@ const AddJob = () => {
         proirty: priority,
         enginer: [engineer?.id!],
         status: "stats test",
-schadule:Temporal.Instant.from(schedule!.toISOString()).toString(), 
-       estDuration: duration,
+        schadule: Temporal.Instant.from(schedule!.toISOString()).toString(),
+        estDuration: duration,
         disc: desc,
         notifyClint: false,
         getBill: false,
         Instruction: instruction,
         adress: site,
-
       })
     );
   }
@@ -392,6 +461,7 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
 
                         <HStack>
                           <Select
+                            value={selectClientIndex}
                             onChange={(e) => {
                               setClient(clientsList![parseInt(e.target.value)]);
                             }}
@@ -408,8 +478,7 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                           </Select>
                           <IconButton
                             onClick={() => {
-                              onOpen();
-                              setActiveDrower("createClient");
+                              createClientModal.onOpen();
                             }}
                             aria-label="Search database"
                             icon={<MdAdd />}
@@ -428,20 +497,21 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                                   client
                               )
                             }
+                            value={selectSiteIndex}
                             variant="outline"
                             placeholder="Choose the client site(Address)"
                           >
-                            {client && ( client.adresses &&
+                            {client &&
+                              client.adresses &&
                               client.adresses!.map((item, index) => (
                                 <option value={index} key={item?.name}>
                                   {item!.name}
                                 </option>
-                              )))}
+                              ))}
                           </Select>{" "}
                           <IconButton
                             onClick={() => {
-                              onOpen();
-                              setActiveDrower("createSite");
+                              createSiteModal.onOpen();
                             }}
                             aria-label="Search database"
                             icon={<MdAdd />}
@@ -602,8 +672,11 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                       </FormControl>
                       <FormControl pb={10} w={"lg"}>
                         <FormLabel> Schedule Date</FormLabel>
-                        
-                        <Input onChange={(e)=>setSchedule(new Date(e.target.value))}
+
+                        <Input
+                          onChange={(e) =>
+                            setSchedule(new Date(e.target.value))
+                          }
                           type="datetime-local"
                           className="FormControl"
                           placeholder="Select Schedule Date"
@@ -744,8 +817,7 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                                       <IconButton
                                         bg={"transparent"}
                                         onClick={() => {
-                                          onOpen();
-                                          setActiveDrower("createClient");
+                                          createClientModal.onOpen();
                                         }}
                                         aria-label="Search database"
                                         icon={<SearchIcon />}
@@ -890,21 +962,25 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
           </AbsoluteCenter>
         </Flex>
       </Flex>
-      {activeDrower == "createClient" && (
-        <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>
-              {modelSection == "financialDetails" && (
-                <IconButton
-                  onClick={() => setModelSection("newClint")}
-                  aria-label="Search database"
-                  icon={<MdArrowBack />}
-                />
-              )}
-            </DrawerHeader>
-            <DrawerBody>
+
+      <Drawer
+        onClose={createClientModal.onClose}
+        isOpen={createClientModal.isOpen}
+        size={"lg"}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            {modelSection == "financialDetails" && (
+              <IconButton
+                onClick={() => setModelSection("newClint")}
+                aria-label="Search database"
+                icon={<MdArrowBack />}
+              />
+            )}
+          </DrawerHeader>
+          <DrawerBody>
             <AbsoluteCenter>
               {modelSection == "newClint" && (
                 <>
@@ -915,15 +991,13 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                     <FormLabel>Client Code</FormLabel>
 
                     <Input
-                      onChange={(e) =>
-                        {
-                          console.log(createClient);
-                            return setCreateClient({
-                              ...createClient,
-                              code: e.target.value,
-                            });
-                          }
-                      }
+                      onChange={(e) => {
+                        console.log(createClient);
+                        return setCreateClient({
+                          ...createClient,
+                          code: e.target.value,
+                        });
+                      }}
                       value={createClient.code}
                       className="FormControl"
                       placeholder=""
@@ -932,16 +1006,14 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel>Client Name</FormLabel>
                     <Input
-                      onChange={(e) =>
-                        {
-                          console.log(createClient);
+                      onChange={(e) => {
+                        console.log(createClient);
 
-                            return setCreateClient({
-                              ...createClient,
-                              name: e.target.value,
-                            });
-                          }
-                      }
+                        return setCreateClient({
+                          ...createClient,
+                          name: e.target.value,
+                        });
+                      }}
                       value={createClient.name}
                       className="FormControl"
                       placeholder=""
@@ -1101,75 +1173,153 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
               )}
             </AbsoluteCenter>
           </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      )}
-      {activeDrower == "createSite" && (
-        <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>
-              {/* { modelSection == "financialDetails" &&   <IconButton
+        </DrawerContent>
+      </Drawer>
+
+      <Drawer
+        onClose={createSiteModal.onClose}
+        isOpen={createSiteModal.isOpen}
+        size={"lg"}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            {/* { modelSection == "financialDetails" &&   <IconButton
                       onClick={() => setModelSection('newClint')}
                       aria-label="Search database"
                       icon={<MdArrowBack />}
                     />} */}
-            </DrawerHeader>
-            <DrawerBody>
-              <AbsoluteCenter>
-                <>
-                  <Heading my={5} size={"md"}>
-                    Add Site{" "}
-                  </Heading>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Site Name </FormLabel>
+          </DrawerHeader>
+          <DrawerBody>
+            <AbsoluteCenter>
+              <>
+                <Heading my={5} size={"md"}>
+                  Add Site{" "}
+                </Heading>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Site Name </FormLabel>
 
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Site Email </FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        name: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.name!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Site Email </FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        email: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.email!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
 
-                  <FormControl pb={10} w={"lg"}>
-                    <FormLabel> Phone </FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
+                <FormControl pb={10} w={"lg"}>
+                  <FormLabel> Phone </FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        tel: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.tel!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
 
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Address Line 1 </FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Address Line 1 </FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        address1: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.address1!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
 
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Address Line 2 </FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> City </FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Postcode</FormLabel>
-                    <Input className="FormControl" placeholder="" />
-                  </FormControl>
-                  <Button
-                    onClick={() => setModelSection("financialDetails")}
-                    colorScheme="blue"
-                    w={"full"}
-                    bg={"#294c58"}
-                    my={10}
-               
-                  >
-                    Save
-                  </Button>
-                </>
-              </AbsoluteCenter>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      )}
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Address Line 2 </FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        address2: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.address2!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> City </FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        city: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.city!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Postcode</FormLabel>
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreateSite({
+                        ...createSite,
+                        postcode: e.target.value,
+                      });
+                    }}
+                    value={createSite && createSite!.postcode!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <Button
+                  onClick={() => handleSiteCreate()}
+                  colorScheme="blue"
+                  w={"full"}
+                  bg={"#294c58"}
+                  my={10}
+                >
+                  Save
+                </Button>
+              </>
+            </AbsoluteCenter>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
