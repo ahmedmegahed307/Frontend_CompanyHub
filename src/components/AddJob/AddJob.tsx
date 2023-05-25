@@ -48,6 +48,7 @@ import {
 } from "@chakra-ui/react";
 import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
+import Swal from "sweetalert2";
 
 import { useState, useEffect } from "react";
 import {
@@ -75,6 +76,10 @@ const creatClientsteps = [
   { title: "Financial details", description: "Date & Time" },
 ];
 
+
+
+
+
 const username: string = "bariqa@afsgo.com";
 const password: string = "bariq1991";
 
@@ -90,6 +95,69 @@ async function signIn() {
 }
 
 const AddJob = () => {
+  const [createClient, setCreateClient] = useState({
+    name: "",
+    code: "",
+    financialContactName: "",
+    financialContactEmail: "",
+    siteType: "",
+    currencyCode: "",
+    vatRate: "",
+    vatValue: "",
+    vatNumber: "",
+    newSubType: "",
+  });
+
+
+  const handleCreate = async () => {
+    try {
+      console.log(createClient);
+  
+  
+      const post = await DataStore.save(
+        new UsersObject({
+          name: createClient.name,
+          // email: createClient.email,
+          type: "client",
+  
+          financialContactEmail: createClient.financialContactEmail,
+          financialContactName: createClient.financialContactName,
+          currencyCode: createClient.currencyCode,
+          siteType: createClient.siteType,
+          vatRate: createClient.vatValue,
+          vatNumber: createClient.vatNumber,
+          vatValue: createClient.vatValue,
+        })
+      );
+  
+      Swal.fire({
+        title: "Congratulations",
+        text: "Resolutions have been saved successfully",
+        icon: "success",
+      });
+      // createModal.onClose();
+  
+      setCreateClient({
+        name: "",
+        code: "",
+        financialContactName: "",
+        financialContactEmail: "",
+        siteType: "",
+        currencyCode: "",
+        vatRate: "",
+        vatValue: "",
+        vatNumber: "",
+        newSubType: "",
+      });
+    } catch (error: any) {
+      Swal.fire({
+        title: "Oops",
+        text: error,
+        icon: "error",
+      });
+    }
+  };
+  
   // signIn();
   console.log("start");
   Geocode.setApiKey("AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ");
@@ -363,12 +431,12 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                             variant="outline"
                             placeholder="Choose the client site(Address)"
                           >
-                            {client &&
+                            {client && ( client.adresses &&
                               client.adresses!.map((item, index) => (
                                 <option value={index} key={item?.name}>
                                   {item!.name}
                                 </option>
-                              ))}
+                              )))}
                           </Select>{" "}
                           <IconButton
                             onClick={() => {
@@ -837,115 +905,202 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
               )}
             </DrawerHeader>
             <DrawerBody>
-              <AbsoluteCenter>
-                {modelSection == "newClint" && (
-                  <>
-                    <Heading my={5} size={"md"}>
-                      Create new client
-                    </Heading>
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel>Client Code</FormLabel>
+            <AbsoluteCenter>
+              {modelSection == "newClint" && (
+                <>
+                  <Heading my={5} size={"md"}>
+                    Create New Client
+                  </Heading>
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel>Client Code</FormLabel>
 
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel>Client Name</FormLabel>
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
+                    <Input
+                      onChange={(e) =>
+                        {
+                          console.log(createClient);
+                            return setCreateClient({
+                              ...createClient,
+                              code: e.target.value,
+                            });
+                          }
+                      }
+                      value={createClient.code}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel>Client Name</FormLabel>
+                    <Input
+                      onChange={(e) =>
+                        {
+                          console.log(createClient);
 
-                    <Button
-                      onClick={() => setModelSection("financialDetails")}
-                      colorScheme="blue"
-                      w={"full"}
-                      bg={"#294c58"}
-                      my={10}
-                      // isDisabled={priority == null || jobType == null}
+                            return setCreateClient({
+                              ...createClient,
+                              name: e.target.value,
+                            });
+                          }
+                      }
+                      value={createClient.name}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+
+                  <Button
+                    onClick={() => setModelSection("financialDetails")}
+                    colorScheme="blue"
+                    w={"full"}
+                    bg={"#294c58"}
+                    my={10}
+                    // isDisabled={priority == null || jobType == null}
+                  >
+                    Next
+                  </Button>
+                </>
+              )}
+              {modelSection == "financialDetails" && (
+                <>
+                  <Heading my={5} size={"md"}>
+                    Financial details
+                  </Heading>
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel> Financial Contact Name </FormLabel>
+
+                    <Input
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          financialContactName: e.target.value,
+                        })
+                      }
+                      value={createClient.financialContactName}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel> Financial Contact Email </FormLabel>
+                    <Input
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          financialContactEmail: e.target.value,
+                        })
+                      }
+                      value={createClient.financialContactEmail}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+
+                  <FormControl pb={10} w={"lg"}>
+                    <FormLabel> Site Type </FormLabel>
+                    <Select
+                      // onChange={(e) =>
+                      //   setEngineer(engineersList![parseInt(e.target.value)])
+                      // }
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          siteType: e.target.value,
+                        })
+                      }
+                      value={createClient.siteType}
+                      variant="outline"
+                      placeholder=" Select the Engineer for this job"
                     >
-                      Next
-                    </Button>
-                  </>
-                )}
-                {modelSection == "financialDetails" && (
-                  <>
-                    <Heading my={5} size={"md"}>
-                      Financial details
-                    </Heading>
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel> Financial Contact Name </FormLabel>
-
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel> Financial Contact Email </FormLabel>
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
-
-                    <FormControl pb={10} w={"lg"}>
-                      <FormLabel> Site Type </FormLabel>
-                      <Select
-                        onChange={(e) =>
-                          setEngineer(engineersList![parseInt(e.target.value)])
-                        }
-                        variant="outline"
-                        placeholder=" Select the Engineer for this job"
-                      >
-                        <option value="company">Company</option>
-                        <option value="household">Household</option>
-                      </Select>
-                    </FormControl>
-                    <FormControl pb={10} w={"lg"}>
-                      <FormLabel> Currency Code </FormLabel>
-                      <Select
-                        onChange={(e) =>
-                          setEngineer(engineersList![parseInt(e.target.value)])
-                        }
-                        variant="outline"
-                        placeholder=" Select the Engineer for this job"
-                      >
-                        <option value="aud">AUD</option>
-                        <option value="eur">EUR</option>
-                        <option value="gbp">GBP</option>
-                      </Select>{" "}
-                    </FormControl>
-                    <FormControl pb={10} w={"lg"}>
-                      <FormLabel> VAT Rate </FormLabel>
-                      <Select
-                        onChange={(e) =>
-                          setEngineer(engineersList![parseInt(e.target.value)])
-                        }
-                        variant="outline"
-                        placeholder=" Select the Engineer for this job"
-                      >
-                        <option value="zeroRate">Zero Rate</option>
-                        <option value="standardRate">Standard Rate</option>
-                        <option value="lowRate">Low Rate</option>
-                      </Select>
-                    </FormControl>
-
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel> VAT Value </FormLabel>
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
-
-                    <FormControl pb={5} w={"lg"}>
-                      <FormLabel> VAT Number </FormLabel>
-                      <Input className="FormControl" placeholder="" />
-                    </FormControl>
-
-                    <Button
-                      onClick={() => setModelSection("financialDetails")}
-                      colorScheme="blue"
-                      w={"full"}
-                      bg={"#294c58"}
-                      my={10}
-                      isDisabled={priority == null || jobType == null}
+                      <option value="company">Company</option>
+                      <option value="household">Household</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl pb={10} w={"lg"}>
+                    <FormLabel> Currency Code </FormLabel>
+                    <Select
+                      // onChange={(e) =>
+                      //   setEngineer(engineersList![parseInt(e.target.value)])
+                      // }
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          currencyCode: e.target.value,
+                        })
+                      }
+                      value={createClient.currencyCode}
+                      variant="outline"
+                      placeholder=" Select the Engineer for this job"
                     >
-                      Next
-                    </Button>
-                  </>
-                )}
-              </AbsoluteCenter>
-            </DrawerBody>
+                      <option value="aud">AUD</option>
+                      <option value="eur">EUR</option>
+                      <option value="gbp">GBP</option>
+                    </Select>{" "}
+                  </FormControl>
+                  <FormControl pb={10} w={"lg"}>
+                    <FormLabel> VAT Rate </FormLabel>
+                    <Select
+                      // onChange={(e) =>
+                      //   setEngineer(engineersList![parseInt(e.target.value)])
+                      // }
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          vatRate: e.target.value,
+                        })
+                      }
+                      value={createClient.vatRate}
+                      variant="outline"
+                      placeholder=" Select the Engineer for this job"
+                    >
+                      <option value="zeroRate">Zero Rate</option>
+                      <option value="standardRate">Standard Rate</option>
+                      <option value="lowRate">Low Rate</option>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel> VAT Value </FormLabel>
+                    <Input
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          vatValue: e.target.value,
+                        })
+                      }
+                      value={createClient.vatValue}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+
+                  <FormControl pb={5} w={"lg"}>
+                    <FormLabel> VAT Number </FormLabel>
+                    <Input
+                      onChange={(e) =>
+                        setCreateClient({
+                          ...createClient,
+                          vatNumber: e.target.value,
+                        })
+                      }
+                      value={createClient.vatNumber}
+                      className="FormControl"
+                      placeholder=""
+                    />
+                  </FormControl>
+
+                  <Button
+                    onClick={() => handleCreate()}
+                    colorScheme="blue"
+                    w={"full"}
+                    bg={"#294c58"}
+                    my={10}
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+            </AbsoluteCenter>
+          </DrawerBody>
           </DrawerContent>
         </Drawer>
       )}
@@ -1005,7 +1160,7 @@ schadule:Temporal.Instant.from(schedule!.toISOString()).toString(),
                     w={"full"}
                     bg={"#294c58"}
                     my={10}
-                    isDisabled={priority == null || jobType == null}
+               
                   >
                     Save
                   </Button>

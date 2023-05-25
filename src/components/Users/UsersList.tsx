@@ -159,7 +159,7 @@ const UsersList = () => {
             size={"sm"}
             bg={"#294c58"}
           >
-            add User
+            Add User
           </Button>
         </Flex>
 
@@ -186,8 +186,8 @@ const UsersList = () => {
                           <Tr key={usersList.id}>
                             <Td>{usersList.name}</Td>
                             <Td>{usersList?.email}</Td>
-                            <Td>{usersList.adresses![0]?.contactName}</Td>
-                            <Td>{usersList.adresses![0]?.tel}</Td>
+                            <Td>{usersList.adresses && usersList.adresses![0]?.contactName}</Td>
+                            <Td>{usersList.adresses && usersList.adresses![0]?.tel}</Td>
                             <Td>{usersList.type}</Td>
                             <Td>
                               <Button

@@ -26,21 +26,55 @@ export default function UsersObjectCreateForm(props) {
     name: "",
     email: "",
     type: "",
+    financialContactName: "",
+    financialContactEmail: "",
+    siteType: "",
+    currencyCode: "",
+    vatRate: "",
+    vatValue: "",
+    vatNumber: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [type, setType] = React.useState(initialValues.type);
+  const [financialContactName, setFinancialContactName] = React.useState(
+    initialValues.financialContactName
+  );
+  const [financialContactEmail, setFinancialContactEmail] = React.useState(
+    initialValues.financialContactEmail
+  );
+  const [siteType, setSiteType] = React.useState(initialValues.siteType);
+  const [currencyCode, setCurrencyCode] = React.useState(
+    initialValues.currencyCode
+  );
+  const [vatRate, setVatRate] = React.useState(initialValues.vatRate);
+  const [vatValue, setVatValue] = React.useState(initialValues.vatValue);
+  const [vatNumber, setVatNumber] = React.useState(initialValues.vatNumber);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setEmail(initialValues.email);
     setType(initialValues.type);
+    setFinancialContactName(initialValues.financialContactName);
+    setFinancialContactEmail(initialValues.financialContactEmail);
+    setSiteType(initialValues.siteType);
+    setCurrencyCode(initialValues.currencyCode);
+    setVatRate(initialValues.vatRate);
+    setVatValue(initialValues.vatValue);
+    setVatNumber(initialValues.vatNumber);
     setErrors({});
   };
   const validations = {
     name: [],
     email: [],
     type: [],
+    financialContactName: [],
+    financialContactEmail: [],
+    siteType: [],
+    currencyCode: [],
+    vatRate: [],
+    vatValue: [],
+    vatNumber: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -71,6 +105,13 @@ export default function UsersObjectCreateForm(props) {
           name,
           email,
           type,
+          financialContactName,
+          financialContactEmail,
+          siteType,
+          currencyCode,
+          vatRate,
+          vatValue,
+          vatNumber,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,6 +169,13 @@ export default function UsersObjectCreateForm(props) {
               name: value,
               email,
               type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -154,6 +202,13 @@ export default function UsersObjectCreateForm(props) {
               name,
               email: value,
               type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -180,6 +235,13 @@ export default function UsersObjectCreateForm(props) {
               name,
               email,
               type: value,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -193,6 +255,241 @@ export default function UsersObjectCreateForm(props) {
         errorMessage={errors.type?.errorMessage}
         hasError={errors.type?.hasError}
         {...getOverrideProps(overrides, "type")}
+      ></TextField>
+      <TextField
+        label="Financial contact name"
+        isRequired={false}
+        isReadOnly={false}
+        value={financialContactName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName: value,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.financialContactName ?? value;
+          }
+          if (errors.financialContactName?.hasError) {
+            runValidationTasks("financialContactName", value);
+          }
+          setFinancialContactName(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("financialContactName", financialContactName)
+        }
+        errorMessage={errors.financialContactName?.errorMessage}
+        hasError={errors.financialContactName?.hasError}
+        {...getOverrideProps(overrides, "financialContactName")}
+      ></TextField>
+      <TextField
+        label="Financial contact email"
+        isRequired={false}
+        isReadOnly={false}
+        value={financialContactEmail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail: value,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.financialContactEmail ?? value;
+          }
+          if (errors.financialContactEmail?.hasError) {
+            runValidationTasks("financialContactEmail", value);
+          }
+          setFinancialContactEmail(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("financialContactEmail", financialContactEmail)
+        }
+        errorMessage={errors.financialContactEmail?.errorMessage}
+        hasError={errors.financialContactEmail?.hasError}
+        {...getOverrideProps(overrides, "financialContactEmail")}
+      ></TextField>
+      <TextField
+        label="Site type"
+        isRequired={false}
+        isReadOnly={false}
+        value={siteType}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail,
+              siteType: value,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.siteType ?? value;
+          }
+          if (errors.siteType?.hasError) {
+            runValidationTasks("siteType", value);
+          }
+          setSiteType(value);
+        }}
+        onBlur={() => runValidationTasks("siteType", siteType)}
+        errorMessage={errors.siteType?.errorMessage}
+        hasError={errors.siteType?.hasError}
+        {...getOverrideProps(overrides, "siteType")}
+      ></TextField>
+      <TextField
+        label="Currency code"
+        isRequired={false}
+        isReadOnly={false}
+        value={currencyCode}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode: value,
+              vatRate,
+              vatValue,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.currencyCode ?? value;
+          }
+          if (errors.currencyCode?.hasError) {
+            runValidationTasks("currencyCode", value);
+          }
+          setCurrencyCode(value);
+        }}
+        onBlur={() => runValidationTasks("currencyCode", currencyCode)}
+        errorMessage={errors.currencyCode?.errorMessage}
+        hasError={errors.currencyCode?.hasError}
+        {...getOverrideProps(overrides, "currencyCode")}
+      ></TextField>
+      <TextField
+        label="Vat rate"
+        isRequired={false}
+        isReadOnly={false}
+        value={vatRate}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate: value,
+              vatValue,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.vatRate ?? value;
+          }
+          if (errors.vatRate?.hasError) {
+            runValidationTasks("vatRate", value);
+          }
+          setVatRate(value);
+        }}
+        onBlur={() => runValidationTasks("vatRate", vatRate)}
+        errorMessage={errors.vatRate?.errorMessage}
+        hasError={errors.vatRate?.hasError}
+        {...getOverrideProps(overrides, "vatRate")}
+      ></TextField>
+      <TextField
+        label="Vat value"
+        isRequired={false}
+        isReadOnly={false}
+        value={vatValue}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue: value,
+              vatNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.vatValue ?? value;
+          }
+          if (errors.vatValue?.hasError) {
+            runValidationTasks("vatValue", value);
+          }
+          setVatValue(value);
+        }}
+        onBlur={() => runValidationTasks("vatValue", vatValue)}
+        errorMessage={errors.vatValue?.errorMessage}
+        hasError={errors.vatValue?.hasError}
+        {...getOverrideProps(overrides, "vatValue")}
+      ></TextField>
+      <TextField
+        label="Vat number"
+        isRequired={false}
+        isReadOnly={false}
+        value={vatNumber}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              type,
+              financialContactName,
+              financialContactEmail,
+              siteType,
+              currencyCode,
+              vatRate,
+              vatValue,
+              vatNumber: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.vatNumber ?? value;
+          }
+          if (errors.vatNumber?.hasError) {
+            runValidationTasks("vatNumber", value);
+          }
+          setVatNumber(value);
+        }}
+        onBlur={() => runValidationTasks("vatNumber", vatNumber)}
+        errorMessage={errors.vatNumber?.errorMessage}
+        hasError={errors.vatNumber?.hasError}
+        {...getOverrideProps(overrides, "vatNumber")}
       ></TextField>
       <Flex
         justifyContent="space-between"

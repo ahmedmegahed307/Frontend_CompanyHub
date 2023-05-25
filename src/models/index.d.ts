@@ -481,6 +481,13 @@ type EagerUsersObject = {
   readonly adresses?: (Address | null)[] | null;
   readonly JobsClint?: (Jobs | null)[] | null;
   readonly type?: string | null;
+  readonly financialContactName?: string | null;
+  readonly financialContactEmail?: string | null;
+  readonly siteType?: string | null;
+  readonly currencyCode?: string | null;
+  readonly vatRate?: string | null;
+  readonly vatValue?: string | null;
+  readonly vatNumber?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -496,6 +503,13 @@ type LazyUsersObject = {
   readonly adresses?: (Address | null)[] | null;
   readonly JobsClint: AsyncCollection<Jobs>;
   readonly type?: string | null;
+  readonly financialContactName?: string | null;
+  readonly financialContactEmail?: string | null;
+  readonly siteType?: string | null;
+  readonly currencyCode?: string | null;
+  readonly vatRate?: string | null;
+  readonly vatValue?: string | null;
+  readonly vatNumber?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

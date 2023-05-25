@@ -17,11 +17,25 @@ export declare type UsersObjectUpdateFormInputValues = {
     name?: string;
     email?: string;
     type?: string;
+    financialContactName?: string;
+    financialContactEmail?: string;
+    siteType?: string;
+    currencyCode?: string;
+    vatRate?: string;
+    vatValue?: string;
+    vatNumber?: string;
 };
 export declare type UsersObjectUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     type?: ValidationFunction<string>;
+    financialContactName?: ValidationFunction<string>;
+    financialContactEmail?: ValidationFunction<string>;
+    siteType?: ValidationFunction<string>;
+    currencyCode?: ValidationFunction<string>;
+    vatRate?: ValidationFunction<string>;
+    vatValue?: ValidationFunction<string>;
+    vatNumber?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UsersObjectUpdateFormOverridesProps = {
@@ -29,6 +43,13 @@ export declare type UsersObjectUpdateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     type?: PrimitiveOverrideProps<TextFieldProps>;
+    financialContactName?: PrimitiveOverrideProps<TextFieldProps>;
+    financialContactEmail?: PrimitiveOverrideProps<TextFieldProps>;
+    siteType?: PrimitiveOverrideProps<TextFieldProps>;
+    currencyCode?: PrimitiveOverrideProps<TextFieldProps>;
+    vatRate?: PrimitiveOverrideProps<TextFieldProps>;
+    vatValue?: PrimitiveOverrideProps<TextFieldProps>;
+    vatNumber?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UsersObjectUpdateFormProps = React.PropsWithChildren<{
     overrides?: UsersObjectUpdateFormOverridesProps | undefined | null;

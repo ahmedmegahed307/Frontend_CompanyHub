@@ -830,6 +830,55 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "financialContactName": {
+                    "name": "financialContactName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "financialContactEmail": {
+                    "name": "financialContactEmail",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "siteType": {
+                    "name": "siteType",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "currencyCode": {
+                    "name": "currencyCode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "vatRate": {
+                    "name": "vatRate",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "vatValue": {
+                    "name": "vatValue",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "vatNumber": {
+                    "name": "vatNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1223,5 +1272,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "a074c8494de28aee39e2fe820b79f9fa"
+    "version": "fdf55b54789f870bcde83d2b6cd46506"
 };
