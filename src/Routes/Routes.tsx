@@ -55,11 +55,11 @@ const router = createBrowserRouter([
         path: "/statistical",
         element: <Statistical />,
       },
+      {
+        path: "/scheduler",
+        element: <Scheduler />,
+      },
     ],
-  },
-  {
-    path: "/scheduler",
-    element: <Scheduler />,
   },
 
   {

@@ -43,7 +43,14 @@ function TopNav() {
         Jobs{" "}
       </Link>
       <Link px={5}>PPM </Link>
-      <Link px={5}>Scheduler </Link>
+      <Link
+        as={NavLink}
+        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
+        to="/scheduler"
+        px={5}
+      >
+        Scheduler{" "}
+      </Link>
       <Link px={5}>Map </Link>
       <Link px={5}>Chat </Link>
       <Link px={5}>Reports </Link>

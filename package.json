@@ -21,6 +21,7 @@
     "@fullcalendar/daygrid": "^6.1.8",
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/react": "^6.1.8",
+    "@fullcalendar/timegrid": "^6.1.8",
     "@js-temporal/polyfill": "^0.4.4",
     "@tanstack/react-table": "^8.9.1",
     "aws-amplify": "^5.2.0",
