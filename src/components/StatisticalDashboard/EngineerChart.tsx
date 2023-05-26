@@ -1,3 +1,4 @@
+import { Card, CardBody, CardHeader, Heading } from "@chakra-ui/react";
 import React from "react";
 import {
   LineChart,
@@ -51,35 +52,29 @@ const data: DataItem[] = [
 const EngineerChart: React.FC = () => {
   return (
     <>
-      <h2
-        style={{
-          marginLeft: "10px",
-          marginTop: "5px",
-          marginBottom: "0px",
-          fontSize: "1.5rem",
-          color: "grey",
-        }}
-      >
-        Engineer Hours last 7 days
-      </h2>
+
+    <Card   width={650}  mt={5}> 
+      <CardHeader>
+      <Heading size={'lg'}>                Engineer Hours last 7 days
+
+</Heading>
+      </CardHeader>
+      <CardBody>
       <LineChart
         layout="vertical"
-        width={800}
-        height={350}
+        width={600} height={200}
         data={data}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 80,
-          bottom: 5,
-        }}
+     
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type="number" domain={[0, 1]} />
         <YAxis dataKey="name" type="category" />
         <Tooltip />
         <Legend />
-      </LineChart>
+      </LineChart>  
+      </CardBody>
+    </Card>
+    
     </>
   );
 };
