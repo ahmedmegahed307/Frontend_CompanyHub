@@ -22,6 +22,9 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  Flex,
+  Box,
+  Center,
 } from "@chakra-ui/react";
 
 let id = 0;
@@ -167,100 +170,99 @@ const Calendar = () => {
 
   return (
     <>
-      <div style={{ width: "180vh", marginLeft: "70px", marginTop: "5px" }}>
-        <div>
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
-            selectable={true}
-            dateClick={(selectInfo: any) => {
-              console.log("Date selected: ", selectInfo);
-            }}
-            editable={true}
-            height={"60vh"}
-            slotMinTime="09:00:00"
-            slotMaxTime="18:00:00"
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay",
-            }}
-            select={handleDateSelect}
-            initialEvents={initialEvents}
-            eventClick={handleEventClick}
-            eventsSet={handleEvents}
-            eventContent={renderEventContent}
-            eventRemove={(e) => {
-              console.log("event removed");
-            }}
-            eventAdd={(e) => {
-              console.log("event added", e);
-            }}
-            eventBorderColor={"green"}
-            eventDragStop={(e) => {
-              console.log("StopDrag");
-            }}
-          />
-        </div>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{eventToEdit ? "Edit Event" : "AddEvent"}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <FormControl>
-                <FormLabel>Event Name</FormLabel>
-                <Input
-                  type="text"
-                  value={eventTitle}
-                  onChange={(e) => setEventTitle(e.target.value)}
-                />
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Event Time</FormLabel>
-                <Input
-                  type="datetime-local"
-                  value={eventTime}
-                  onChange={(e) => setEventTime(e.target.value)}
-                />
-              </FormControl>
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={handleEventCreation}>
-                {eventToEdit ? "Update" : "Add"}
-              </Button>
-              <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-        <AlertDialog
-          isOpen={isOpen}
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-        >
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Event
-            </AlertDialogHeader>{" "}
-            <AlertDialogBody>
-              Are you sure you want to delete this event?
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={handleDeleteConfirmation}
-                ml={3}
-              >
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
+      <Box w={"full"}>
+        <Center>
+          <Box ml={10} w={"full"}>
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="timeGridWeek"
+              selectable={true}
+              dateClick={(selectInfo: any) => {
+                console.log("Date selected: ", selectInfo);
+              }}
+              editable={true}
+              height={"60vh"}
+              slotMinTime="09:00:00"
+              slotMaxTime="18:00:00"
+              headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
+              }}
+              select={handleDateSelect}
+              initialEvents={initialEvents}
+              eventClick={handleEventClick}
+              eventsSet={handleEvents}
+              eventContent={renderEventContent}
+              eventRemove={(e) => {
+                console.log("event removed");
+              }}
+              eventAdd={(e) => {
+                console.log("event added", e);
+              }}
+              eventBorderColor={"green"}
+              eventDragStop={(e) => {
+                console.log("StopDrag");
+              }}
+            />
+          </Box>
+        </Center>
+      </Box>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{eventToEdit ? "Edit Event" : "AddEvent"}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Event Name</FormLabel>
+              <Input
+                type="text"
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Event Time</FormLabel>
+              <Input
+                type="datetime-local"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleEventCreation}>
+              {eventToEdit ? "Update" : "Add"}
+            </Button>
+            <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Delete Event
+          </AlertDialogHeader>{" "}
+          <AlertDialogBody>
+            Are you sure you want to delete this event?
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="red" onClick={handleDeleteConfirmation} ml={3}>
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

@@ -4,7 +4,7 @@ import ClientSelect from "./ClientSelect";
 import EventSelect from "./EventSelect";
 const CalendarSelectLists: React.FC = () => {
   return (
-    <HStack marginTop={20} marginLeft={10}>
+    <HStack marginTop={10} marginLeft={10}>
       <EngineerSelect />
       <ClientSelect />
       <EventSelect />
