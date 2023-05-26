@@ -1,3 +1,4 @@
+import { Box, Flex, HStack } from "@chakra-ui/react";
 import EngineerChart from "./EngineerChart";
 import JobChart from "./JobChart";
 import TodayJobClosedChart from "./TodayJobClosedChart";
@@ -5,21 +6,22 @@ import WorkProgressChart from "./WorkProgressChart";
 //style={{ position: "absolute", left: -300, top: 10 }}
 export default function Statistical() {
   return (
-    <div>
-      <div style={{ display: "flex" }}>
-        <div>
-          <TodayJobClosedChart />
-        </div>
-        <div style={{ flex: 1, marginLeft: "-500px" }}>
-          <WorkProgressChart />
-        </div>
-      </div>
-      <div style={{ position: "absolute", top: 320, left: 0 }}>
-        <EngineerChart />
-      </div>
-      <div style={{ position: "absolute", top: 150, right: 0 }}>
-        <JobChart />
-      </div>
-    </div>
+    <>
+      <Flex bg={"#f8f8f8"} p={10} w={"full"} direction={"row"}>
+        <Flex width={"full"} direction={"column"} w={"full"}>
+          <HStack>
+            <TodayJobClosedChart />
+            <WorkProgressChart />
+          </HStack>
+          <HStack>
+            <EngineerChart />
+          </HStack>
+        </Flex>
+
+        <Flex w={"full"}>
+          <JobChart />
+        </Flex>
+      </Flex>
+    </>
   );
 }
