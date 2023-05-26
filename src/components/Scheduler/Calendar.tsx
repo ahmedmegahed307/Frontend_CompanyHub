@@ -23,7 +23,9 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
+
 let id = 0;
+
 const Calendar = () => {
   const [events, setEvents] = useState<Array<any>>([]);
   const [initialEvents] = useState([
@@ -49,11 +51,7 @@ const Calendar = () => {
   const handleEvents = (events: any[]) => {
     setEvents(events);
   };
-  useEffect(() => {
-    if (eventToEdit) {
-      setEventTime(eventToEdit.startStr);
-    }
-  }, [eventToEdit]);
+
   const renderEventContent = (eventContent: any) => {
     const eventStyle: React.CSSProperties = {
       whiteSpace: "nowrap",
@@ -109,7 +107,7 @@ const Calendar = () => {
       if (!target.classList.contains("edit-button")) {
         setEventToEdit(event);
         setEventTitle(event.title);
-        setEventTime(event.start!.toISOString().slice(0, -1)); // Updated line
+        setEventTime(event.start!.toISOString().slice(0, -1));
         setIsModalOpen(true);
       }
     }
@@ -166,9 +164,10 @@ const Calendar = () => {
     setEventTitle("");
     setEventTime("");
   };
+
   return (
     <>
-      <div style={{ width: "180vh", marginLeft: "70px", marginTop: "20px" }}>
+      <div style={{ width: "180vh", marginLeft: "70px", marginTop: "5px" }}>
         <div>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -195,7 +194,7 @@ const Calendar = () => {
               console.log("event removed");
             }}
             eventAdd={(e) => {
-              console.log(" event added", e);
+              console.log("event added", e);
             }}
             eventBorderColor={"green"}
             eventDragStop={(e) => {
@@ -206,9 +205,7 @@ const Calendar = () => {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>
-              {eventToEdit ? "Edit Event" : "Add Event"}
-            </ModalHeader>
+            <ModalHeader>{eventToEdit ? "Edit Event" : "AddEvent"}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <FormControl>
