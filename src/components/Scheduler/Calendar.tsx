@@ -22,7 +22,6 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Flex,
   Box,
   Center,
 } from "@chakra-ui/react";
@@ -194,14 +193,14 @@ const Calendar = () => {
               eventClick={handleEventClick}
               eventsSet={handleEvents}
               eventContent={renderEventContent}
-              eventRemove={(e) => {
+              eventRemove={(_e) => {
                 console.log("event removed");
               }}
               eventAdd={(e) => {
                 console.log("event added", e);
               }}
               eventBorderColor={"green"}
-              eventDragStop={(e) => {
+              eventDragStop={(_e) => {
                 console.log("StopDrag");
               }}
             />

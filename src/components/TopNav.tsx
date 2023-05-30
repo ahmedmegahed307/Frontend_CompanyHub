@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   useBreakpointValue,
   Drawer,
@@ -15,13 +14,12 @@ import {
   Spacer,
   Image,
   MenuButton,
-  Button,
   Menu,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
 import { MdSettings } from "react-icons/md";
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 
 function TopNav() {
@@ -39,9 +37,10 @@ function TopNav() {
           variant="outline"
         />
         <MenuList>
-        <MenuItem as={NavLink} to="/checkLists">
-        CheckLists
-          </MenuItem>  <MenuItem as={NavLink} to="/clients/clientsList">
+          <MenuItem as={NavLink} to="/checkLists">
+            CheckLists
+          </MenuItem>{" "}
+          <MenuItem as={NavLink} to="/clients/clientsList">
             Clients
           </MenuItem>
           <MenuItem as={NavLink} to="/jobtype/list">

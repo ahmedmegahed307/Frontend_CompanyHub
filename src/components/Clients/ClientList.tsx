@@ -1,13 +1,10 @@
 import {
   Tabs,
-  TabList,
-  Tab,
   TabPanels,
   TabPanel,
   Flex,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -17,7 +14,6 @@ import {
   Card,
   Spacer,
   Button,
-  Box,
   IconButton,
   useDisclosure,
   AbsoluteCenter,
@@ -39,17 +35,17 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { DataStore } from "aws-amplify";
-import { Resolutions, UserType, UsersObject } from "../../models";
-import { FaAngleRight, FaEdit, FaTimes } from "react-icons/fa";
+import { UsersObject } from "../../models";
+import { FaAngleRight } from "react-icons/fa";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { MdArrowBack } from "react-icons/md";
 import Swal from "sweetalert2";
 
 const ClientList = () => {
-  const createModal = useDisclosure();
+  // const createModal = useDisclosure();
   const deleteModal = useDisclosure();
   const updateModal = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -224,10 +220,9 @@ const ClientList = () => {
                                 aria-label="Search database"
                                 icon={<EditIcon />}
                                 onClick={() => {
-                                  console.log('asd');
+                                  console.log("asd");
                                   console.log(client);
                                   setModelSection("newClint");
-;
                                   setEditClient({
                                     ...editClient,
                                     id: client.id!,
@@ -505,7 +500,11 @@ const ClientList = () => {
         </DrawerContent>
       </Drawer>
 
-      <Drawer onClose={updateModal.onClose} isOpen={updateModal.isOpen} size={"lg"}>
+      <Drawer
+        onClose={updateModal.onClose}
+        isOpen={updateModal.isOpen}
+        size={"lg"}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -711,7 +710,6 @@ const ClientList = () => {
         </DrawerContent>
       </Drawer>
 
-
       {/* Delete Modal  */}
       <AlertDialog
         motionPreset="slideInBottom"
@@ -743,7 +741,7 @@ const ClientList = () => {
 
                 if (original) {
                   const updatedPost = await DataStore.save(
-                    UsersObject.copyOf(original, (updated) => {
+                    UsersObject.copyOf(original, (_updated) => {
                       // updated.isActive = false;
                       deleteModal.onClose();
                     })

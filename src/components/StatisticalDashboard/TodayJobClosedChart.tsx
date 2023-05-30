@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader, Center, Heading } from "@chakra-ui/react";
 import React from "react";
-import { PieChart, Pie, ResponsiveContainer } from "recharts";
+import { PieChart, Pie } from "recharts";
 
 interface DataItem {
   name: string;

@@ -1,5 +1,4 @@
 import { Card, CardBody, CardHeader, Heading } from "@chakra-ui/react";
-import React from "react";
 import {
   CartesianGrid,
   Legend,
@@ -86,35 +85,27 @@ const data = [
 const JobChart = () => {
   return (
     <>
-    <Card>
-      <CardHeader>
-        <Heading size={'lg'}>        Total number of jobs over time
-</Heading>
-      </CardHeader>
-      <CardBody>
-      <LineChart
-        width={600}
-        height={500}
-        data={data}
-      
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" interval={0} />
-        <YAxis domain={[0, 30]} />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="logged"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="cancelled" stroke="#82ca9d" />
-      </LineChart>
-      </CardBody>
-    </Card>
-    
-   
+      <Card>
+        <CardHeader>
+          <Heading size={"lg"}> Total number of jobs over time</Heading>
+        </CardHeader>
+        <CardBody>
+          <LineChart width={600} height={500} data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" interval={0} />
+            <YAxis domain={[0, 30]} />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="logged"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+            <Line type="monotone" dataKey="cancelled" stroke="#82ca9d" />
+          </LineChart>
+        </CardBody>
+      </Card>
     </>
   );
 };

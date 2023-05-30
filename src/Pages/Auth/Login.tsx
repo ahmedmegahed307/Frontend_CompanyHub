@@ -5,20 +5,17 @@ import {
   Button,
   Card,
   CardBody,
-  Flex,
   FormControl,
   FormLabel,
   HStack,
   Heading,
   Input,
-  Text,
   VStack,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -57,8 +54,7 @@ const Login = () => {
                       </FormControl>
                       <Button
                         onClick={() => {
-                            navigate("/jobs");  
-
+                          navigate("/jobs");
                         }}
                         colorScheme="blue"
                         w={"full"}
@@ -72,16 +68,14 @@ const Login = () => {
                   <Button
                     py={10}
                     variant="link"
-                    onClick={() => { 
-                        navigate("/forgotPassword");  
-                                      }}
+                    onClick={() => {
+                      navigate("/forgotPassword");
+                    }}
                     colorScheme="blue"
                     w={"full"}
                     color={"#294c58"}
                     size={"sm"}
                     type="button"
-                    
-                
                   >
                     I've forgotten my password{" "}
                   </Button>

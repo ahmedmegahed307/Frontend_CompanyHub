@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   useBreakpointValue,
   Drawer,
@@ -12,8 +11,6 @@ import {
   DrawerCloseButton,
   useDisclosure,
   VStack,
-  Spacer,
-  Image,
   Link,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";

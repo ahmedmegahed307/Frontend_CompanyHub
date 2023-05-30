@@ -1,13 +1,10 @@
 import {
   Tabs,
-  TabList,
-  Tab,
   TabPanels,
   TabPanel,
   Flex,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -17,7 +14,6 @@ import {
   Card,
   Spacer,
   Button,
-  Box,
   Input,
   IconButton,
   useDisclosure,
@@ -25,12 +21,10 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
   AbsoluteCenter,
   FormControl,
   FormLabel,
-  Select,
   Tag,
   TagLabel,
   TagCloseButton,
@@ -44,8 +38,7 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { DataStore } from "aws-amplify";
-import { JobType, JobTypesList, UsersObject } from "../../models";
-import { NavLink } from "react-router-dom";
+import { JobTypesList } from "../../models";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Swal from "sweetalert2";
 
@@ -66,7 +59,6 @@ const JobTypeList = () => {
   const handleCreate = async (event: FormEvent) => {
     event.preventDefault();
     console.log(createJobType);
-
 
     try {
       console.log(createJobType);
@@ -96,27 +88,21 @@ const JobTypeList = () => {
     }
   };
 
-
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault();
     console.log(createJobType);
-  
 
     try {
       console.log(createJobType);
 
-      const original = await DataStore.query(
-        JobTypesList,
-        editJobType!.id
-      );
+      const original = await DataStore.query(JobTypesList, editJobType!.id);
 
       if (original) {
         const updatedPost = await DataStore.save(
           JobTypesList.copyOf(original, (updated) => {
-       updated.isActive = true ;
-       updated.name=editJobType.name;
-       updated.subTypeList=editJobType.subTypeList;
-       
+            updated.isActive = true;
+            updated.name = editJobType.name;
+            updated.subTypeList = editJobType.subTypeList;
 
             deleteModal.onClose();
           })
@@ -129,7 +115,6 @@ const JobTypeList = () => {
         updateModal.onClose();
       }
 
-     
       // createModal.onClose();
 
       setCreateJobType({ name: "", subTypeList: [], newSubType: "" });
@@ -141,21 +126,19 @@ const JobTypeList = () => {
       });
     }
   };
-  
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const createModal = useDisclosure();
   const deleteModal = useDisclosure();
   const updateModal = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
 
-  
   useEffect(() => {
     const lists = DataStore.observeQuery(JobTypesList, (c) =>
-    c.isActive.eq(true)).subscribe(
-      ({ items }) => {
-        setJobTypeLists(items);
-      }
-    );
+      c.isActive.eq(true)
+    ).subscribe(({ items }) => {
+      setJobTypeLists(items);
+    });
 
     return () => {
       lists.unsubscribe();
@@ -173,8 +156,9 @@ const JobTypeList = () => {
     }
   };
 
-
-  const handleAddSubTypeUpdate = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleAddSubTypeUpdate = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === "Enter" && editJobType.newSubType) {
       event.preventDefault(); // Prevent form submission
       setEditJobType((prevJobType) => ({
@@ -262,9 +246,11 @@ const JobTypeList = () => {
                                   setEditJobType({
                                     ...editJobType,
                                     id: jobtype.id!,
-                                    name:jobtype.name!,
-                                    subTypeList:jobtype.subTypeList!.length > 0 ? jobtype.subTypeList as string[] :  []  ,
-                               
+                                    name: jobtype.name!,
+                                    subTypeList:
+                                      jobtype.subTypeList!.length > 0
+                                        ? (jobtype.subTypeList as string[])
+                                        : [],
                                   });
                                   updateModal.onOpen();
                                 }}
@@ -276,13 +262,11 @@ const JobTypeList = () => {
                               />
                               <IconButton
                                 aria-label="Search database"
-                        
                                 icon={<DeleteIcon />}
                                 onClick={() => {
                                   setEditJobType({
                                     ...editJobType,
                                     id: jobtype.id!,
-                               
                                   });
                                   deleteModal.onOpen();
                                 }}
@@ -380,9 +364,12 @@ const JobTypeList = () => {
         </DrawerContent>
       </Drawer>
 
-
- {/* Edit Modal  */}
-      <Drawer onClose={updateModal.onClose} isOpen={updateModal.isOpen} size={"lg"}>
+      {/* Edit Modal  */}
+      <Drawer
+        onClose={updateModal.onClose}
+        isOpen={updateModal.isOpen}
+        size={"lg"}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -458,8 +445,8 @@ const JobTypeList = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-         {/* Delete Modal  */}
-         <AlertDialog
+      {/* Delete Modal  */}
+      <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
         onClose={deleteModal.onClose}
@@ -490,7 +477,7 @@ const JobTypeList = () => {
                 if (original) {
                   const updatedPost = await DataStore.save(
                     JobTypesList.copyOf(original, (updated) => {
-                 updated.isActive = false;
+                      updated.isActive = false;
                       deleteModal.onClose();
                     })
                   );

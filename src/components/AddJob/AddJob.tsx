@@ -1,17 +1,12 @@
 import {
   AbsoluteCenter,
-  Image,
   Box,
   Button,
-  Divider,
   FormControl,
-  FormHelperText,
   FormLabel,
   HStack,
   Input,
   Select,
-  Spacer,
-  Stack,
   Step,
   StepDescription,
   StepIcon,
@@ -21,12 +16,10 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
-  VStack,
   useSteps,
   Textarea,
   Flex,
   Heading,
-  Collapse,
   useDisclosure,
   Card,
   Table,
@@ -58,24 +51,17 @@ import {
   PartsList,
   Jobs,
   JobType,
-  UserType,
 } from "../../models";
-import GoogleMapReact from "google-map-react";
 import GoogleMap from "../GoogleMap";
-import { SearchIcon } from "@chakra-ui/icons";
-import { MdAdd, MdArrowBack, MdPlusOne } from "react-icons/md";
+import { AddIcon } from "@chakra-ui/icons";
+import { MdAdd, MdArrowBack, MdRemove } from "react-icons/md";
 import { Temporal } from "@js-temporal/polyfill";
-import ClientList from "../Clients/ClientList";
 const steps = [
   { title: "Client", description: "Contact Info" },
   { title: "Job", description: "Date & Time" },
   { title: "Engineer", description: "Select Rooms" },
   { title: "Parts", description: "Select Rooms" },
   { title: "Review", description: "Select Rooms" },
-];
-const creatClientsteps = [
-  { title: "Create New Client", description: "Contact Info" },
-  { title: "Financial details", description: "Date & Time" },
 ];
 
 const username: string = "bariqa@afsgo.com";
@@ -175,9 +161,12 @@ const AddJob = () => {
     try {
       // sites.push(site!);
 
-      console.log('site created .. ');
+      console.log("site created .. ");
       console.log(createSite);
-      setClient({ ...client!, adresses: [...client!.adresses??[], createSite!] });
+      setClient({
+        ...client!,
+        adresses: [...(client!.adresses ?? []), createSite!],
+      });
 
       const original = await DataStore.query(UsersObject, client!.id);
       console.log(original);
@@ -190,8 +179,8 @@ const AddJob = () => {
           console.log("site done");
           console.log(e);
           console.log(client);
-console.log(client?.adresses?.length??0);
-          setSelectSiteIndex(client?.adresses?.length??0);
+          console.log(client?.adresses?.length ?? 0);
+          setSelectSiteIndex(client?.adresses?.length ?? 0);
           createSiteModal.onClose();
           setClientSite(e);
           // setClientSite(
@@ -213,6 +202,40 @@ console.log(client?.adresses?.length??0);
         });
         console.log(updatedPost);
       }
+    } catch (error: any) {
+      Swal.fire({
+        title: "Oops",
+        text: error,
+        icon: "error",
+      });
+    }
+  };
+
+  const handlePortCreate = async () => {
+    try {
+      // sites.push(site!);
+
+      console.log("site created .. ");
+      console.log(createPart);
+
+      const post = await DataStore.save(
+        new PartsList({
+          code: createPart?.code,
+          name: createPart?.name,
+          cost: createPart?.cost,
+        })
+      ).then(async (_res) => {
+        createPartModal.onClose();
+
+        addPartModal.onClose();
+        setjobPartsList([...jobPartsList, createPart!]);
+
+        Swal.fire({
+          title: "Congratulations",
+          text: "Client have been Created successfully",
+          icon: "success",
+        }).then(() => {});
+      });
     } catch (error: any) {
       Swal.fire({
         title: "Oops",
@@ -257,12 +280,14 @@ console.log(client?.adresses?.length??0);
   const [engineer, setEngineer] = useState<UsersObject>();
   const [jobType, setJobType] = useState<JobTypesList>();
   const [partsList, setPartsList] = useState<PartsList[]>();
+  const [jobPartsList, setjobPartsList] = useState<PartsList[]>([]);
   const [jobSubType, setJobSubType] = useState<string>();
   const [priority, setPriority] = useState<string>();
   const [duration, setDuration] = useState<string>();
   const [schedule, setSchedule] = useState<Date>();
   const [desc, setDesc] = useState<string>();
   const [instruction, setInstruction] = useState<string>();
+  const [createPart, setCreatePart] = useState<PartsList>();
 
   //select Index
   const [selectClientIndex, setSelectClientIndex] = useState<number>();
@@ -353,6 +378,8 @@ console.log(client?.adresses?.length??0);
 
   const createClientModal = useDisclosure();
   const createSiteModal = useDisclosure();
+  const addPartModal = useDisclosure();
+  const createPartModal = useDisclosure();
 
   /**
    * Create a new Post
@@ -598,7 +625,7 @@ console.log(client?.adresses?.length??0);
                           placeholder="Select the job sub-type"
                         >
                           {jobType &&
-                            jobType.subTypeList!.map((item, index) => (
+                            jobType.subTypeList!.map((item, _index) => (
                               <option value={item ?? 0} key={item}>
                                 {item}
                               </option>
@@ -716,7 +743,7 @@ console.log(client?.adresses?.length??0);
                               </Thead>
                               <Tbody>
                                 {engineersList &&
-                                  engineersList!.map((item, index) => (
+                                  engineersList!.map((item, _index) => (
                                     <Tr key={item.id}>
                                       <Td>
                                         {" "}
@@ -744,91 +771,48 @@ console.log(client?.adresses?.length??0);
               {activeStep == 3 && (
                 <>
                   <Flex w={"full"}>
-                    {/* <Flex mx={20} w={"full"} direction={"column"}>
-                      <FormControl pb={10} w={"lg"}>
-                        <FormLabel>Engineer</FormLabel>
-                        <Select
-                          onChange={(e) =>
-                            setEngineer(
-                              engineersList![parseInt(e.target.value)]
-                            )
-                          }
-                          variant="outline"
-                          placeholder=" Select the Engineer for this job"
-                        >
-                          {engineersList &&
-                            engineersList!.map((item, index) => (
-                              <option value={index} key={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                        </Select>{" "}
-                      </FormControl>
-                      <FormControl pb={10} w={"lg"}>
-                        <FormLabel> Schedule Date</FormLabel>
-                        <Input
-                          type="datetime-local"
-                          className="FormControl"
-                          placeholder="Select Schedule Date"
-                        />
-                      </FormControl>
-                      <FormControl pb={10} w={"lg"}>
-                        <FormLabel> Est. Duration</FormLabel>
-                        <Input className="FormControl" placeholder="" />
-                      </FormControl>
-
-                      <Button
-                        onClick={() => setActiveStep(activeStep + 1)}
-                        colorScheme="blue"
-                        w={"full"}
-                        bg={"#294c58"}
-                        my={10}
-                      >
-                        Next
-                      </Button>
-                    </Flex> */}
-
-                    <Flex mr={10} w={"full"} direction={"column"}>
-                      <Box height={"50vh"} w={"50vh"}>
-                        <TableContainer>
+                    <Flex w={"full"} direction={"column"}>
+                      <TableContainer>
+                        <Card>
+                          <Flex
+                            justify={"space-between"}
+                            align={"flex-end"}
+                            direction={"row"}
+                            my={5}
+                          >
+                            <FormLabel> Parts List</FormLabel>
+                            <Button
+                              onClick={() => {
+                                addPartModal.onOpen();
+                              }}
+                              leftIcon={<AddIcon />}
+                              px={5}
+                              py={5}
+                              colorScheme="blue"
+                              variant={"outline"}
+                              size={"sm"}
+                            >
+                              Add Part
+                            </Button>
+                          </Flex>
                           <Card maxH={"50vh"} overflowY={"auto"}>
-                            <Table variant="simple" maxH={10}>
-                              <TableCaption>
+                            <Table variant="simple">
+                              {/* <TableCaption>
                                 Choose the engineer that is perfect for the job{" "}
-                              </TableCaption>
-                              <Thead
-                                zIndex={"1000"}
-                                bg={"gray.100"}
-                                rounded={"xl"}
-                                position="sticky"
-                                top={0}
-                              >
+                              </TableCaption> */}
+                              <Thead bg={"gray.100"} rounded={"xl"}>
                                 <Tr>
-                                  <Th colSpan={3}>
-                                    {" "}
-                                    <HStack>
-                                      <Input
-                                        borderRadius={"md"}
-                                        bg={"white"}
-                                        className="FormControl"
-                                        placeholder="Search for parts .."
-                                      />
-
-                                      <IconButton
-                                        bg={"transparent"}
-                                        onClick={() => {
-                                          createClientModal.onOpen();
-                                        }}
-                                        aria-label="Search database"
-                                        icon={<SearchIcon />}
-                                      />
-                                    </HStack>{" "}
-                                  </Th>
+                                  <Th>#Code </Th>
+                                  <Th>Part Name </Th>
+                                  <Th>Quntity</Th>
+                                  <Th>Cost</Th>
+                                  <Th>Sub Total</Th>
+                                  <Th>*</Th>
                                 </Tr>
                               </Thead>
-                              <Tbody h={10} maxH={10}>
-                                {partsList &&
-                                  partsList!.map((item, index) => (
+                              <Tbody>
+                                {jobPartsList &&
+                                  jobPartsList!.map((item, _index) => (
                                     <Tr key={item.id}>
                                       <Td>
                                         {" "}
@@ -850,13 +834,15 @@ console.log(client?.adresses?.length??0);
                                           {item.name}
                                         </Text>
                                       </Td>
+                                      <Td></Td> <Td></Td> <Td></Td>
                                       <Td>
                                         <IconButton
                                           onClick={() =>
                                             setModelSection("newClint")
                                           }
+                                          color={"red"}
                                           aria-label="Search database"
-                                          icon={<MdAdd />}
+                                          icon={<MdRemove />}
                                         />
                                       </Td>
                                     </Tr>
@@ -864,28 +850,6 @@ console.log(client?.adresses?.length??0);
                               </Tbody>
                             </Table>
                           </Card>
-                        </TableContainer>{" "}
-                      </Box>
-                    </Flex>
-                    <Flex w={"full"} direction={"column"}>
-                      <TableContainer>
-                        <Card>
-                          <FormLabel> Parts List</FormLabel>
-
-                          <Table variant="simple">
-                            {/* <TableCaption>
-                                Choose the engineer that is perfect for the job{" "}
-                              </TableCaption> */}
-                            <Thead bg={"gray.100"} rounded={"xl"}>
-                              <Tr>
-                                <Th>#Code </Th>
-                                <Th>Part Name </Th>
-                                <Th>Quntity</Th>
-                                <Th>Cost</Th>
-                              </Tr>
-                            </Thead>
-                            <Tbody></Tbody>
-                          </Table>
                         </Card>
                       </TableContainer>
                       <Button
@@ -1308,6 +1272,184 @@ console.log(client?.adresses?.length??0);
                 </FormControl>
                 <Button
                   onClick={() => handleSiteCreate()}
+                  colorScheme="blue"
+                  w={"full"}
+                  bg={"#294c58"}
+                  my={10}
+                >
+                  Save
+                </Button>
+              </>
+            </AbsoluteCenter>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+
+      <Drawer
+        onClose={addPartModal.onClose}
+        isOpen={addPartModal.isOpen}
+        size={"lg"}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerBody p={0}>
+            <Box height={"50vh"} w={"full"}>
+              <TableContainer>
+                <Card maxH={"100vh"} overflowY={"auto"}>
+                  <Table variant="simple" maxH={10}>
+                    <TableCaption>
+                      Choose the engineer that is perfect for the job{" "}
+                    </TableCaption>
+                    <Thead
+                      zIndex={"1000"}
+                      bg={"gray.100"}
+                      rounded={"xl"}
+                      position="sticky"
+                      top={0}
+                    >
+                      <Tr>
+                        <Th colSpan={3}>
+                          {" "}
+                          <HStack>
+                            <Input
+                              borderRadius={"md"}
+                              bg={"white"}
+                              className="FormControl"
+                              placeholder="Search for parts .."
+                            />
+
+                            <IconButton
+                              bg={"transparent"}
+                              onClick={() => {
+                                createPartModal.onOpen();
+                              }}
+                              colorScheme="blue"
+                              variant={"outline"}
+                              aria-label="Search database"
+                              icon={<MdAdd />}
+                            />
+                          </HStack>{" "}
+                        </Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody h={10} maxH={10}>
+                      {partsList &&
+                        partsList!.map((item, _index) => (
+                          <Tr key={item.id}>
+                            <Td>
+                              {" "}
+                              <Text
+                                autoCapitalize={"true"}
+                                size={"sm"}
+                                variant={"h1"}
+                              >
+                                {item.code}
+                              </Text>
+                            </Td>
+                            <Td>
+                              {" "}
+                              <Text
+                                autoCapitalize={"true"}
+                                size={"sm"}
+                                variant={"h1"}
+                              >
+                                {item.name}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <IconButton
+                                onClick={() => {
+                                  setjobPartsList([...jobPartsList!, item]);
+                                  console.log(item);
+                                  console.log(jobPartsList);
+                                }}
+                                aria-label="Search database"
+                                icon={<MdAdd />}
+                              />
+                            </Td>
+                          </Tr>
+                        ))}
+                    </Tbody>
+                  </Table>
+                </Card>
+              </TableContainer>{" "}
+            </Box>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+
+      <Drawer
+        onClose={createPartModal.onClose}
+        isOpen={createPartModal.isOpen}
+        size={"lg"}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            {/* { modelSection == "financialDetails" &&   <IconButton
+                      onClick={() => setModelSection('newClint')}
+                      aria-label="Search database"
+                      icon={<MdArrowBack />}
+                    />} */}
+          </DrawerHeader>
+          <DrawerBody>
+            <AbsoluteCenter>
+              <>
+                <Heading my={5} size={"md"}>
+                  Add New Part
+                </Heading>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Code </FormLabel>
+
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreatePart({
+                        ...createPart!,
+                        code: e.target.value,
+                      });
+                    }}
+                    value={createPart && createPart!.code!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Name </FormLabel>
+
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreatePart({
+                        ...createPart!,
+                        name: e.target.value,
+                      });
+                    }}
+                    value={createPart && createPart!.name!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+                <FormControl pb={5} w={"lg"}>
+                  <FormLabel> Cost </FormLabel>
+
+                  <Input
+                    onChange={(e) => {
+                      console.log(createClient);
+                      return setCreatePart({
+                        ...createPart!,
+                        cost: e.target.value,
+                      });
+                    }}
+                    value={createPart && createPart!.cost!}
+                    className="FormControl"
+                    placeholder=""
+                  />
+                </FormControl>
+
+                <Button
+                  onClick={() => handlePortCreate()}
                   colorScheme="blue"
                   w={"full"}
                   bg={"#294c58"}

@@ -1,13 +1,10 @@
 import {
   Tabs,
-  TabList,
-  Tab,
   TabPanels,
   TabPanel,
   Flex,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -17,7 +14,6 @@ import {
   Card,
   Spacer,
   Button,
-  Box,
   Input,
   IconButton,
   useDisclosure,
@@ -39,11 +35,10 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { DataStore } from "aws-amplify";
-import { Resolutions, UsersObject } from "../../models";
+import { Resolutions } from "../../models";
 import { NavLink } from "react-router-dom";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Swal from "sweetalert2";
-import React from "react";
 
 const StandardResolutionList = () => {
   const [resolutionList, setResolutionLists] = useState<Resolutions[]>();
@@ -51,13 +46,11 @@ const StandardResolutionList = () => {
     name: "",
   });
 
-
   const [editResolution1, setEditResolution1] = useState({
     id: "",
     name: "",
-    isActive:false
+    isActive: false,
   });
-
 
   const [editResolution, setEditResolution] = useState<Resolutions>(
     new Resolutions({ name: "" })
@@ -100,8 +93,7 @@ const StandardResolutionList = () => {
       if (original) {
         const updatedPost = await DataStore.save(
           Resolutions.copyOf(original, (updated) => {
-            updated.name=editResolution1.name,
-            updateModal.onClose();
+            (updated.name = editResolution1.name), updateModal.onClose();
             Swal.fire({
               title: "Congratulations",
               text: "Resolutions have been saved successfully",
@@ -199,7 +191,11 @@ const StandardResolutionList = () => {
                                 as={NavLink}
                                 icon={<EditIcon />}
                                 onClick={() => {
-                                  setEditResolution1({id:resolution.id,name:resolution.name,isActive:true});
+                                  setEditResolution1({
+                                    id: resolution.id,
+                                    name: resolution.name,
+                                    isActive: true,
+                                  });
                                   updateModal.onOpen();
                                 }}
                                 colorScheme="blue"

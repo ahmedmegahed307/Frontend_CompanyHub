@@ -1,13 +1,10 @@
 import {
   Tabs,
-  TabList,
-  Tab,
   TabPanels,
   TabPanel,
   Flex,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -17,26 +14,23 @@ import {
   Card,
   Spacer,
   Button,
-  Box,
   Input,
-  IconButton,
   useDisclosure,
   Drawer,
   DrawerOverlay,
-  DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
   AbsoluteCenter,
   FormControl,
   FormLabel,
   Select,
+  DrawerContent,
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Auth, DataStore } from "aws-amplify";
-import { Address, UserType, UsersObject } from "../../models";
-import { FaEdit, FaTimes, FaUser } from "react-icons/fa";
+import { Address, UsersObject } from "../../models";
+import { FaTimes, FaUser } from "react-icons/fa";
 import { AddIcon } from "@chakra-ui/icons";
 
 const UsersList = () => {
@@ -54,39 +48,37 @@ const UsersList = () => {
     console.log(createUser);
 
     var username = createUser.email;
-    var password = 'Ukfs2019???';
-    
+    var password = "Ukfs2019???";
 
-      try {
-        const { user } = await Auth.signUp({
-          username,
-          password,
-          attributes: {
-          name:  username       
-          },
-          autoSignIn: { // optional - enables auto sign in after user is confirmed
-            enabled: true,
-          }
-        });
-        console.log(user);
-        const post = await DataStore.save(
-          new UsersObject({
-            name: createUser.name,
-            email: createUser.email,
-            type: createUser.role,
-            adresses: [
-              new Address({
-                contactName: createUser.contactName,
-                tel: createUser.phoneNumber,
-              }),
-            ],
-          })
-        );
-    
-      } catch (error) {
-        console.log('error signing up:', error);
-      }
-    
+    try {
+      const { user } = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          name: username,
+        },
+        autoSignIn: {
+          // optional - enables auto sign in after user is confirmed
+          enabled: true,
+        },
+      });
+      console.log(user);
+      const post = await DataStore.save(
+        new UsersObject({
+          name: createUser.name,
+          email: createUser.email,
+          type: createUser.role,
+          adresses: [
+            new Address({
+              contactName: createUser.contactName,
+              tel: createUser.phoneNumber,
+            }),
+          ],
+        })
+      );
+    } catch (error) {
+      console.log("error signing up:", error);
+    }
 
     onClose();
 
@@ -186,8 +178,14 @@ const UsersList = () => {
                           <Tr key={usersList.id}>
                             <Td>{usersList.name}</Td>
                             <Td>{usersList?.email}</Td>
-                            <Td>{usersList.adresses && usersList.adresses![0]?.contactName}</Td>
-                            <Td>{usersList.adresses && usersList.adresses![0]?.tel}</Td>
+                            <Td>
+                              {usersList.adresses &&
+                                usersList.adresses![0]?.contactName}
+                            </Td>
+                            <Td>
+                              {usersList.adresses &&
+                                usersList.adresses![0]?.tel}
+                            </Td>
                             <Td>{usersList.type}</Td>
                             <Td>
                               <Button

@@ -1,4 +1,4 @@
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack } from "@chakra-ui/react";
 import EngineerChart from "./EngineerChart";
 import JobChart from "./JobChart";
 import TodayJobClosedChart from "./TodayJobClosedChart";

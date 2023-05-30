@@ -4,9 +4,7 @@ import {
   TabPanels,
   TabPanel,
   Flex,
-  Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -14,7 +12,6 @@ import {
   Thead,
   Tr,
   Card,
-  Spacer,
 } from "@chakra-ui/react";
 import { DataStore } from "aws-amplify";
 import { Jobs } from "../../models"; // Import the correct type

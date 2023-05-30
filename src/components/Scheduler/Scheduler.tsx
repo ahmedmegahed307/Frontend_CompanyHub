@@ -1,6 +1,6 @@
 import SchedulerJobs from "./SchedulerJobs";
 import Calendar from "./Calendar";
-import { HStack, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import CalendarSelectLists from "./CalendarSelectLists";
 
 const Scheduler = () => {

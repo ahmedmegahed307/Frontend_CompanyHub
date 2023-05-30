@@ -18,15 +18,12 @@ import {
   Card,
   Spacer,
   Button,
-  Box,
   Input,
-  IconButton,
   useDisclosure,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
   AbsoluteCenter,
   FormControl,
@@ -36,7 +33,7 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 
-import { CheckListModule, JobTypesList, Jobs } from "../../models";
+import { CheckListModule, JobTypesList } from "../../models";
 import { DataStore } from "aws-amplify";
 
 const CheckLists = () => {

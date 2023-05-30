@@ -5,13 +5,11 @@ import {
   Button,
   Card,
   CardBody,
-  Flex,
   FormControl,
   FormLabel,
   HStack,
   Heading,
   Input,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +33,7 @@ const ForgotPassword = () => {
               <AbsoluteCenter>
                 <Box>
                   <Heading size={"lg"} py={10} textAlign={"center"}>
-                  Reset Password
+                    Reset Password
                   </Heading>
                   <Card p={10} variant={"unstyled"}>
                     <CardBody>
@@ -46,12 +44,12 @@ const ForgotPassword = () => {
                           placeholder="Enter your email address..."
                         />
                       </FormControl>
-              
-                      <Button
-    onClick={() => {
-      navigate("/login");  
 
-    }}                        colorScheme="blue"
+                      <Button
+                        onClick={() => {
+                          navigate("/login");
+                        }}
+                        colorScheme="blue"
                         w={"full"}
                         bg={"#294c58"}
                       >
@@ -64,15 +62,14 @@ const ForgotPassword = () => {
                     py={10}
                     variant="link"
                     onClick={() => {
-                      navigate("/login");  
-
+                      navigate("/login");
                     }}
                     colorScheme="blue"
                     w={"full"}
                     color={"#294c58"}
                     size={"sm"}
                   >
-                   Back to sign in
+                    Back to sign in
                   </Button>
                 </Box>
               </AbsoluteCenter>

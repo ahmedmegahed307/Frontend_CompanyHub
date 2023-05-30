@@ -1,26 +1,18 @@
-
 import "./App.css";
-import {
-  HStack,
- 
-} from "@chakra-ui/react";
-import AddJob from "./components/AddJob/AddJob";
-import JobList from "./components/JobList/JobList";
-import { Outlet, RouterProvider } from "react-router-dom";
-import router from "./Routes/Routes";
+import { HStack } from "@chakra-ui/react";
+
 import TopNav from "./components/TopNav";
 import SideBar from "./components/SideBar";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-    
-    <TopNav/>
-    <SideBar />
+      <TopNav />
+      <SideBar />
 
       <HStack>
-
-<Outlet></Outlet>
+        <Outlet></Outlet>
       </HStack>
     </>
   );
