@@ -238,7 +238,7 @@ const AddJob = () => {
       });
     } catch (error: any) {
       Swal.fire({
-        title: "Oops",
+        title: "Oops..",
         text: error,
         icon: "error",
       });
