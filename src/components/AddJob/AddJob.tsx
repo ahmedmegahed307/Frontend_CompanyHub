@@ -232,7 +232,7 @@ const AddJob = () => {
 
         Swal.fire({
           title: "Congratulations",
-          text: "Client have been Created successfully",
+          text: "Client have been Created successfully.",
           icon: "success",
         }).then(() => {});
       });
