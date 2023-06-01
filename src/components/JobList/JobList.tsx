@@ -29,6 +29,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import CustomTable from "./CustomTable";
 
 const JobList = () => {
   const [jobsList, setJobsList] = useState<Jobs[]>();
@@ -138,7 +139,9 @@ const JobList = () => {
               <TableContainer>tap 2</TableContainer>
             </TabPanel>
             <TabPanel>
-              <TableContainer>tap 3</TableContainer>
+              <TableContainer>
+                <CustomTable />
+              </TableContainer>
             </TabPanel>
           </TabPanels>
         </Tabs>
