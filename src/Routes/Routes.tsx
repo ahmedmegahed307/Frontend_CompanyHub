@@ -12,6 +12,7 @@ import StandardResolutionList from "../components/StandardResolution/StandardRes
 import CheckLists from "../Pages/Auth/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
 import Scheduler from "../components/Scheduler/Scheduler";
+import JobDetails from "../components/JobList/JobDetails";
 
 const router = createBrowserRouter([
   //   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/scheduler",
         element: <Scheduler />,
+      },
+      {
+        path: "/job-details",
+        element: <JobDetails />,
       },
     ],
   },

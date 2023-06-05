@@ -30,6 +30,8 @@ import {
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import CustomTable from "./CustomTable";
+import OpenJobsTable from "./OpenJobsTable";
+import AssignedJobsTable from "./AssignedJobsTable";
 
 const JobList = () => {
   const [jobsList, setJobsList] = useState<Jobs[]>();
@@ -136,11 +138,13 @@ const JobList = () => {
               </TableContainer>
             </TabPanel>
             <TabPanel>
-              <TableContainer>tap 2</TableContainer>
+              <TableContainer>
+                {jobsList && <OpenJobsTable data1={jobsList ?? []} />}
+              </TableContainer>{" "}
             </TabPanel>
             <TabPanel>
               <TableContainer>
-                <CustomTable />
+                {jobsList && <AssignedJobsTable data1={jobsList ?? []} />}
               </TableContainer>
             </TabPanel>
           </TabPanels>
