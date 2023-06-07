@@ -140,7 +140,6 @@ const Calendar = () => {
     if (selectInfo) {
       let calendarApi = selectInfo.view.calendar;
       calendarApi.unselect();
-
       if (eventToEdit) {
         // Editing an existing event
         eventToEdit.setProp("title", eventTitle);
