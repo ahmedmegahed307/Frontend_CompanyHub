@@ -1,5 +1,5 @@
 import "./App.css";
-import { HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 
 import TopNav from "./components/TopNav";
 import SideBar from "./components/SideBar";
@@ -9,10 +9,13 @@ function App() {
   return (
     <>
       <TopNav />
-      <SideBar />
 
-      <HStack>
-        <Outlet></Outlet>
+      <HStack align={"start"}>
+        <SideBar />
+
+        <Box h={"90vh"} w={"81.4vw"} overflowX={"hidden"}>
+          <Outlet></Outlet>
+        </Box>
       </HStack>
     </>
   );

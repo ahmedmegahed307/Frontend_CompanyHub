@@ -17,9 +17,14 @@ import {
   Menu,
   MenuItem,
   MenuList,
+  HStack,
+  Heading,
+  Input,
+  Link,
+  Container,
 } from "@chakra-ui/react";
 import { MdSettings } from "react-icons/md";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, SunIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 
 function TopNav() {
@@ -34,7 +39,7 @@ function TopNav() {
           as={IconButton}
           aria-label="Options"
           icon={<MdSettings />}
-          variant="outline"
+          variant="ghost"
         />
         <MenuList>
           <MenuItem as={NavLink} to="/checkLists">
@@ -60,19 +65,61 @@ function TopNav() {
 
   return (
     <>
-      <Box as="nav" bg={"gray.100"} py={2}>
-        <Flex alignItems="center" maxW="7xl" mx="auto" px="4">
+      <Box w={"full"} as="nav" border="1px" borderColor="gray.200" py={2}>
+        <Flex alignItems={"center"} px={5}>
           {/* <Text fontSize="2xl" fontWeight="bold">
-          <Link href="/">YourLogo</Link>
-        </Text> */}
-          <Image
-            p={1}
-            w={150}
-            src="../src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
-            alt="Dan Abramov"
-          />
+            <Link href="/">YourLogo</Link>
+          </Text> */}
+          <Box>
+            <Image src="src/assets/img/fav.svg"></Image>
+          </Box>
+          <Heading mx={2} size={"lg"}>
+            UK Field Service
+          </Heading>
+          {/* <HStack mx={5} spacing={5}>
+            <Link
+              as={NavLink}
+              _activeLink={{ fontWeight: "bold", color: "#294c58" }}
+              to="/home"
+              fontSize={"sm"}
+              color={"gray"}
+            >
+              Home
+            </Link>
+            <Link
+              as={NavLink}
+              _activeLink={{ fontWeight: "bold", color: "#333" }}
+              to="/table-example"
+              fontSize={"sm"}
+              color={"gray"}
+            >
+              Table One
+            </Link>{" "}
+            <Link
+              as={NavLink}
+              _activeLink={{ fontWeight: "bold", color: "#333" }}
+              to="/form-example"
+              fontSize={"sm"}
+              color={"gray"}
+            >
+              Form One
+            </Link>{" "}
+            <Link fontSize={"sm"} color={"gray"}>
+              Documentation
+            </Link>
+          </HStack> */}
           <Spacer />
-          {isMobileNav ? (
+
+          <Input
+            type="text"
+            size={"sm"}
+            w={"60"}
+            mx={5}
+            borderRadius={"md"}
+            placeholder="Search.."
+          />
+          <NavItems />
+          {/* {isMobileNav ? (
             <>
               <IconButton
                 aria-label="Open menu"
@@ -105,7 +152,7 @@ function TopNav() {
             <Flex alignItems="center">
               <NavItems />
             </Flex>
-          )}
+          )} */}
         </Flex>
       </Box>
     </>

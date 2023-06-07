@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader, Heading } from "@chakra-ui/react";
 import {
+  BarChart,
   CartesianGrid,
   Legend,
   Line,
@@ -85,7 +86,7 @@ const data = [
 const JobChart = () => {
   return (
     <>
-      <Card>
+      <Card variant={"outline"}>
         <CardHeader>
           <Heading size={"lg"}> Total number of jobs over time</Heading>
         </CardHeader>

@@ -13,8 +13,9 @@ import {
   VStack,
   Link,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
+import { MdInfo, MdInfoOutline } from "react-icons/md";
 
 function TopNav() {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
@@ -22,41 +23,28 @@ function TopNav() {
 
   const NavItems = () => (
     <>
-      <Link px={5}>Operational Dashboard</Link>
-      <Link
-        as={NavLink}
-        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
-        to="/statistical"
-        px={5}
-      >
-        Statistical Dashboard
-      </Link>
-      <Link
-        as={NavLink}
-        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
-        to="/jobs"
-        px={5}
-      >
-        Jobs{" "}
-      </Link>
-      <Link px={5}>PPM </Link>
-      <Link
-        as={NavLink}
-        _activeLink={{ fontWeight: "bold", color: "#294c58" }}
-        to="/scheduler"
-        px={5}
-      >
-        Scheduler{" "}
-      </Link>
-      <Link px={5}>Map </Link>
-      <Link px={5}>Chat </Link>
-      <Link px={5}>Reports </Link>
+      <VStack spacing={1} m={0} align={"start"}>
+        <SideBarItem text="Operational " url="/statistical" />
+        <SideBarItem text="Statistical Dashboard" url="/statistical" />
+        <SideBarItem text="Jobs" url="/jobs" />
+        <SideBarItem text="PPM" url="" />
+        <SideBarItem text="Scheduler" url="/scheduler" />
+        <SideBarItem text="Map" url="" />
+        <SideBarItem text="Chat" url="" />
+        <SideBarItem text="Reports" url="" />
+      </VStack>
     </>
   );
 
   return (
     <>
-      <Box boxShadow={"lg"} as="nav" py={2}>
+      <Box
+        borderRight="1px solid "
+        h={"92vh"}
+        borderColor="gray.200"
+        as="nav"
+        py={2}
+      >
         <Flex alignItems="center" maxW="7xl" mx="auto" px="4">
           {isMobileNav ? (
             <>
@@ -88,7 +76,7 @@ function TopNav() {
               </Drawer>
             </>
           ) : (
-            <Flex alignItems="center">
+            <Flex direction={"column"} alignItems="center">
               <NavItems />
             </Flex>
           )}
@@ -99,3 +87,39 @@ function TopNav() {
 }
 
 export default TopNav;
+
+interface Pros {
+  text: string;
+  url: string;
+}
+
+export const SideBarItem = ({ text, url }: Pros) => {
+  return (
+    <>
+      <Link
+        w={"full"}
+        as={NavLink}
+        fontWeight={"bold"}
+        _activeLink={{
+          bg: "#416D77",
+          color: "white",
+          borderRadius: "lg",
+          px: "5",
+          py: "2",
+          borderColor: "#416D77",
+          border: "none",
+        }}
+        _hover={{
+          bg: "#416D77",
+          color: "white",
+        }}
+        to={url!}
+        px={5}
+        py={2}
+        borderRadius={"lg"}
+      >
+        <AddIcon fontSize={"xs"} mx="2px" /> {text}
+      </Link>
+    </>
+  );
+};

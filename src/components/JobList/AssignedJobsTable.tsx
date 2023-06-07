@@ -124,10 +124,16 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
 
   return (
     <>
-      <Card p={0} borderRadius={""} variant={"outline"}>
-        <Table variant="simple">
+      <Card
+        overflow={"scroll"}
+        p={0}
+        borderRadius={"xl"}
+        width={"full"}
+        variant={"outline"}
+      >
+        <Table variant="simple" size="md">
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-          <Thead bg={"gray.100"} rounded={"xl"}>
+          <Thead rounded={"xl"}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -154,22 +160,6 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
               </Tr>
             ))}
           </Tbody>
-          <Tfoot>
-            {table.getFooterGroups().map((footerGroup) => (
-              <Tr key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <Th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-          </Tfoot>
         </Table>
 
         <Flex justifyContent="space-between" m={4} alignItems="center">
@@ -181,6 +171,7 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
                 icon={<ArrowLeftIcon h={3} w={3} />}
                 mr={4}
                 aria-label={""}
+                variant={"outline"}
               />
             </Tooltip>
             <Tooltip label="Previous Page">
@@ -189,6 +180,7 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
                 disabled={!table.getCanPreviousPage()}
                 icon={<ChevronLeftIcon h={6} w={6} />}
                 aria-label={""}
+                variant={"outline"}
               />
             </Tooltip>
           </Flex>
@@ -245,6 +237,7 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
                 disabled={!table.getCanNextPage()}
                 icon={<ChevronRightIcon h={6} w={6} />}
                 aria-label={""}
+                variant={"outline"}
               />
             </Tooltip>
             <Tooltip label="Last Page">
@@ -254,6 +247,7 @@ const AssignedJobsTable = ({ data1 }: Pros) => {
                 icon={<ArrowRightIcon h={3} w={3} />}
                 ml={4}
                 aria-label={""}
+                variant={"outline"}
               />
             </Tooltip>
           </Flex>

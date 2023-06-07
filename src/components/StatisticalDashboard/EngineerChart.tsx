@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  BarChart,
 } from "recharts";
 
 interface DataItem {
@@ -52,29 +53,20 @@ const data: DataItem[] = [
 const EngineerChart: React.FC = () => {
   return (
     <>
-
-    <Card   width={650}  mt={5}> 
-      <CardHeader>
-      <Heading size={'lg'}>                Engineer Hours last 7 days
-
-</Heading>
-      </CardHeader>
-      <CardBody>
-      <LineChart
-        layout="vertical"
-        width={600} height={200}
-        data={data}
-     
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis type="number" domain={[0, 1]} />
-        <YAxis dataKey="name" type="category" />
-        <Tooltip />
-        <Legend />
-      </LineChart>  
-      </CardBody>
-    </Card>
-    
+      <Card variant={"outline"} width={"500"} mt={5}>
+        <CardHeader>
+          <Heading size={"lg"}> Engineer Hours last 7 days</Heading>
+        </CardHeader>
+        <CardBody>
+          <BarChart layout="vertical" width={500} height={200} data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" domain={[0, 1]} />
+            <YAxis dataKey="name" type="category" />
+            <Tooltip />
+            <Legend />
+          </BarChart>
+        </CardBody>
+      </Card>
     </>
   );
 };

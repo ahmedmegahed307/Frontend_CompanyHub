@@ -12,7 +12,7 @@ const TodayJobClosedChart: React.FC = () => {
 
   return (
     <>
-      <Card>
+      <Card variant={"outline"} bg={"transparent"}>
         <CardHeader>
           <Heading size={"lg"}> Planned vs Actual</Heading>
         </CardHeader>

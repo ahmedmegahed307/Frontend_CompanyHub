@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
@@ -6,6 +6,9 @@ const theme = extendTheme({
     body: `'Montserrat', sans-serif`,
   },
 
-})
+  table: {
+    color: "red",
+  },
+});
 
-export default theme
+export default theme;

@@ -131,7 +131,7 @@ const CheckLists = () => {
                     <TableCaption>
                       Imperial to metric conversion factors
                     </TableCaption>
-                    <Thead bg={"gray.100"} rounded={"xl"}>
+                    <Thead bg={"black"} rounded={"xl"}>
                       <Tr>
                         <Th>Title</Th>
                         <Th>Visible on</Th>

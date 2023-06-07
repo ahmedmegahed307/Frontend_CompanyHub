@@ -172,7 +172,7 @@ const StandardResolutionList = () => {
               <TableContainer borderRadius={"xl"}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple">
-                    <Thead bg={"gray.100"} rounded={"xl"}>
+                    <Thead bg={"black"} rounded={"xl"}>
                       <Tr>
                         <Th>Resolution</Th>
 
