@@ -26,8 +26,11 @@ import {
 import { MdSettings } from "react-icons/md";
 import { HamburgerIcon, SunIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-
-function TopNav() {
+import SearchInput from "./SearchBar/SearchInput";
+interface Props {
+  onSearch: (searchText: string) => void;
+}
+function TopNav({ onSearch }: Props) {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -40,6 +43,8 @@ function TopNav() {
           aria-label="Options"
           icon={<MdSettings />}
           variant="ghost"
+          marginRight={5}
+          marginLeft={250}
         />
         <MenuList>
           <MenuItem as={NavLink} to="/checkLists">
@@ -110,14 +115,16 @@ function TopNav() {
           </HStack> */}
           <Spacer />
 
-          <Input
+          {/* <Input
             type="text"
             size={"sm"}
             w={"60"}
             mx={5}
             borderRadius={"md"}
             placeholder="Search.."
-          />
+          /> */}
+          <SearchInput onSearch={onSearch} />
+
           <NavItems />
           {/* {isMobileNav ? (
             <>
