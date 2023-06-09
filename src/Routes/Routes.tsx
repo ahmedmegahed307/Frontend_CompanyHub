@@ -14,6 +14,7 @@ import Statistical from "../components/StatisticalDashboard/Statistical";
 import Scheduler from "../components/Scheduler/Scheduler";
 import JobDetails from "../components/JobList/JobDetails";
 import Operational from "../components/OperationalDashboard/Operational";
+import PPMTabs from "../components/PPM/PPMTabs";
 
 const router = createBrowserRouter([
   //   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/scheduler",
         element: <Scheduler />,
+      },
+      {
+        path: "/ppm",
+        element: <PPMTabs />,
       },
       {
         path: "/job-details",
