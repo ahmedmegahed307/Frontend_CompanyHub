@@ -24,7 +24,7 @@ function TopNav() {
   const NavItems = () => (
     <>
       <VStack spacing={1} m={0} align={"start"}>
-        <SideBarItem text="Operational " url="/statistical" />
+        <SideBarItem text="Operational" url="/operational" />
         <SideBarItem text="Statistical Dashboard" url="/statistical" />
         <SideBarItem text="Jobs" url="/jobs" />
         <SideBarItem text="PPM" url="" />

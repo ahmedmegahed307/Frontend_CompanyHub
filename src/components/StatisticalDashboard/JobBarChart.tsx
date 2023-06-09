@@ -61,17 +61,7 @@ const data = [
 const JobBarChart = () => {
   return (
     <>
-      <BarChart
-        width={600}
-        height={400}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
+      <BarChart width={500} height={400} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />

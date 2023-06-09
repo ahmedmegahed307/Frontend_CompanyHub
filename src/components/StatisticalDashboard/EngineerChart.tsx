@@ -1,13 +1,12 @@
-import { Card, CardBody, CardHeader, Heading } from "@chakra-ui/react";
+import { Card, CardBody } from "@chakra-ui/react";
 import React from "react";
 import {
-  LineChart,
+  BarChart,
+  CartesianGrid,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
-  BarChart,
 } from "recharts";
 
 interface DataItem {
@@ -19,55 +18,57 @@ interface DataItem {
 
 const data: DataItem[] = [
   {
-    name: "Engineer",
+    name: "Eng1",
     uv: 4000,
     pv: 2400,
     amt: 2400,
   },
   {
-    name: "Engineer",
+    name: "Eng2",
     uv: 3000,
     pv: 1398,
     amt: 2210,
   },
   {
-    name: "Engineer",
+    name: "Eng3",
     uv: 2000,
     pv: 9800,
     amt: 2290,
   },
   {
-    name: "Engineer",
+    name: "Eng4",
     uv: 2780,
     pv: 3908,
     amt: 2000,
   },
   {
-    name: "Engineer",
+    name: "Eng5",
     uv: 1890,
     pv: 4800,
     amt: 2181,
   },
 ];
 
-const EngineerChart: React.FC = () => {
+const EngineerChart = () => {
   return (
-    <>
-      <Card variant={"outline"} width={"500"} mt={5}>
-        <CardHeader>
-          <Heading size={"lg"}> Engineer Hours last 7 days</Heading>
-        </CardHeader>
-        <CardBody>
-          <BarChart layout="vertical" width={500} height={200} data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={[0, 1]} />
-            <YAxis dataKey="name" type="category" />
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </CardBody>
-      </Card>
-    </>
+    <Card
+      overflow={"scroll"}
+      overflowX={"hidden"}
+      variant={"outline"}
+      width={"100%"}
+      height={400}
+      m={0}
+    >
+      <CardBody>
+        <BarChart layout="vertical" width={600} height={400} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" domain={[0, 1]} />
+          <YAxis dataKey="name" type="category" />
+          <Tooltip />
+          <Legend />
+        </BarChart>
+      </CardBody>
+    </Card>
   );
 };
 
