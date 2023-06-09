@@ -44,7 +44,7 @@ function TopNav({ onSearch }: Props) {
           icon={<MdSettings />}
           variant="ghost"
           marginRight={5}
-          marginLeft={250}
+          marginLeft={20}
         />
         <MenuList>
           <MenuItem as={NavLink} to="/checkLists">

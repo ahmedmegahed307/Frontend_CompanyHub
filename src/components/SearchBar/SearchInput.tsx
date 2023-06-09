@@ -42,16 +42,15 @@ const SearchInput = ({ onSearch }: Props) => {
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
-          borderRadius={20}
+          borderRadius={"sm"}
           placeholder="Enter a job ID (e.g. 70) or client name.."
-          variant="filled"
         />
         {inputValue && (
           <InputRightElement>
             <IconButton
               aria-label="Clear input"
               icon={<BsX />}
-              borderRadius={20}
+              borderRadius={"sm"}
               variant="ghost"
               onClick={handleClearInput}
             />
