@@ -27,7 +27,7 @@ function TopNav() {
         <SideBarItem text="Operational " url="/statistical" />
         <SideBarItem text="Statistical Dashboard" url="/statistical" />
         <SideBarItem text="Jobs" url="/jobs" />
-        <SideBarItem text="PPM" url="" />
+        <SideBarItem text="PPM" url="/ppm" />
         <SideBarItem text="Scheduler" url="/scheduler" />
         <SideBarItem text="Map" url="" />
         <SideBarItem text="Chat" url="" />
