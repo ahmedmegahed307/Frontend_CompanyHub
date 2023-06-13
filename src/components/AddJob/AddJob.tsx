@@ -590,6 +590,7 @@ const AddJob = () => {
                   ))}
               </Select>{" "}
             </FormControl>
+
             <FormControl w={"lg"}>
               <FormLabel> Schedule Date</FormLabel>
 
@@ -764,135 +765,137 @@ const AddJob = () => {
                   <Heading my={5} size={"md"}>
                     Financial details
                   </Heading>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Financial Contact Name </FormLabel>
+                  <VStack spacing={5}>
+                    <FormControl w={"lg"}>
+                      <FormLabel> Financial Contact Name </FormLabel>
 
-                    <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          financialContactName: e.target.value,
-                        })
-                      }
-                      value={createClient.financialContactName}
-                      className="FormControl"
-                      placeholder=""
-                    />
-                  </FormControl>
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> Financial Contact Email </FormLabel>
-                    <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          financialContactEmail: e.target.value,
-                        })
-                      }
-                      value={createClient.financialContactEmail}
-                      className="FormControl"
-                      placeholder=""
-                    />
-                  </FormControl>
+                      <Input
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            financialContactName: e.target.value,
+                          })
+                        }
+                        value={createClient.financialContactName}
+                        className="FormControl"
+                        placeholder=""
+                      />
+                    </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> Financial Contact Email </FormLabel>
+                      <Input
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            financialContactEmail: e.target.value,
+                          })
+                        }
+                        value={createClient.financialContactEmail}
+                        className="FormControl"
+                        placeholder=""
+                      />
+                    </FormControl>
 
-                  <FormControl w={"lg"}>
-                    <FormLabel> Site Type </FormLabel>
-                    <Select
-                      // onChange={(e) =>
-                      //   setEngineer(engineersList![parseInt(e.target.value)])
-                      // }
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          siteType: e.target.value,
-                        })
-                      }
-                      value={createClient.siteType}
-                      variant="outline"
-                      placeholder=" Select the Engineer for this job"
-                    >
-                      <option value="company">Company</option>
-                      <option value="household">Household</option>
-                    </Select>
-                  </FormControl>
-                  <FormControl w={"lg"}>
-                    <FormLabel> Currency Code </FormLabel>
-                    <Select
-                      // onChange={(e) =>
-                      //   setEngineer(engineersList![parseInt(e.target.value)])
-                      // }
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          currencyCode: e.target.value,
-                        })
-                      }
-                      value={createClient.currencyCode}
-                      variant="outline"
-                      placeholder=" Select the Engineer for this job"
-                    >
-                      <option value="aud">AUD</option>
-                      <option value="eur">EUR</option>
-                      <option value="gbp">GBP</option>
-                    </Select>{" "}
-                  </FormControl>
-                  <FormControl w={"lg"}>
-                    <FormLabel> VAT Rate </FormLabel>
-                    <Select
-                      // onChange={(e) =>
-                      //   setEngineer(engineersList![parseInt(e.target.value)])
-                      // }
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          vatRate: e.target.value,
-                        })
-                      }
-                      value={createClient.vatRate}
-                      variant="outline"
-                      placeholder=" Select the Engineer for this job"
-                    >
-                      <option value="zeroRate">Zero Rate</option>
-                      <option value="standardRate">Standard Rate</option>
-                      <option value="lowRate">Low Rate</option>
-                    </Select>
-                  </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> Site Type </FormLabel>
+                      <Select
+                        // onChange={(e) =>
+                        //   setEngineer(engineersList![parseInt(e.target.value)])
+                        // }
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            siteType: e.target.value,
+                          })
+                        }
+                        value={createClient.siteType}
+                        variant="outline"
+                        placeholder=" Select the Engineer for this job"
+                      >
+                        <option value="company">Company</option>
+                        <option value="household">Household</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> Currency Code </FormLabel>
+                      <Select
+                        // onChange={(e) =>
+                        //   setEngineer(engineersList![parseInt(e.target.value)])
+                        // }
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            currencyCode: e.target.value,
+                          })
+                        }
+                        value={createClient.currencyCode}
+                        variant="outline"
+                        placeholder=" Select the Engineer for this job"
+                      >
+                        <option value="aud">AUD</option>
+                        <option value="eur">EUR</option>
+                        <option value="gbp">GBP</option>
+                      </Select>{" "}
+                    </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> VAT Rate </FormLabel>
+                      <Select
+                        // onChange={(e) =>
+                        //   setEngineer(engineersList![parseInt(e.target.value)])
+                        // }
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            vatRate: e.target.value,
+                          })
+                        }
+                        value={createClient.vatRate}
+                        variant="outline"
+                        placeholder=" Select the Engineer for this job"
+                      >
+                        <option value="zeroRate">Zero Rate</option>
+                        <option value="standardRate">Standard Rate</option>
+                        <option value="lowRate">Low Rate</option>
+                      </Select>
+                    </FormControl>
 
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> VAT Value </FormLabel>
-                    <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          vatValue: e.target.value,
-                        })
-                      }
-                      value={createClient.vatValue}
-                      className="FormControl"
-                      placeholder=""
-                    />
-                  </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> VAT Value </FormLabel>
+                      <Input
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            vatValue: e.target.value,
+                          })
+                        }
+                        value={createClient.vatValue}
+                        className="FormControl"
+                        placeholder=""
+                      />
+                    </FormControl>
 
-                  <FormControl pb={5} w={"lg"}>
-                    <FormLabel> VAT Number </FormLabel>
-                    <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient,
-                          vatNumber: e.target.value,
-                        })
-                      }
-                      value={createClient.vatNumber}
-                      className="FormControl"
-                      placeholder=""
-                    />
-                  </FormControl>
+                    <FormControl w={"lg"}>
+                      <FormLabel> VAT Number </FormLabel>
+                      <Input
+                        onChange={(e) =>
+                          setCreateClient({
+                            ...createClient,
+                            vatNumber: e.target.value,
+                          })
+                        }
+                        value={createClient.vatNumber}
+                        className="FormControl"
+                        placeholder=""
+                      />
+                    </FormControl>
+                  </VStack>
 
                   <Flex
                     align={"right"}
                     alignContent={"end"}
                     alignItems={"end"}
                     float={"right"}
-                    w={"100vw"}
+                    w={"full"}
                   >
                     <Button
                       alignSelf={"end"}

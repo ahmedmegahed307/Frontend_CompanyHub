@@ -98,6 +98,7 @@ export default function Operational() {
           {/* <JobBarChart /> */}
           <Card
             overflow={"scroll"}
+            overflowX={"hidden"}
             h={300}
             w={"full"}
             m={10}
@@ -166,6 +167,7 @@ export default function Operational() {
           {/* calender */}
           <Card
             overflow={"scroll"}
+            overflowX={"hidden"}
             h={300}
             w={"full"}
             p={0}
