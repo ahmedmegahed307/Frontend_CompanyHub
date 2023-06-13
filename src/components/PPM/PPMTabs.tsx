@@ -21,7 +21,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 import VisitsList from "./VisitsList";
-import ContractList from "./ContractList";
+import ContractList from "./Contracts/ContractList";
 
 const PPMTabs = () => {
   return (

@@ -18,6 +18,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 interface Visit {
   id: number;
@@ -111,7 +112,11 @@ const VisitsList = () => {
                     visitList.map((visit) => (
                       <Tr key={visit.id}>
                         <Td>{visit.client}</Td>
-                        <Td>{visit.contractReference}</Td>
+                        <Td>
+                          <NavLink to={`/contracts/editContract/${visit.id}`}>
+                            {visit.contractReference}
+                          </NavLink>
+                        </Td>
                         <Td>{visit.jobID}</Td>
                         <Td>{visit.visitDate}</Td>
                         <Td>{visit.engineer}</Td>

@@ -15,6 +15,8 @@ import Scheduler from "../components/Scheduler/Scheduler";
 import JobDetails from "../components/JobList/JobDetails";
 import Operational from "../components/OperationalDashboard/Operational";
 import PPMTabs from "../components/PPM/PPMTabs";
+import AddContract from "../components/PPM/Contracts/AddContract";
+import EditContract from "../components/PPM/Contracts/EditContract";
 
 const router = createBrowserRouter([
   //   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: "/ppm",
         element: <PPMTabs />,
+      },
+      {
+        path: "/contracts/addContract",
+        element: <AddContract />,
+      },
+      {
+        path: "/contracts/editContract/:id",
+        element: <EditContract />,
       },
       {
         path: "/job-details",

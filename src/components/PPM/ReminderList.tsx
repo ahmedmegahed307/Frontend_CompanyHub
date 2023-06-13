@@ -16,6 +16,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 interface Reminder {
   id: number;
@@ -131,7 +132,14 @@ const ReminderList = () => {
                     reminderList.map((reminder) => (
                       <Tr key={reminder.id}>
                         <Td>{reminder.client}</Td>
-                        <Td>{reminder.contractReference}</Td>
+
+                        <Td>
+                          <NavLink
+                            to={`/contracts/editContract/${reminder.id}`}
+                          >
+                            {reminder.contractReference}
+                          </NavLink>
+                        </Td>
                         <Td>{reminder.jobID}</Td>
                         <Td>{reminder.reminderDate}</Td>
                         <Td>{reminder.engineer}</Td>
