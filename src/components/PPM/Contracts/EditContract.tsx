@@ -11,6 +11,7 @@ import {
   useDisclosure,
   Divider,
   Checkbox,
+  VStack,
 } from "@chakra-ui/react";
 import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
@@ -83,153 +84,161 @@ const EditContract = () => {
     <>
       <Box w={"full"} borderColor="gray.200" py={10}>
         <Flex direction={"column"} maxW="7xl" mx="auto" px="4">
-          <Heading size={"lg"} color={"#1396ab"}>
-            Edit Contract
+          <Heading mb={5} size={"lg"} color={"#1396ab"}>
+            Edit Contract{" "}
           </Heading>
 
-          <Heading my={10} size={"md"} color={"#1396ab"}>
-            Contract Details
-          </Heading>
           <Divider />
 
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl w={"lg"}>
-              <FormLabel>Client</FormLabel>
+          <HStack mt={5}>
+            <VStack spacing={5} p={5}>
+              <FormControl w={"lg"}>
+                <FormLabel>Client</FormLabel>
 
-              <HStack>
+                <HStack>
+                  <Select
+                    value={selectClientIndex}
+                    onChange={(e) => {
+                      setClient(clientsList![parseInt(e.target.value)]);
+                    }}
+                    variant="outline"
+                    placeholder="Create a Client...
+                        "
+                  >
+                    {clientsList &&
+                      clientsList!.map((item, index) => (
+                        <option value={index} key={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </Select>
+                </HStack>
+              </FormControl>
+
+              <FormControl w={"lg"}>
+                <FormLabel>Job Type</FormLabel>
                 <Select
-                  value={selectClientIndex}
-                  onChange={(e) => {
-                    setClient(clientsList![parseInt(e.target.value)]);
-                  }}
+                  onChange={(e) =>
+                    setJobType(jobTypeList![parseInt(e.target.value)])
+                  }
                   variant="outline"
-                  placeholder="Create a Client...
-                          "
+                  placeholder="Select the job type"
                 >
-                  {clientsList &&
-                    clientsList!.map((item, index) => (
+                  {jobTypeList &&
+                    jobTypeList!.map((item, index) => (
                       <option value={index} key={item.id}>
                         {item.name}
                       </option>
                     ))}
+                </Select>{" "}
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel>Estimated Duration</FormLabel>
+                <Input className="FormControl" placeholder="0" />
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel>Contract Charge</FormLabel>
+                <Input
+                  type="number"
+                  className="FormControl"
+                  placeholder="Enter total or per visit charge depending on billing type"
+                />
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel> Start Date</FormLabel>
+
+                <Input
+                  onChange={(e) => setStartDate(new Date(e.target.value))}
+                  type="datetime-local"
+                  className="FormControl"
+                  placeholder="Select Schedule Date"
+                />
+              </FormControl>
+            </VStack>
+
+            <VStack spacing={5} p={5}>
+              <FormControl w={"lg"}>
+                <FormLabel>Contract Reference (optional)</FormLabel>
+                <Input className="FormControl" placeholder="" />
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel>Sub Type</FormLabel>
+                <Select
+                  onChange={(e) => setJobSubType(e.target.value)}
+                  variant="outline"
+                  placeholder="Select the job sub-type"
+                >
+                  {jobType &&
+                    jobType.subTypeList!.map((item, _index) => (
+                      <option value={item ?? 0} key={item}>
+                        {item}
+                      </option>
+                    ))}
                 </Select>
-              </HStack>
-            </FormControl>
+              </FormControl>
 
-            <FormControl w={"lg"}>
-              <FormLabel>Contract Reference (optional)</FormLabel>
-              <Input className="FormControl" placeholder="" />
-            </FormControl>
-          </HStack>
-
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl w={"lg"}>
-              <FormLabel>Job Type</FormLabel>
-              <Select
-                onChange={(e) =>
-                  setJobType(jobTypeList![parseInt(e.target.value)])
-                }
-                variant="outline"
-                placeholder="Select the job type"
-              >
-                {jobTypeList &&
-                  jobTypeList!.map((item, index) => (
-                    <option value={index} key={item.id}>
-                      {item.name}
-                    </option>
+              <FormControl w={"lg"}>
+                <FormLabel>PM Frequency</FormLabel>
+                <Select
+                  onChange={(e) => setFrequency(e.target.value)}
+                  variant="outline"
+                  placeholder="Select the job priority"
+                >
+                  {PMFrequencyList.map((options) => (
+                    <option value={options.value}>{options.name}</option>
                   ))}
-              </Select>{" "}
-            </FormControl>
-            <FormControl w={"lg"}>
-              <FormLabel>Sub Type</FormLabel>
-              <Select
-                onChange={(e) => setJobSubType(e.target.value)}
-                variant="outline"
-                placeholder="Select the job sub-type"
-              >
-                {jobType &&
-                  jobType.subTypeList!.map((item, _index) => (
-                    <option value={item ?? 0} key={item}>
-                      {item}
-                    </option>
+                </Select>
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel>Billing Type</FormLabel>
+                <Select
+                  onChange={(e) => setBillType(e.target.value)}
+                  variant="outline"
+                  placeholder="Select type"
+                >
+                  {BillingType.map((options) => (
+                    <option value={options.value}>{options.name}</option>
                   ))}
-              </Select>
-            </FormControl>
-          </HStack>
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl w={"lg"}>
-              <FormLabel>Estimated Duration</FormLabel>
-              <Input className="FormControl" placeholder="0" />
-            </FormControl>
-            <FormControl w={"lg"}>
-              <FormLabel>PM Frequency</FormLabel>
-              <Select
-                onChange={(e) => setFrequency(e.target.value)}
-                variant="outline"
-                placeholder="Select the job priority"
-              >
-                {PMFrequencyList.map((options) => (
-                  <option value={options.value}>{options.name}</option>
-                ))}
-              </Select>
-            </FormControl>
-          </HStack>
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl w={"lg"}>
-              <FormLabel>Contract Charge</FormLabel>
-              <Input
-                type="number"
-                className="FormControl"
-                placeholder="Enter total or per visit charge depending on billing type"
-              />
-            </FormControl>
-            <FormControl w={"lg"}>
-              <FormLabel> Start Date</FormLabel>
+                </Select>
+              </FormControl>
+              <FormControl w={"lg"}>
+                <FormLabel> Expiry Date</FormLabel>
 
-              <Input
-                onChange={(e) => setStartDate(new Date(e.target.value))}
-                type="datetime-local"
-                className="FormControl"
-                placeholder="Select Schedule Date"
-              />
-            </FormControl>
-          </HStack>
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl w={"lg"}>
-              <FormLabel> Expiry Date</FormLabel>
-
-              <Input
-                onChange={(e) => setExpiryDate(new Date(e.target.value))}
-                type="datetime-local"
-                className="FormControl"
-                placeholder="Select Schedule Date"
-              />
-            </FormControl>
-            <FormControl w={"lg"}>
-              <FormLabel>Billy Type</FormLabel>
-              <Select
-                onChange={(e) => setBillType(e.target.value)}
-                variant="outline"
-                placeholder="Select type"
-              >
-                {BillingType.map((options) => (
-                  <option value={options.value}>{options.name}</option>
-                ))}
-              </Select>
-            </FormControl>
-          </HStack>
-          <HStack align={"start"} spacing={8} m={5}>
-            <FormControl pb={5} w={"lg"} display="flex" alignItems="center">
-              <Checkbox size="lg" colorScheme="green" />
-              <FormLabel mb="0" ml="10px">
-                PM Active
-              </FormLabel>
-            </FormControl>
+                <Input
+                  onChange={(e) => setExpiryDate(new Date(e.target.value))}
+                  type="datetime-local"
+                  className="FormControl"
+                  placeholder="Select Schedule Date"
+                />
+              </FormControl>
+            </VStack>
           </HStack>
 
-          <Button w={"xs"} colorScheme="blackAlpha" bg={"#1396ab"}>
-            Save
-          </Button>
+          <FormControl
+            mx={5}
+            my={5}
+            w={"lg"}
+            display="flex"
+            alignItems="center"
+          >
+            <Checkbox size="lg" colorScheme="green" />
+            <FormLabel mb="0" ml="10px">
+              PM Active
+            </FormLabel>
+          </FormControl>
+
+          <Box>
+            <Button
+              mr={28}
+              float={"right"}
+              ml={5}
+              w={"xs"}
+              colorScheme="blackAlpha"
+              bg={"#1396ab"}
+            >
+              Save
+            </Button>
+          </Box>
         </Flex>
       </Box>
     </>
