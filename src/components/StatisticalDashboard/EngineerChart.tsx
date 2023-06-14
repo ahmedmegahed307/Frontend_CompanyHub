@@ -54,7 +54,7 @@ const EngineerChart = () => {
     <Card
       overflow={"scroll"}
       overflowX={"hidden"}
-      variant={"outline"}
+      variant={"unstyled"}
       width={"100%"}
       height={400}
       m={0}

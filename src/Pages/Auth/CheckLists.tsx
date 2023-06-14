@@ -127,11 +127,9 @@ const CheckLists = () => {
             <TabPanel>
               <TableContainer borderRadius={"xl"}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
-                  <Table variant="simple">
-                    <TableCaption>
-                      Imperial to metric conversion factors
-                    </TableCaption>
-                    <Thead bg={"black"} rounded={"xl"}>
+                  <Table variant="simple" size="md">
+                    {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+                    <Thead rounded={"xl"}>
                       <Tr>
                         <Th>Title</Th>
                         <Th>Visible on</Th>
