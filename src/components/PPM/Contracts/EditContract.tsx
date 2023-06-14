@@ -25,6 +25,7 @@ import {
   Jobs,
   JobType,
 } from "../../../models";
+import { Link } from "react-router-dom";
 
 const EditContract = () => {
   Geocode.setApiKey("AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ");
@@ -228,8 +229,19 @@ const EditContract = () => {
           </FormControl>
 
           <Box>
+            <Link to="/ppm">
+              <Button
+                mr={28}
+                float={"right"}
+                w={"xs"}
+                colorScheme="blackAlpha"
+                bg={"red"}
+              >
+                Cancel
+              </Button>
+            </Link>
             <Button
-              mr={28}
+              mr={2}
               float={"right"}
               ml={5}
               w={"xs"}
