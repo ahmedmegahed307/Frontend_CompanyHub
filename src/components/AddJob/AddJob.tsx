@@ -426,10 +426,9 @@ const AddJob = () => {
     <>
       <Box w={"full"} borderColor="gray.200" py={10}>
         <Flex direction={"column"} maxW="7xl" mx="auto" px="4">
-          <Heading size={"lg"}>Create New Job </Heading>
-          <Text fontSize={"sm"} color={"gray"}>
-            Manage your account settings and set e-mail preferences.
-          </Text>
+          <Heading size={"lg"} color={"#1396ab"}>
+            Create New Job{" "}
+          </Heading>
 
           <HStack my={10}>
             <Heading mr={10} size={"md"}>

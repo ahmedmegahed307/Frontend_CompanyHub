@@ -62,7 +62,6 @@ function TopNav({ onSearch }: Props) {
           <MenuItem as={NavLink} to="/resolution/list">
             Standard Resolutions
           </MenuItem>
-          <MenuItem>Attend a Workshop</MenuItem>
         </MenuList>
       </Menu>
     </>
@@ -78,7 +77,7 @@ function TopNav({ onSearch }: Props) {
           <Box>
             <Image src="src/assets/img/fav.svg"></Image>
           </Box>
-          <Heading mx={2} size={"lg"}>
+          <Heading mx={2} size={"lg"} color={"#1396ab"}>
             UK Field Service
           </Heading>
           {/* <HStack mx={5} spacing={5}>

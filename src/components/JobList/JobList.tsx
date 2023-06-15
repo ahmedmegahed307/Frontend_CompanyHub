@@ -67,7 +67,9 @@ const JobList = () => {
       <Box w={"full"} borderColor="gray.200" py={10}>
         <Flex direction={"column"} maxW="7xl" mx="auto" px="4">
           <HStack justify={"space-between"}>
-            <Heading size={"lg"}>Jobs List </Heading>
+            <Heading color={"#1396ab"} size={"lg"}>
+              Jobs List{" "}
+            </Heading>
             <Button
               as={NavLink}
               to="/jobs/addJob"
@@ -83,9 +85,7 @@ const JobList = () => {
               New Order
             </Button>
           </HStack>
-          <Text fontSize={"sm"} color={"gray"}>
-            Manage your account settings and set e-mail preferences.
-          </Text>
+
           <Tabs my={4} w={"full"}>
             <TabList>
               <Tab color={"black"}>Pending ({jobsList?.length})</Tab>
@@ -112,7 +112,7 @@ const JobList = () => {
                       <TableCaption>
                         Imperial to metric conversion factors
                       </TableCaption>
-                      <Thead rounded={"xl"}>
+                      <Thead bg={"gray.100"} rounded={"xl"}>
                         <Tr>
                           <Th color={"gray"}>Request No.</Th>
                           <Th color={"gray"}>Client</Th>

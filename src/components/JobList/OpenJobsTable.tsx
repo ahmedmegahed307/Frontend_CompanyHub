@@ -121,7 +121,7 @@ const OpenJobsTable = ({ data1 }: Pros) => {
       <Card p={0} borderRadius={"xl"} width={"full"} variant={"outline"}>
         <Table variant="simple" size="md">
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-          <Thead rounded={"xl"}>
+          <Thead bg={"gray.100"} rounded={"xl"}>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

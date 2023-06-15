@@ -25,13 +25,14 @@ import {
   FormLabel,
   Select,
   DrawerContent,
+  IconButton,
 } from "@chakra-ui/react";
 import { FormEvent, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Auth, DataStore } from "aws-amplify";
 import { Address, UsersObject } from "../../models";
 import { FaTimes, FaUser } from "react-icons/fa";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const UsersList = () => {
   const [usersList, setUsersLists] = useState<UsersObject[]>();
@@ -115,7 +116,13 @@ const UsersList = () => {
         w={"full"}
       >
         <Flex w={"full"} direction={"row"}>
-          <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
+          <Heading
+            size={"lg"}
+            w={"full"}
+            py={10}
+            textAlign={"left"}
+            color={"#1396ab"}
+          >
             Users List
           </Heading>
           <Spacer />
@@ -162,7 +169,7 @@ const UsersList = () => {
               <TableContainer borderRadius={"xl"}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple">
-                    <Thead bg={"black"} rounded={"xl"}>
+                    <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Name</Th>
                         <Th>Email</Th>
@@ -188,15 +195,18 @@ const UsersList = () => {
                             </Td>
                             <Td>{usersList.type}</Td>
                             <Td>
-                              <Button
-                                colorScheme="red"
-                                variant="outline"
-                                m={2}
+                              <IconButton
+                                aria-label="Search database"
+                                as={NavLink}
+                                icon={<DeleteIcon />}
+                                onClick={() => {
+                                  console.log(usersList.name);
+                                }}
+                                colorScheme="blue"
+                                variant={"solid"}
                                 size={"sm"}
-                                leftIcon={<FaTimes />}
-                              >
-                                Deactivate
-                              </Button>
+                                bg={"#294c58"}
+                              />
                             </Td>
                           </Tr>
                         ))}

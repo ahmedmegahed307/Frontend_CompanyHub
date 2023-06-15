@@ -35,7 +35,13 @@ const PPMTabs = () => {
         w={"full"}
       >
         <Flex w={"full"} direction={"row"}>
-          <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
+          <Heading
+            size={"lg"}
+            w={"full"}
+            py={10}
+            textAlign={"left"}
+            color={"#1396ab"}
+          >
             PPM List
           </Heading>
           <Spacer />

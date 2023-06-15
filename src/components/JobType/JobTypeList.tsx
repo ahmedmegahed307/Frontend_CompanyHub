@@ -192,7 +192,13 @@ const JobTypeList = () => {
         w={"full"}
       >
         <Flex w={"full"} direction={"row"}>
-          <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
+          <Heading
+            size={"lg"}
+            w={"full"}
+            py={10}
+            textAlign={"left"}
+            color={"#1396ab"}
+          >
             JobType List
           </Heading>
           <Spacer />
@@ -224,7 +230,7 @@ const JobTypeList = () => {
               <TableContainer borderRadius={"xl"}>
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple">
-                    <Thead bg={"black"} rounded={"xl"}>
+                    <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Name</Th>
                         <Th>Associated job subtypes</Th>

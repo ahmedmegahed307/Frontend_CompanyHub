@@ -87,7 +87,13 @@ const CheckLists = () => {
         w={"full"}
       >
         <Flex w={"full"} direction={"row"}>
-          <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
+          <Heading
+            size={"lg"}
+            w={"full"}
+            py={10}
+            textAlign={"left"}
+            color={"#1396ab"}
+          >
             Check Lists
           </Heading>
           <Spacer />
@@ -129,7 +135,7 @@ const CheckLists = () => {
                 <Card p={0} borderRadius={""} variant={"outline"}>
                   <Table variant="simple" size="md">
                     {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-                    <Thead rounded={"xl"}>
+                    <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
                         <Th>Title</Th>
                         <Th>Visible on</Th>
