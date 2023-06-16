@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
+import moment from "moment";
 
 import { useState, useEffect } from "react";
 import { BillingType, PMFrequencyList } from "../../StaticData";
@@ -24,8 +25,12 @@ import {
   PartsList,
   Jobs,
   JobType,
+  Contract,
+  PmFreq,
 } from "../../../models";
 import { Link } from "react-router-dom";
+import { Temporal } from "@js-temporal/polyfill";
+import Swal from "sweetalert2";
 
 const AddContract = () => {
   Geocode.setApiKey("AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ");
@@ -39,8 +44,10 @@ const AddContract = () => {
   const [frequency, setFrequency] = useState<string>();
   const [billType, setBillType] = useState<string>();
   const [duration, setDuration] = useState<string>();
+  const [contractCharge, setContractCharge] = useState<number>();
   const [startDate, setStartDate] = useState<Date>();
   const [expiryDate, setExpiryDate] = useState<Date>();
+  const [estDuration, setEstDuration] = useState<string>();
 
   //select Index
   const [selectClientIndex, setSelectClientIndex] = useState<number>();
@@ -80,6 +87,48 @@ const AddContract = () => {
       sub.unsubscribe();
     };
   }, []);
+
+  const handleCreate = async () => {
+    try {
+      console.log(moment(startDate).format("DD-MM-yyyy"));
+      console.log(expiryDate!.toISOString());
+      // console.log(createClient);
+
+      var newContract = new Contract({
+        clientId: client?.id,
+        // jobType: jobType,
+        jobSubtype: jobSubType,
+        startDate: moment(startDate).format("yyyy-DD-MM"),
+        expiryDate: moment(expiryDate).format("yyyy-DD-MM"),
+        contractCharge: contractCharge,
+        isActive: true,
+        pmActive: true,
+        estDuration: estDuration,
+
+        // pmFreq: ,
+        // billingType:,
+      });
+
+      console.log(newContract);
+      const post = await DataStore.save(newContract).then(async (res) => {
+        Swal.fire({
+          title: "Congratulations",
+          text: "New contract have been Created successfully",
+          icon: "success",
+        }).then(() => {
+          // location.href = "/contracts";
+        });
+      });
+
+      // createModal.onClose();
+    } catch (error: any) {
+      Swal.fire({
+        title: "Oops",
+        text: error,
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <>
@@ -135,11 +184,18 @@ const AddContract = () => {
               </FormControl>
               <FormControl w={"lg"}>
                 <FormLabel>Estimated Duration</FormLabel>
-                <Input className="FormControl" placeholder="0" />
+                <Input
+                  onChange={(e) => setEstDuration(e.target.value)}
+                  className="FormControl"
+                  placeholder="0"
+                />
               </FormControl>
               <FormControl w={"lg"}>
                 <FormLabel>Contract Charge</FormLabel>
                 <Input
+                  onChange={(e) =>
+                    setContractCharge(parseFloat(e.target.value))
+                  }
                   type="number"
                   className="FormControl"
                   placeholder="Enter total or per visit charge depending on billing type"
@@ -150,7 +206,7 @@ const AddContract = () => {
 
                 <Input
                   onChange={(e) => setStartDate(new Date(e.target.value))}
-                  type="datetime-local"
+                  type="date"
                   className="FormControl"
                   placeholder="Select Schedule Date"
                 />
@@ -207,7 +263,7 @@ const AddContract = () => {
 
                 <Input
                   onChange={(e) => setExpiryDate(new Date(e.target.value))}
-                  type="datetime-local"
+                  type="date"
                   className="FormControl"
                   placeholder="Select Schedule Date"
                 />
@@ -246,6 +302,9 @@ const AddContract = () => {
               w={"xs"}
               colorScheme="blackAlpha"
               bg={"#1396ab"}
+              onClick={() => {
+                handleCreate();
+              }}
             >
               Save
             </Button>

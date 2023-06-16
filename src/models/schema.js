@@ -1,5 +1,293 @@
 export const schema = {
     "models": {
+        "Contract": {
+            "name": "Contract",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "clientId": {
+                    "name": "clientId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobType": {
+                    "name": "jobType",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "JobType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobSubtype": {
+                    "name": "jobSubtype",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "estDuration": {
+                    "name": "estDuration",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "pmFreq": {
+                    "name": "pmFreq",
+                    "isArray": false,
+                    "type": {
+                        "enum": "BillingType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "contractCharge": {
+                    "name": "contractCharge",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "startDate": {
+                    "name": "startDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "expiryDate": {
+                    "name": "expiryDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "billingType": {
+                    "name": "billingType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "BillingType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "pmActive": {
+                    "name": "pmActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Contracts",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "TestData": {
+            "name": "TestData",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "data": {
+                    "name": "data",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "TestData",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "ChatMessages": {
+            "name": "ChatMessages",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "text": {
+                    "name": "text",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "senderId": {
+                    "name": "senderId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "reciverId": {
+                    "name": "reciverId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isRead": {
+                    "name": "isRead",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "ChatMessages",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "CheckListModule": {
             "name": "CheckListModule",
             "fields": {
@@ -582,7 +870,9 @@ export const schema = {
                 "status": {
                     "name": "status",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "JobStatus"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -923,6 +1213,34 @@ export const schema = {
         }
     },
     "enums": {
+        "BillingType": {
+            "name": "BillingType",
+            "values": [
+                "INVOICE_PER_VISIT",
+                "INVOICE_PER_CONTRACT"
+            ]
+        },
+        "PmFreq": {
+            "name": "PmFreq",
+            "values": [
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "QUARTERLY",
+                "SEMI_ANNUAL",
+                "ANNUAL"
+            ]
+        },
+        "JobStatus": {
+            "name": "JobStatus",
+            "values": [
+                "CANCELLED",
+                "OPEN",
+                "ASSIGENED",
+                "PENDING",
+                "CLOSED"
+            ]
+        },
         "CheckListItemType": {
             "name": "CheckListItemType",
             "values": [
@@ -1272,5 +1590,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "fdf55b54789f870bcde83d2b6cd46506"
+    "version": "de016475aa007a4aaab6713053f6ee5f"
 };

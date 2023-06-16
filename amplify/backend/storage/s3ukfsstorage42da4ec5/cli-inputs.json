@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3ukfsstorage42da4ec5",
+  "bucketName": "ukfs-storage-42da4ec5",
+  "policyUUID": "e632a0b7",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ",
+    "DELETE",
+    "CREATE_AND_UPDATE"
+  ]
+}

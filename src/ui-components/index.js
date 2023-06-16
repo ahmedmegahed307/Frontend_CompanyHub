@@ -5,6 +5,12 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as ContractCreateForm } from "./ContractCreateForm";
+export { default as ContractUpdateForm } from "./ContractUpdateForm";
+export { default as TestDataCreateForm } from "./TestDataCreateForm";
+export { default as TestDataUpdateForm } from "./TestDataUpdateForm";
+export { default as ChatMessagesCreateForm } from "./ChatMessagesCreateForm";
+export { default as ChatMessagesUpdateForm } from "./ChatMessagesUpdateForm";
 export { default as CheckListModuleCreateForm } from "./CheckListModuleCreateForm";
 export { default as CheckListModuleUpdateForm } from "./CheckListModuleUpdateForm";
 export { default as SessionsCreateForm } from "./SessionsCreateForm";
