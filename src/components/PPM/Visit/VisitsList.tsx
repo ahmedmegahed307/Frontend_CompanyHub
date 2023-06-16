@@ -113,7 +113,9 @@ const VisitsList = () => {
                       <Tr key={visit.id}>
                         <Td>{visit.client}</Td>
                         <Td>
-                          <NavLink to={`/contracts/editContract/${visit.id}`}>
+                          <NavLink
+                            to={`/ppm/contracts/editContract/${visit.id}`}
+                          >
                             {visit.contractReference}
                           </NavLink>
                         </Td>

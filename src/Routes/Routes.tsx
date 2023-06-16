@@ -2,8 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import JobList from "../components/Jobs/JobList/JobList";
 import App from "../App";
 import { Table } from "@chakra-ui/react";
-import Login from "../Pages/Auth/Login";
-import ForgotPassword from "../Pages/Auth/ForgotPassword";
+import ForgotPassword from "../components/Authentication/ForgotPassword";
 import UsersList from "../components/Settings/Users/UsersList";
 import CheckLists from "../components/Settings/CheckLists/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
@@ -17,6 +16,7 @@ import ClientList from "../components/Settings/Clients/ClientList";
 import JobTypeList from "../components/Settings/JobTypes/JobTypeList";
 import StandardResolutionList from "../components/Settings/Resolution/StandardResolutionList";
 import AddJob from "../components/Jobs/AddJob/AddJob";
+import Login from "../components/Authentication/Login";
 
 const router = createBrowserRouter([
   //   {

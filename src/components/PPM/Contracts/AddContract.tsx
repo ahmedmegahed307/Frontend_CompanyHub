@@ -17,7 +17,7 @@ import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
 
 import { useState, useEffect } from "react";
-import { BillingType, PMFrequencyList } from "../../StaticData";
+import { BillingType, PMFrequencyList } from "../../StaticData/StaticData";
 import {
   UsersObject,
   JobTypesList,

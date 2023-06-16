@@ -135,7 +135,7 @@ const ReminderList = () => {
 
                         <Td>
                           <NavLink
-                            to={`/contracts/editContract/${reminder.id}`}
+                            to={`/ppm/contracts/editContract/${reminder.id}`}
                           >
                             {reminder.contractReference}
                           </NavLink>
