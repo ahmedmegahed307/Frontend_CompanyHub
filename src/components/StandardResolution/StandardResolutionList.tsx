@@ -33,101 +33,44 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { DataStore } from "aws-amplify";
+import { useRef, useState } from "react";
 import { Resolutions } from "../../models";
 import { NavLink } from "react-router-dom";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import Swal from "sweetalert2";
+import useResolution from "./hooks/useResolution";
+import useCreateResolution from "./hooks/useCreateResolution";
+import useResolutionMutation from "./hooks/useResolutionMutation";
 
 const StandardResolutionList = () => {
-  const [resolutionList, setResolutionLists] = useState<Resolutions[]>();
-  const [createResolution, setResolution] = useState({
-    name: "",
+  // get resolutionList
+  const { data: resolutionList } = useResolution();
+
+  //create
+  const createResolution = useCreateResolution(() => {
+    createModal.onClose();
   });
-
-  const [editResolution1, setEditResolution1] = useState({
-    id: "",
-    name: "",
-    isActive: false,
-  });
-
-  const [editResolution, setEditResolution] = useState<Resolutions>(
-    new Resolutions({ name: "" })
-  );
-
-  const handleCreate = async (event: FormEvent) => {
-    event.preventDefault();
-
-    try {
-      console.log(createResolution);
-
-      const post = await DataStore.save(
-        new Resolutions({ isActive: true, name: createResolution.name })
-      );
-
-      Swal.fire({
-        title: "Congratulations",
-        text: "Resolutions have been saved successfully",
-        icon: "success",
-      });
-      createModal.onClose();
-
-      setResolution({ name: "" });
-    } catch (error: any) {
-      Swal.fire({
-        title: "Oops",
-        text: error,
-        icon: "error",
-      });
-    }
-  };
-
-  const handleUpdate = async (event: FormEvent) => {
-    event.preventDefault();
-
-    try {
-      console.log(editResolution);
-      const original = await DataStore.query(Resolutions, editResolution1!.id);
-
-      if (original) {
-        const updatedPost = await DataStore.save(
-          Resolutions.copyOf(original, (updated) => {
-            (updated.name = editResolution1.name), updateModal.onClose();
-            Swal.fire({
-              title: "Congratulations",
-              text: "Resolutions have been saved successfully",
-              icon: "success",
-            });
-          })
-        );
-      }
-
-      setResolution({ name: "" });
-    } catch (error: any) {
-      Swal.fire({
-        title: "Oops",
-        text: error,
-        icon: "error",
-      });
-    }
-  };
-
+  const createRef = useRef<HTMLInputElement>(null);
   const createModal = useDisclosure();
-  const deleteModal = useDisclosure();
-  const updateModal = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    const lists = DataStore.observeQuery(Resolutions, (c) =>
-      c.isActive.eq(true)
-    ).subscribe(({ items }) => {
-      setResolutionLists(items);
-    });
 
-    return () => {
-      lists.unsubscribe();
-    };
-  }, []);
+  //update
+  const updateResolution = useResolutionMutation(() => {
+    updateModal.onClose();
+  }, true);
+  const updateModal = useDisclosure();
+  const updateRef = useRef<HTMLInputElement>(null);
+  const [updateResolutionInput, setUpdateResolutionInput] = useState("");
+  const [updateResolutionId, setUpdateResolutionId] = useState("");
+
+  //delete
+  const deleteResolution = useResolutionMutation(() => {
+    deleteModal.onClose();
+  }, false);
+  const [deleteResolutionId, setDeleteResolutionId] = useState("");
+  const deleteModal = useDisclosure();
+  const handleDelete = (id: string) => {
+    deleteResolution.mutate(id);
+  };
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
@@ -150,9 +93,6 @@ const StandardResolutionList = () => {
             Standard Resolution List
           </Heading>
           <Spacer />
-          {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
-              New Order
-            </Button> */}
 
           <Button
             onClick={() => {
@@ -197,11 +137,8 @@ const StandardResolutionList = () => {
                                 as={NavLink}
                                 icon={<EditIcon />}
                                 onClick={() => {
-                                  setEditResolution1({
-                                    id: resolution.id,
-                                    name: resolution.name,
-                                    isActive: true,
-                                  });
+                                  setUpdateResolutionInput(resolution.name);
+                                  setUpdateResolutionId(resolution.id);
                                   updateModal.onOpen();
                                 }}
                                 colorScheme="blue"
@@ -215,7 +152,7 @@ const StandardResolutionList = () => {
                                 as={NavLink}
                                 icon={<DeleteIcon />}
                                 onClick={() => {
-                                  setEditResolution(resolution);
+                                  setDeleteResolutionId(resolution.id);
                                   deleteModal.onOpen();
                                 }}
                                 colorScheme="blue"
@@ -246,7 +183,15 @@ const StandardResolutionList = () => {
 
           <DrawerBody>
             <AbsoluteCenter>
-              <form onSubmit={handleCreate}>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  createResolution.mutate({
+                    name: createRef.current?.value || "",
+                    isActive: true,
+                  } as Resolutions);
+                }}
+              >
                 <Heading my={5} size={"md"}>
                   Create Resolution
                 </Heading>
@@ -255,13 +200,7 @@ const StandardResolutionList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={createResolution.name}
-                    onChange={(e) =>
-                      setResolution({
-                        ...createResolution,
-                        name: e.target.value,
-                      })
-                    }
+                    ref={createRef}
                     required
                   />
                 </FormControl>
@@ -294,7 +233,17 @@ const StandardResolutionList = () => {
 
           <DrawerBody>
             <AbsoluteCenter>
-              <form onSubmit={handleUpdate}>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+
+                  updateResolution.mutate({
+                    name: updateRef.current?.value || "",
+                    id: updateResolutionId,
+                    isActive: true,
+                  } as Resolutions);
+                }}
+              >
                 <Heading my={5} size={"md"}>
                   Update Resolution
                 </Heading>
@@ -303,14 +252,9 @@ const StandardResolutionList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={editResolution1!.name}
-                    onChange={(e) =>
-                      setEditResolution1({
-                        ...editResolution1!,
-                        name: e.target.value,
-                      })
-                    }
+                    ref={updateRef}
                     required
+                    defaultValue={updateResolutionInput}
                   />
                 </FormControl>
 
@@ -321,7 +265,7 @@ const StandardResolutionList = () => {
                   bg={"#294c58"}
                   my={10}
                 >
-                  Create
+                  Update
                 </Button>
               </form>
             </AbsoluteCenter>
@@ -351,20 +295,8 @@ const StandardResolutionList = () => {
             </Button>
             <Button
               colorScheme="red"
-              onClick={async () => {
-                const original = await DataStore.query(
-                  Resolutions,
-                  editResolution!.id
-                );
-
-                if (original) {
-                  const updatedPost = await DataStore.save(
-                    Resolutions.copyOf(original, (updated) => {
-                      updated.isActive = false;
-                      deleteModal.onClose();
-                    })
-                  );
-                }
+              onClick={() => {
+                handleDelete(deleteResolutionId);
               }}
               ml={3}
             >
