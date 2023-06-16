@@ -1,22 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
-import AddJob from "../components/AddJob/AddJob";
-import JobList from "../components/JobList/JobList";
+import JobList from "../components/Jobs/JobList/JobList";
 import App from "../App";
 import { Table } from "@chakra-ui/react";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
-import ClientList from "../components/Clients/ClientList";
-import JobTypeList from "../components/JobType/JobTypeList";
-import UsersList from "../components/Users/UsersList";
-import StandardResolutionList from "../components/StandardResolution/StandardResolutionList";
-import CheckLists from "../Pages/Auth/CheckLists";
+import UsersList from "../components/Settings/Users/UsersList";
+import CheckLists from "../components/Settings/CheckLists/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
 import Scheduler from "../components/Scheduler/Scheduler";
-import JobDetails from "../components/JobList/JobDetails";
+import JobDetails from "../components/Jobs/JobList/JobDetails";
 import Operational from "../components/OperationalDashboard/Operational";
 import PPMTabs from "../components/PPM/PPMTabs";
 import AddContract from "../components/PPM/Contracts/AddContract";
 import EditContract from "../components/PPM/Contracts/EditContract";
+import ClientList from "../components/Settings/Clients/ClientList";
+import JobTypeList from "../components/Settings/JobTypes/JobTypeList";
+import StandardResolutionList from "../components/Settings/Resolution/StandardResolutionList";
+import AddJob from "../components/Jobs/AddJob/AddJob";
 
 const router = createBrowserRouter([
   //   {
@@ -37,23 +37,23 @@ const router = createBrowserRouter([
         element: <JobList />,
       },
       {
-        path: "/clients/clientsList",
+        path: "/settings/clients/clientsList",
         element: <ClientList />,
       },
       {
-        path: "/users/usersList",
+        path: "/settings/users/usersList",
         element: <UsersList />,
       },
       {
-        path: "/jobtype/list",
+        path: "/settings/jobtype/list",
         element: <JobTypeList />,
       },
       {
-        path: "/resolution/list",
+        path: "/settings/resolution/list",
         element: <StandardResolutionList />,
       },
       {
-        path: "/checkLists",
+        path: "/settings/checkLists",
         element: <CheckLists />,
       },
       {
@@ -73,11 +73,11 @@ const router = createBrowserRouter([
         element: <PPMTabs />,
       },
       {
-        path: "/contracts/addContract",
+        path: "/ppm/contracts/addContract",
         element: <AddContract />,
       },
       {
-        path: "/contracts/editContract/:id",
+        path: "/ppm/contracts/editContract/:id",
         element: <EditContract />,
       },
       {

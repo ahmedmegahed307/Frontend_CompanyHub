@@ -72,7 +72,7 @@ const ContractList = () => {
 
           <Button
             as={NavLink}
-            to="/contracts/addContract"
+            to="/ppm/contracts/addContract"
             onClick={() => {}}
             variant={"outline"}
             color={"#416D77"}
@@ -116,7 +116,7 @@ const ContractList = () => {
                             <Td>{contract.nextVisitDate}</Td>
                             <Td>
                               <NavLink
-                                to={`/contracts/editContract/${contract.id}`}
+                                to={`/ppm/contracts/editContract/${contract.id}`}
                               >
                                 <IconButton
                                   aria-label="Search database"

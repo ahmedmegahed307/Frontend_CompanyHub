@@ -1,5 +1,5 @@
 import React from "react";
-import ReminderList from "./ReminderList";
+import ReminderList from "./Reminder/ReminderList";
 import {
   Flex,
   Heading,
@@ -20,7 +20,7 @@ import {
   Tbody,
   Td,
 } from "@chakra-ui/react";
-import VisitsList from "./VisitsList";
+import VisitsList from "./Visit/VisitsList";
 import ContractList from "./Contracts/ContractList";
 
 const PPMTabs = () => {
