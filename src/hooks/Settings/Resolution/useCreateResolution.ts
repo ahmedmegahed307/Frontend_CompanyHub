@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataStore } from "aws-amplify";
 import Swal from "sweetalert2";
-import { Resolutions } from "../../../../models";
+import { Resolutions } from "../../../models";
 
 const useCreateResolution = (onCreate:()=>void) =>{
     const queryClient = useQueryClient();

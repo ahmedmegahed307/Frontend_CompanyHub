@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { DataStore } from "aws-amplify";
-import { Resolutions } from "../../../../models";
+import { Resolutions } from "../../../models";
 
 const useResolution = () =>{
 

@@ -36,9 +36,9 @@ import {
 import { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import useResolution from "./hooks/useResolution";
-import useCreateResolution from "./hooks/useCreateResolution";
-import useResolutionMutation from "./hooks/useResolutionMutation";
+import useCreateResolution from "../../../hooks/Settings/Resolution/useCreateResolution";
+import useResolution from "../../../hooks/Settings/Resolution/useResolution";
+import useResolutionMutation from "../../../hooks/Settings/Resolution/useResolutionMutation";
 import { Resolutions } from "../../../models";
 
 const StandardResolutionList = () => {
