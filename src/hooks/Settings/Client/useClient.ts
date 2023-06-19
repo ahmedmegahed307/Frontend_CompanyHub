@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { DataStore } from "aws-amplify";
 import { UsersObject } from "../../../models";
 
-const useResolution = () =>{
+const useClient = () =>{
 
     return  useQuery<UsersObject[],Error>({
         queryKey: ['clientList'],
@@ -12,4 +12,4 @@ const useResolution = () =>{
         },
       });
 }
-export default useResolution;
+export default useClient;
