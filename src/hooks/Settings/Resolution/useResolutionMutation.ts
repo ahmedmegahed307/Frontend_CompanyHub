@@ -26,7 +26,8 @@ const useResolutionMutation = (
         }
 
         throw new Error("Resolution not found");
-      } else {
+      } 
+      else {
         const id = resolution as string;
         const original = await DataStore.query(Resolutions, id);
 
