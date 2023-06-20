@@ -26,84 +26,94 @@ import {
   Select,
   DrawerContent,
   IconButton,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogCloseButton,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { FormEvent, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Auth, DataStore } from "aws-amplify";
-import { Address, UsersObject } from "../../../models";
-import { FaTimes, FaUser } from "react-icons/fa";
+import { UsersObject } from "../../../models";
+import { FaUser } from "react-icons/fa";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import useUser from "../../../hooks/Settings/User/useUser";
+import useCreateUserMutation from "../../../hooks/Settings/User/useCreateUser";
+import useUserMutation from "../../../hooks/Settings/User/useUserMutation";
 
 const UsersList = () => {
-  const [usersList, setUsersLists] = useState<UsersObject[]>();
-  const [createUser, setCreateUser] = useState({
-    name: "",
-    email: "",
-    contactName: "",
-    phoneNumber: "",
-    role: "",
+  // get usersLists
+  const { data: usersList } = useUser();
+
+  //create
+  const [createUser, setCreateUser] = useState<UsersObject>({} as UsersObject);
+  const createModal = useDisclosure();
+  const createUserQuery = useCreateUserMutation(() => {
+    createModal.onClose();
   });
-
-  const handleCreate = async (event: FormEvent) => {
-    event.preventDefault();
-    console.log(createUser);
-
-    var username = createUser.email;
-    var password = "Ukfs2019???";
-
-    try {
-      const { user } = await Auth.signUp({
-        username,
-        password,
-        attributes: {
-          name: username,
-        },
-        autoSignIn: {
-          // optional - enables auto sign in after user is confirmed
-          enabled: true,
-        },
-      });
-      console.log(user);
-      const post = await DataStore.save(
-        new UsersObject({
-          name: createUser.name,
-          email: createUser.email,
-          type: createUser.role,
-          adresses: [
-            new Address({
-              contactName: createUser.contactName,
-              tel: createUser.phoneNumber,
-            }),
-          ],
-        })
-      );
-    } catch (error) {
-      console.log("error signing up:", error);
-    }
-
-    onClose();
-
-    setCreateUser({
-      name: "",
-      email: "",
-      contactName: "",
-      phoneNumber: "",
-      role: "",
-    });
+  const handleCreate = () => {
+    createUserQuery.mutate(createUser);
+    setCreateUser({} as UsersObject);
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useEffect(() => {
-    const userslist = DataStore.observeQuery(UsersObject).subscribe(
-      ({ items }) => {
-        setUsersLists(items);
-      }
-    );
+  //delete
+  const deleteModal = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const deleteUser = useUserMutation(() => {
+    deleteModal.onClose();
+  }, false);
 
-    return () => {
-      userslist.unsubscribe();
-    };
-  }, []);
+  const [deleteUserId, setDeleteUserId] = useState("");
+
+  // const handleCreate = async (event: FormEvent) => {
+  //   event.preventDefault();
+  //   console.log(createUser);
+
+  //   var username = createUser.email;
+  //   var password = "Ukfs2019???";
+
+  //   try {
+  //     const { user } = await Auth.signUp({
+  //       username,
+  //       password,
+  //       attributes: {
+  //         name: username,
+  //       },
+  //       autoSignIn: {
+  //         // optional - enables auto sign in after user is confirmed
+  //         enabled: true,
+  //       },
+  //     });
+  //     console.log(user);
+  //     const post = await DataStore.save(
+  //       new UsersObject({
+  //         name: createUser.name,
+  //         email: createUser.email,
+  //         type: createUser.role,
+  //         adresses: [
+  //           new Address({
+  //             contactName: createUser.contactName,
+  //             tel: createUser.phoneNumber,
+  //           }),
+  //         ],
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log("error signing up:", error);
+  //   }
+
+  //   onClose();
+
+  //   setCreateUser({
+  //     name: "",
+  //     email: "",
+  //     contactName: "",
+  //     phoneNumber: "",
+  //     role: "",
+  //   });
+  // };
 
   return (
     <>
@@ -126,9 +136,7 @@ const UsersList = () => {
             Users List
           </Heading>
           <Spacer />
-          {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
-              New Order
-            </Button> */}
+
           <Button
             marginRight={2}
             as={NavLink}
@@ -147,7 +155,7 @@ const UsersList = () => {
           </Button>
           <Button
             onClick={() => {
-              onOpen();
+              createModal.onOpen();
             }}
             leftIcon={<AddIcon />}
             my={10}
@@ -200,7 +208,8 @@ const UsersList = () => {
                                 as={NavLink}
                                 icon={<DeleteIcon />}
                                 onClick={() => {
-                                  console.log(usersList.name);
+                                  setDeleteUserId(usersList.id);
+                                  deleteModal.onOpen();
                                 }}
                                 colorScheme="blue"
                                 variant={"solid"}
@@ -218,14 +227,23 @@ const UsersList = () => {
           </TabPanels>
         </Tabs>
       </Flex>
-      <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
+      <Drawer
+        onClose={createModal.onClose}
+        isOpen={createModal.isOpen}
+        size={"lg"}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
 
           <DrawerBody>
             <AbsoluteCenter>
-              <form onSubmit={handleCreate}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCreate();
+                }}
+              >
                 <Heading my={5} size={"md"}>
                   Create User
                 </Heading>
@@ -234,7 +252,7 @@ const UsersList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={createUser.name}
+                    value={createUser?.name || ""}
                     onChange={(e) =>
                       setCreateUser({
                         ...createUser,
@@ -249,7 +267,7 @@ const UsersList = () => {
                   <Input
                     className="FormControl"
                     placeholder="example@gmail.com"
-                    value={createUser.email}
+                    value={createUser?.email || ""}
                     onChange={(e) =>
                       setCreateUser({
                         ...createUser,
@@ -264,12 +282,19 @@ const UsersList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={createUser.contactName}
                     onChange={(e) =>
-                      setCreateUser({
-                        ...createUser,
-                        contactName: e.target.value,
-                      })
+                      setCreateUser((prevUser) => ({
+                        ...prevUser,
+                        adresses: prevUser.adresses
+                          ? [
+                              {
+                                ...prevUser.adresses[0],
+                                contactName: e.target.value,
+                              },
+                              ...prevUser.adresses.slice(1),
+                            ]
+                          : [], // Add a default empty array if adresses is null or undefined
+                      }))
                     }
                     required
                   />
@@ -279,12 +304,19 @@ const UsersList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={createUser.phoneNumber}
                     onChange={(e) =>
-                      setCreateUser({
-                        ...createUser,
-                        phoneNumber: e.target.value,
-                      })
+                      setCreateUser((prevUser) => ({
+                        ...prevUser,
+                        adresses: prevUser.adresses
+                          ? [
+                              {
+                                ...prevUser.adresses[0],
+                                tel: e.target.value,
+                              },
+                              ...prevUser.adresses.slice(1),
+                            ]
+                          : [], // Add a default empty array if adresses is null or undefined
+                      }))
                     }
                     required
                   />
@@ -292,11 +324,11 @@ const UsersList = () => {
                 <FormControl pb={5} w={"lg"}>
                   <FormLabel>Role</FormLabel>
                   <Select
-                    value={createUser.role}
+                    value={createUser?.type || ""}
                     onChange={(e) =>
                       setCreateUser({
                         ...createUser,
-                        role: e.target.value,
+                        type: e.target.value,
                       })
                     }
                   >
@@ -321,6 +353,39 @@ const UsersList = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+
+      {/* Delete Modal  */}
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={deleteModal.onClose}
+        isOpen={deleteModal.isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>
+            Are you sure you want to Deactivate User
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={deleteModal.onClose}>
+              No
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                deleteUser.mutate(deleteUserId);
+              }}
+              ml={3}
+            >
+              Yes
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
