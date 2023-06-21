@@ -17,6 +17,8 @@ import JobTypeList from "../components/Settings/JobTypes/JobTypeList";
 import StandardResolutionList from "../components/Settings/Resolution/StandardResolutionList";
 import AddJob from "../components/Jobs/AddJob/AddJob";
 import Login from "../components/Authentication/Login";
+import JobQuery from "../components/Reports/JobQuery/JobQuery";
+import TimeSheet from "../components/Reports/TimeSheet/TimeSheet";
 
 const router = createBrowserRouter([
   //   {
@@ -83,6 +85,14 @@ const router = createBrowserRouter([
       {
         path: "/job-details",
         element: <JobDetails />,
+      },
+      {
+        path: "/reports/jobQuery",
+        element: <JobQuery />,
+      },
+      {
+        path: "/reports/timeSheet",
+        element: <TimeSheet />,
       },
     ],
   },

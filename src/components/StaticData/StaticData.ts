@@ -44,3 +44,30 @@ export const ContractMockList: Contract[] = [
     nextVisitDate: "20/10/2020",
   },
 ];
+ // reports
+ interface Option {
+  value: string;
+  label: string;
+}
+
+export const Priority: Option[] = [
+  { value: "Low", label: "Low " },
+  { value: "Medium", label: "Medium" },
+  { value: "High", label: "High" },
+];
+export const DateType: Option[] = [
+  { value: "LoggedDate", label: "LoggedDate " },
+  { value: "ScheduledDate", label: "Scheduled Date" },
+  { value: "ResolvedDate", label: "Resolved Date" },
+  { value: "AssignedDate", label: "Assigned Date" },
+  { value: "ClosedDate", label: "Closed Date" },
+  { value: "CancelledDate", label: "Cancelled Date" },
+];
+export const Status: Option[] = [
+  { value: "Pending", label: "Pending" },
+  { value: "Open", label: "Open" },
+  { value: "Assigned", label: "Assigned" },
+  { value: "Resolved", label: "Resolved" },
+  { value: "Cancelled", label: "Cancelled" },
+  { value: "Closed", label: "Closed" },
+];
