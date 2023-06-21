@@ -81,3 +81,4 @@ export const InvoiceStatus: Option[] = [
   { value: "PartiallyPaid", label: "Partially Paid" },
   { value: "Sent", label: "Sent" },
 ];
+

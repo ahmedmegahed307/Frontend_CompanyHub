@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
 import { DateType } from "../../StaticData/StaticData";
 
-const DateTypeSelect = () => {
+interface DateTypeProps {
+  onSelectedDateType: (dateType: string | undefined) => void;
+}
+
+const DateTypeSelect = ({ onSelectedDateType }: DateTypeProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string>();
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOptions(event.target.value);
+    onSelectedDateType(selectedOptions);
   };
   useEffect(() => {
     console.log(selectedOptions);
