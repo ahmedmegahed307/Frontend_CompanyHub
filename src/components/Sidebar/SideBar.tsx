@@ -1,20 +1,17 @@
+import { useState } from "react";
 import {
   Box,
   Flex,
   IconButton,
   useBreakpointValue,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
   VStack,
   Link as ChakraLink,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import {
-  AddIcon,
   HamburgerIcon,
   InfoOutlineIcon,
   ChatIcon,
@@ -24,50 +21,122 @@ import {
   DragHandleIcon,
   ViewIcon,
   SunIcon,
+  ChevronDownIcon,
 } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
+interface SubItemProps {
+  text: string;
+  url: string;
+}
 
 interface SideBarItemProps {
   text: string;
   url: string;
   icon: any;
+  subItems?: SubItemProps[];
 }
 
-const SideBarItem = ({ text, url, icon }: SideBarItemProps) => {
+const SideBarItem = ({ text, url, icon, subItems }: SideBarItemProps) => {
+  const isReports = text === "Reports";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <ChakraLink
-      w="full"
-      as={NavLink}
-      fontWeight="bold"
-      _activeLink={{
-        bg: "#416D77",
-        color: "white",
-        borderRadius: "lg",
-        px: "5",
-        py: "2",
-        borderColor: "#416D77",
-        border: "none",
-      }}
-      _hover={{
-        bg: "#416D77",
-        color: "white",
-      }}
-      to={url}
-      px={5}
-      py={2}
-      borderRadius="lg"
-    >
-      {icon} {text}
-    </ChakraLink>
+    <>
+      {isReports ? (
+        <Menu>
+          <MenuButton
+            as={ChakraLink}
+            w="full"
+            fontWeight="bold"
+            _activeLink={{
+              bg: "#416D77",
+              color: "white",
+              borderRadius: "lg",
+              px: "5",
+              py: "2",
+              borderColor: "#416D77",
+              border: "none",
+            }}
+            _hover={{
+              bg: "#416D77",
+              color: "white",
+            }}
+            px={5}
+            py={2}
+            borderRadius="lg"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Flex justifyContent="space-between" alignItems="center">
+              <Flex alignItems="center">
+                {icon} {text}
+              </Flex>
+              <ChevronDownIcon />
+            </Flex>
+          </MenuButton>
+          <MenuList>
+            {subItems?.map((subItem) => (
+              <MenuItem
+                key={subItem.url}
+                as={NavLink}
+                to={subItem.url}
+                fontWeight="bold"
+                _activeLink={{
+                  bg: "#416D77",
+                  color: "white",
+                  borderRadius: "lg",
+                  px: "5",
+                  py: "2",
+                  borderColor: "#416D77",
+                  border: "none",
+                }}
+                _hover={{
+                  bg: "#416D77",
+                  color: "white",
+                }}
+                px={5}
+                py={2}
+                borderRadius="lg"
+              >
+                {subItem.text}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Menu>
+      ) : (
+        <ChakraLink
+          w="full"
+          as={NavLink}
+          fontWeight="bold"
+          _activeLink={{
+            bg: "#416D77",
+            color: "white",
+            borderRadius: "lg",
+            px: "5",
+            py: "2",
+            borderColor: "#416D77",
+            border: "none",
+          }}
+          _hover={{
+            bg: "#416D77",
+            color: "white",
+          }}
+          to={url}
+          px={5}
+          py={2}
+          borderRadius="lg"
+        >
+          {icon} {text}
+        </ChakraLink>
+      )}
+    </>
   );
 };
 
 function TopNav() {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const NavItems = () => (
-    <VStack spacing={1} m={0} align="start">
+    <VStack spacing={5} m={0} align="start">
       <SideBarItem
         icon={<InfoOutlineIcon fontSize={"sm"} mx="2px" />}
         text="Operational"
@@ -107,6 +176,20 @@ function TopNav() {
         icon={<SunIcon fontSize={"md"} mx="2px" />}
         text="Reports"
         url=""
+        subItems={[
+          {
+            text: "Job Query Report",
+            url: "/reports/jobQuery",
+          },
+          {
+            text: "Time Sheet Report",
+            url: "/reports/timeSheet",
+          },
+          {
+            text: "Invoicing Report",
+            url: "/reports/inviocing",
+          },
+        ]}
       />
     </VStack>
   );
@@ -121,34 +204,12 @@ function TopNav() {
     >
       <Flex alignItems="center" maxW="7xl" mx="auto" px="4">
         {isMobileNav ? (
-          <>
-            <IconButton
-              aria-label="Open menu"
-              icon={<HamburgerIcon />}
-              onClick={onOpen}
-              variant="ghost"
-            />
-            <Drawer
-              isOpen={isOpen}
-              placement="right"
-              onClose={onClose}
-              size="xs"
-            >
-              <DrawerOverlay>
-                <DrawerContent>
-                  <DrawerCloseButton />
-                  <DrawerHeader borderBottomWidth="1px">
-                    Navigation
-                  </DrawerHeader>
-                  <DrawerBody>
-                    <VStack spacing="24px" alignItems="start">
-                      <NavItems />
-                    </VStack>
-                  </DrawerBody>
-                </DrawerContent>
-              </DrawerOverlay>
-            </Drawer>
-          </>
+          <Menu>
+            <MenuButton aria-label="Open menu" />
+            <MenuList>
+              <NavItems />
+            </MenuList>
+          </Menu>
         ) : (
           <Flex direction="column" alignItems="center">
             <NavItems />

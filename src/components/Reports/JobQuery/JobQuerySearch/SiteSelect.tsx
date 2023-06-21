@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -15,49 +15,43 @@ import {
   MenuOptionGroup,
   TagCloseButton,
 } from "@chakra-ui/react";
+import useClient from "../../../../hooks/Settings/Client/useClient";
 
-interface Option {
-  value: string;
-  label: string;
-}
-
-const options: Option[] = [
-  { value: "Eng1", label: "Eng 1" },
-  { value: "Eng2", label: "Eng 2" },
-  { value: "Eng3", label: "Eng 3" },
-];
-
-const EngineerSelect = () => {
+const SiteSelect = () => {
+  const { data: clientList } = useClient();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    console.log("Selected Engineers:", selectedOptions);
+    console.log("Selected Sites:", selectedOptions);
   }, [selectedOptions]);
 
   const handleSelectChange = (selectedValues: string[]) => {
     setSelectedOptions(selectedValues);
   };
 
-  const handleOptionSelect = (option: Option) => {
-    if (!selectedOptions.includes(option.value)) {
-      setSelectedOptions([...selectedOptions, option.value]);
+  const handleOptionSelect = (option: string) => {
+    if (!selectedOptions.includes(option)) {
+      setSelectedOptions([...selectedOptions, option]);
     }
     setIsMenuOpen(false);
   };
 
-  const handleOptionDeselect = (option: any) => {
+  const handleOptionDeselect = (option: string) => {
     const updatedOptions = selectedOptions.filter((value) => value !== option);
     setSelectedOptions(updatedOptions);
   };
 
-  const filteredOptions = options.filter(
-    (option) => !selectedOptions.includes(option.value)
-  );
+  const filteredOptions: { value: string; label: string }[] = clientList
+    ? clientList.map((client: any) => ({
+        value: client.id,
+        label: client.name,
+      }))
+    : [];
 
   return (
     <FormControl pb={5} w={"md"}>
-      <FormLabel color={"grey"}>Engineers</FormLabel>
+      <FormLabel color={"grey"}>Sites</FormLabel>
       <Flex direction="column" maxWidth={300}>
         <Menu
           isOpen={isMenuOpen}
@@ -73,7 +67,7 @@ const EngineerSelect = () => {
               </Box>
             }
           >
-            Select Engineers
+            Select Sites
           </MenuButton>
           <MenuList minWidth="200px">
             <MenuOptionGroup
@@ -85,7 +79,7 @@ const EngineerSelect = () => {
                   key={option.value}
                   value={option.value}
                   isChecked={selectedOptions.includes(option.value)}
-                  onClick={() => handleOptionSelect(option)}
+                  onClick={() => handleOptionSelect(option.value)}
                 >
                   {option.label}
                 </MenuItemOption>
@@ -95,16 +89,18 @@ const EngineerSelect = () => {
         </Menu>
         <Wrap mt={2}>
           <Flex wrap="wrap">
-            {selectedOptions.map((option, index) => (
+            {selectedOptions.map((option) => (
               <Tag
-                key={index}
+                key={option}
                 borderRadius="full"
                 variant="solid"
                 bg={"#1B4D3E"}
                 mr={2}
                 mb={2}
               >
-                <TagLabel>{option}</TagLabel>
+                <TagLabel>
+                  {filteredOptions.find((o) => o.value === option)?.label}
+                </TagLabel>
                 <TagCloseButton onClick={() => handleOptionDeselect(option)} />
               </Tag>
             ))}
@@ -115,4 +111,4 @@ const EngineerSelect = () => {
   );
 };
 
-export default EngineerSelect;
+export default SiteSelect;
