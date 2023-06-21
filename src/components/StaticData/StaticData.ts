@@ -63,6 +63,12 @@ export const DateType: Option[] = [
   { value: "ClosedDate", label: "Closed Date" },
   { value: "CancelledDate", label: "Cancelled Date" },
 ];
+export const InvoiceDateType: Option[] = [
+  { value: "issuedDate", label: "Invoice Issued Date" },
+  { value: "dueDate", label: "Invoice Due Date" },
+  { value: "paidDate", label: "Invoice Paid Date" },
+
+];
 export const Status: Option[] = [
   { value: "Pending", label: "Pending" },
   { value: "Open", label: "Open" },
@@ -70,4 +76,12 @@ export const Status: Option[] = [
   { value: "Resolved", label: "Resolved" },
   { value: "Cancelled", label: "Cancelled" },
   { value: "Closed", label: "Closed" },
+];
+export const InvoiceStatus: Option[] = [
+  { value: "Draft", label: "Draft" },
+  { value: "DraftAndOverdue", label: "Draft and OverDue" },
+  { value: "Overdue", label: "Overdue" },
+  { value: "Paid", label: "Paid" },
+  { value: "PartiallyPaid", label: "Partially Paid" },
+  { value: "Sent", label: "Sent" },
 ];

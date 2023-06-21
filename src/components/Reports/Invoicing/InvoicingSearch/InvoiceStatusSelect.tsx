@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { DateType } from "../../../StaticData/StaticData";
+import { InvoiceStatus } from "../../../StaticData/StaticData";
 
-const DateTypeSelect = () => {
+const InvoiceStatusSelect = () => {
   const [selectedOptions, setSelectedOptions] = useState<string>();
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -14,13 +14,13 @@ const DateTypeSelect = () => {
 
   return (
     <FormControl pb={7} w={"md"}>
-      <FormLabel color={"grey"}>Date Type</FormLabel>
+      <FormLabel color={"grey"}>Invoice Status</FormLabel>
       <Flex direction="column" maxWidth={300}>
         <Select value={selectedOptions || ""} onChange={handleSelectChange}>
           <option value="" disabled>
-            Select Date Type
+            Select Status
           </option>
-          {DateType.map((option) => (
+          {InvoiceStatus.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
@@ -31,4 +31,4 @@ const DateTypeSelect = () => {
   );
 };
 
-export default DateTypeSelect;
+export default InvoiceStatusSelect;

@@ -19,6 +19,8 @@ import AddJob from "../components/Jobs/AddJob/AddJob";
 import Login from "../components/Authentication/Login";
 import JobQuery from "../components/Reports/JobQuery/JobQuery";
 import TimeSheet from "../components/Reports/TimeSheet/TimeSheet";
+import Survey from "../components/Reports/Survey/Survey";
+import Invoicing from "../components/Reports/Invoicing/Invoicing";
 
 const router = createBrowserRouter([
   //   {
@@ -93,6 +95,14 @@ const router = createBrowserRouter([
       {
         path: "/reports/timeSheet",
         element: <TimeSheet />,
+      },
+      {
+        path: "/reports/survey",
+        element: <Survey />,
+      },
+      {
+        path: "/reports/invoicing",
+        element: <Invoicing />,
       },
     ],
   },
