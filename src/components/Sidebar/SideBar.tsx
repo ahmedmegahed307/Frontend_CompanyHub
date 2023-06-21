@@ -187,7 +187,11 @@ function TopNav() {
           },
           {
             text: "Invoicing Report",
-            url: "/reports/inviocing",
+            url: "/reports/invoicing",
+          },
+          {
+            text: "Survey Report",
+            url: "/reports/survey",
           },
         ]}
       />

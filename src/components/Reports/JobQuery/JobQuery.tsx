@@ -1,13 +1,13 @@
 import { Button, Center, HStack, Heading } from "@chakra-ui/react";
-import ClientSelect from "./JobQuerySearch/ClientSelect";
+import ClientSelect from "../GeneralComponents/ClientSelect";
 import SiteSelect from "./JobQuerySearch/SiteSelect";
 import PrioritySelect from "./JobQuerySearch/PrioritySelect";
-import DateTypeSelect from "./JobQuerySearch/DateTypeSelect";
 import StatusSelect from "./JobQuerySearch/StatusSelect";
 import JobSubTypeSelect from "./JobQuerySearch/JobSubTypeSelect";
 import JobTypeSelect from "./JobQuerySearch/JobTypeSelect";
 import DateFromSelect from "../GeneralComponents/DateFromSelect";
 import DateToSelect from "../GeneralComponents/DateToSelect";
+import DateTypeSelect from "../GeneralComponents/DateTypeSelect";
 
 const JobQuery = () => {
   return (
