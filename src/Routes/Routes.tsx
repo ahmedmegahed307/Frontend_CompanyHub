@@ -7,7 +7,6 @@ import UsersList from "../components/Settings/Users/UsersList";
 import CheckLists from "../components/Settings/CheckLists/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
 import Scheduler from "../components/Scheduler/Scheduler";
-import JobDetails from "../components/Jobs/JobList/JobDetails";
 import Operational from "../components/OperationalDashboard/Operational";
 import PPMTabs from "../components/PPM/PPMTabs";
 import AddContract from "../components/PPM/Contracts/AddContract";
@@ -21,6 +20,7 @@ import JobQuery from "../components/Reports/JobQuery/JobQuery";
 import TimeSheet from "../components/Reports/TimeSheet/TimeSheet";
 import Survey from "../components/Reports/Survey/Survey";
 import Invoicing from "../components/Reports/Invoicing/Invoicing";
+import JobDetails from "../components/Jobs/JobDetails/JobDetails";
 
 const router = createBrowserRouter([
   //   {
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         element: <EditContract />,
       },
       {
-        path: "/job-details",
+        path: "/job/jobDetails",
         element: <JobDetails />,
       },
       {
