@@ -36,7 +36,7 @@ import {
   Select,
   Textarea,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import CustomTable from "./CustomTable";
 import OpenJobsTable from "./OpenJobsTable";
 import AssignedJobsTable from "./AssignedJobsTable";
@@ -126,7 +126,9 @@ const JobList = () => {
                         {jobsList &&
                           jobsList!.map((item, index) => (
                             <Tr key={item.id}>
-                              <Td>{item.jobNumber ?? "00" + index}</Td>
+                              <Link to={`/job/${item.id}/jobInfo`}>
+                                <Td>{item.jobNumber ?? "00" + index}</Td>
+                              </Link>
                               <Td>Clint1</Td>
                               <Td>inches</Td>
                               <Td>{item.adress?.name}</Td>

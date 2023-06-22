@@ -10,7 +10,7 @@ interface MapProps {
   apiKey: string;
 }
 
-const Map: React.FC<MapProps> = ({ apiKey }) => {
+const Map = ({ apiKey }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

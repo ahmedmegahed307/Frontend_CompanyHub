@@ -170,12 +170,12 @@ function TopNav() {
       <SideBarItem
         icon={<ViewIcon fontSize={"xs"} mx="2px" />}
         text="Map"
-        url=""
+        url="/map"
       />
       <SideBarItem
         icon={<ChatIcon fontSize={"xs"} mx="2px" />}
         text="Chat"
-        url=""
+        url="/chat"
       />
       <SideBarItem
         icon={<SunIcon fontSize={"xs"} mx="2px" />}
