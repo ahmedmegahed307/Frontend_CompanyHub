@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Button, Center, HStack, Heading } from "@chakra-ui/react";
 import DateFromSelect from "../GeneralComponents/DateFromSelect";
 import DateToSelect from "../GeneralComponents/DateToSelect";
@@ -5,14 +6,25 @@ import ClientSelect from "../../Scheduler/ClientSelect";
 import EngineerSelect from "../../Scheduler/EngineerSelect";
 
 const TimeSheet = () => {
+  const [selectedDateFrom, setSelectedDateFrom] = useState<Date | undefined>();
+  const [selectedDateTo, setSelectedDateTo] = useState<Date | undefined>();
+
+  const handleSelectedDateFrom = (date: Date | undefined) => {
+    setSelectedDateFrom(date);
+  };
+
+  const handleSelectedDateTo = (date: Date | undefined) => {
+    setSelectedDateTo(date);
+  };
+
   return (
     <>
       <Heading m={5} color={"#1396ab"} size={"lg"}>
         Time Sheet Report
       </Heading>
       <HStack marginTop={10} marginLeft={10}>
-        <DateFromSelect />
-        <DateToSelect />
+        <DateFromSelect onSelectedDateFrom={handleSelectedDateFrom} />
+        <DateToSelect onSelectedDateTo={handleSelectedDateTo} />
         <EngineerSelect />
       </HStack>
 

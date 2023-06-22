@@ -7,21 +7,36 @@ import ClientSelect from "../GeneralComponents/ClientSelect";
 import JobID from "./SurverySearch/JobID";
 
 const Survey = () => {
+  const handleSelectedDateType = (dateType: string | undefined) => {
+    // Implement the logic for handling the selected date type
+  };
+
+  const handleSelectedDateFrom = (date: Date | undefined) => {
+    // Implement the logic for handling the selected date from
+  };
+
+  const handleSelectedDateTo = (date: Date | undefined) => {
+    // Implement the logic for handling the selected date to
+  };
+
+  const handleSelectedClients = (clients: string[] | undefined) => {
+    // Implement the logic for handling the selected clients
+  };
+
   return (
     <>
       <Heading m={5} color={"#1396ab"} size={"lg"}>
         Survey Report
       </Heading>
       <HStack marginTop={10} marginLeft={10}>
-        <DateTypeSelect />
-        <DateFromSelect />
-        <DateToSelect />
-
+        <DateTypeSelect onSelectedDateType={handleSelectedDateType} />
+        <DateFromSelect onSelectedDateFrom={handleSelectedDateFrom} />
+        <DateToSelect onSelectedDateTo={handleSelectedDateTo} />
         <JobID />
       </HStack>
       <HStack marginLeft={10} spacing={-32}>
         <EngineerSelect />
-        <ClientSelect />
+        <ClientSelect onSelectedClients={handleSelectedClients} />
       </HStack>
       <Center>
         <Button
