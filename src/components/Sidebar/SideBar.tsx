@@ -139,6 +139,11 @@ function TopNav() {
     <VStack spacing={5} m={0} align="start">
       <SideBarItem
         icon={<InfoOutlineIcon fontSize={"xs"} mx="2px" />}
+        text="Company Info"
+        url="/settings/company/info"
+      />
+      <SideBarItem
+        icon={<SunIcon fontSize={"xs"} mx="2px" />}
         text="Operational"
         url="/operational"
       />

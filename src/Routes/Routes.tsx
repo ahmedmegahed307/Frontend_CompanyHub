@@ -20,13 +20,11 @@ import JobQuery from "../components/Reports/JobQuery/JobQuery";
 import TimeSheet from "../components/Reports/TimeSheet/TimeSheet";
 import Survey from "../components/Reports/Survey/Survey";
 import Invoicing from "../components/Reports/Invoicing/Invoicing";
-import JobDetails from "../components/Jobs/JobDetails/JobDetails";
+import JobDetails from "../components/Jobs/JobDetails/Details/JobDetails";
+import CompanyInfo from "../components/Settings/Company/CompanyInfo";
+import JobInfo from "../components/Jobs/JobDetails/JobInfo";
 
 const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <Home />,
-  //   },
   {
     path: "/",
     element: <App />,
@@ -57,6 +55,11 @@ const router = createBrowserRouter([
         element: <StandardResolutionList />,
       },
       {
+        path: "/settings/company/info",
+        element: <CompanyInfo />,
+      },
+
+      {
         path: "/settings/checkLists",
         element: <CheckLists />,
       },
@@ -85,8 +88,8 @@ const router = createBrowserRouter([
         element: <EditContract />,
       },
       {
-        path: "/job/jobDetails",
-        element: <JobDetails />,
+        path: "/job/jobInfo",
+        element: <JobInfo />,
       },
       {
         path: "/reports/jobQuery",
