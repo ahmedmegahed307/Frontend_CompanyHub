@@ -11,10 +11,10 @@ const DateTypeSelect = ({ onSelectedDateType }: DateTypeProps) => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOptions(event.target.value);
-    onSelectedDateType(selectedOptions);
   };
   useEffect(() => {
     console.log(selectedOptions);
+    onSelectedDateType(selectedOptions);
   }, [selectedOptions]);
 
   return (

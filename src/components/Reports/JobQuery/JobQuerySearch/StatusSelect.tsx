@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
 import { Status } from "../../../StaticData/StaticData";
-
-const StatusSelect = () => {
+interface StatusProps {
+  onSelectedStatus: (priority: string | undefined) => void;
+}
+const StatusSelect = ({ onSelectedStatus }: StatusProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string>();
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -10,6 +12,7 @@ const StatusSelect = () => {
   };
   useEffect(() => {
     console.log(selectedOptions);
+    onSelectedStatus(selectedOptions);
   }, [selectedOptions]);
 
   return (

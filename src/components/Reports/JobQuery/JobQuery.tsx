@@ -13,14 +13,14 @@ import { useEffect, useState } from "react";
 
 export interface JobQueryFilter {
   dateType: string | undefined;
-  dateFrom: Date;
-  dateTo: Date;
-  priority: string;
-  jobType: string;
-  jobSubType: string;
-  status: string;
-  sites: string[];
-  clients: string[];
+  dateFrom: Date | undefined;
+  dateTo: Date | undefined;
+  priority: string | undefined;
+  jobType: string | undefined;
+  jobSubType: string | undefined;
+  status: string | undefined;
+  sites: string[] | undefined;
+  clients: string[] | undefined;
 }
 const JobQuery = () => {
   const [jobQuery, setJobQuery] = useState<JobQueryFilter>(
@@ -32,7 +32,7 @@ const JobQuery = () => {
     setIsSearchClicked(true);
   };
   useEffect(() => {
-    console.log(jobQuery);
+    console.log("Job Filter Object:", jobQuery); // object to deal with database
   }, [jobQuery]);
 
   return (
@@ -46,18 +46,40 @@ const JobQuery = () => {
             setJobQuery({ ...jobQuery, dateType })
           }
         />
-        <DateFromSelect />
-        <DateToSelect />
-        <PrioritySelect />
+        <DateFromSelect
+          onSelectedDateFrom={(dateFrom) =>
+            setJobQuery({ ...jobQuery, dateFrom })
+          }
+        />
+        <DateToSelect
+          onSelectedDateTo={(dateTo) => setJobQuery({ ...jobQuery, dateTo })}
+        />
+        <PrioritySelect
+          onSelectedPriority={(priority) =>
+            setJobQuery({ ...jobQuery, priority })
+          }
+        />
       </HStack>
       <HStack marginLeft={10}>
-        <JobTypeSelect />
-        <JobSubTypeSelect />
-        <StatusSelect />
-        <SiteSelect />
+        <JobTypeSelect
+          onSelectedJobType={(jobType) => setJobQuery({ ...jobQuery, jobType })}
+        />
+        <JobSubTypeSelect
+          onSelectedJobSubType={(jobSubType) =>
+            setJobQuery({ ...jobQuery, jobSubType })
+          }
+        />
+        <StatusSelect
+          onSelectedStatus={(status) => setJobQuery({ ...jobQuery, status })}
+        />
+        <SiteSelect
+          onSelectedSites={(sites) => setJobQuery({ ...jobQuery, sites })}
+        />
       </HStack>
       <HStack marginLeft={10}>
-        <ClientSelect />
+        <ClientSelect
+          onSelectedClients={(clients) => setJobQuery({ ...jobQuery, clients })}
+        />
       </HStack>
       <Center>
         <Button
