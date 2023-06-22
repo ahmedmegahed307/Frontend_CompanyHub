@@ -10,6 +10,14 @@
       "StackName": "amplify-ukfs-staging-100054",
       "StackId": "arn:aws:cloudformation:us-east-1:960466866803:stack/amplify-ukfs-staging-100054/3bef5790-e419-11ed-98e9-0aef3bf7eadf",
       "AmplifyAppId": "d3iiwa6ymy3uo0"
+    },
+    "categories": {
+      "auth": {
+        "ukfs": {}
+      },
+      "storage": {
+        "s3ukfsstorage42da4ec5": {}
+      }
     }
   }
 }

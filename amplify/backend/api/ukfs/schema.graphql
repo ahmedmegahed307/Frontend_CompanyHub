@@ -1,0 +1,224 @@
+enum BillingType {
+  INVOICE_PER_VISIT
+  INVOICE_PER_CONTRACT
+}
+
+enum PmFreq {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  SEMI_ANNUAL
+  ANNUAL
+}
+
+type Contract @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  clientId: String
+  description: String
+  jobType: JobType
+  jobSubtype: String
+  estDuration: String
+  pmFreq: PmFreq
+  contractCharge: Float
+  startDate: AWSDate
+  expiryDate: AWSDate
+  billingType: BillingType
+  pmActive: Boolean
+  isActive: Boolean
+}
+
+enum JobStatus {
+  CANCELLED
+  OPEN
+  ASSIGENED
+  PENDING
+  CLOSED
+}
+
+type TestData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  data: String
+}
+
+type ChatMessages @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String
+  senderId: ID
+  reciverId: ID
+  isRead: Boolean
+  isActive: Boolean
+}
+
+enum CheckListItemType {
+  HEADER
+  SUBHEADER
+  CHECKBOX
+  TEXTBOX
+  DROPBOX
+  IMAGE
+}
+
+type CheckListItems {
+  id: ID
+  lable: String
+  type: CheckListItemType
+  isReq: Boolean
+  initData: String
+  dataset: [String]
+  value: String
+  order: Int
+  comment: String
+}
+
+type CheckListModule @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  visibleOn: String
+  JobTypes: String
+  isReq: Boolean
+  items: [CheckListItems]
+  connectionId: String
+}
+
+enum SessionType {
+  TRAVEL
+  WORK
+  REMOTE
+  NONE
+}
+
+type Sessions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: SessionType
+  startTime: AWSDateTime
+  endTime: AWSDateTime
+  isActive: Boolean
+  jobId: String
+  userId: String
+}
+
+type PartsList @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  quantity: Int
+  cost: String
+  code: String
+}
+
+type Attachment {
+  Id: ID!
+  url: String
+  type: String
+}
+
+type Signature {
+  id: ID!
+  name: String
+  position: String
+  user_id: String
+  date: AWSDateTime
+  img: String
+}
+
+type UserType @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  isActive: Boolean
+}
+
+type JobTypesList @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  subTypeList: [String]
+  isActive: Boolean
+}
+
+type ResolutionItem {
+  text: String
+  date: AWSDateTime
+  userId: String
+}
+
+type Resolutions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  isActive: Boolean
+}
+
+type Address {
+  name: String
+  address1: String
+  address2: String
+  tel: String
+  contactName: String
+  email: String
+  contactType: String
+  city: String
+  country: String
+  postcode: String
+  long: String
+  lat: String
+}
+
+type JobType {
+  name: String
+  subtype_id: String
+  subType: String
+  id: ID
+}
+
+type StatusList @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  isActive: String
+}
+
+type Part {
+  name: String
+  quantity: Int
+  cost: String
+  code: String
+}
+
+type Jobs @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: JobType
+  proirty: String
+  enginer: [String]
+  status: JobStatus
+  schadule: AWSDateTime
+  estDuration: String
+  disc: String
+  notifyClint: Boolean
+  getBill: Boolean
+  bill: String
+  contractId: String
+  Instruction: String
+  JobParts: [Part]
+  partsFiles: [String]
+  jobNumber: String
+  usersID: ID! @index(name: "byUsersObject")
+  adress: Address
+  resolutions: [ResolutionItem]
+  signatures: [Signature]
+  attachmentList: [Attachment]
+  sessionType: SessionType
+}
+
+type UsersObject @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  email: String
+  adresses: [Address]
+  JobsClint: [Jobs] @hasMany(indexName: "byUsersObject", fields: ["id"])
+  type: String
+  financialContactName: String
+  financialContactEmail: String
+  siteType: String
+  currencyCode: String
+  vatRate: String
+  vatValue: String
+  vatNumber: String
+}
+ 

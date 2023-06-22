@@ -67,7 +67,7 @@ const steps = [
 ];
 
 const username: string = "bariqa@afsgo.com";
-const password: string = "bariq1991";
+const password: string = "bariq19911";
 
 async function signIn() {
   try {
@@ -165,6 +165,7 @@ const AddJob = () => {
 
       console.log("site created .. ");
       console.log(createSite);
+
       setClient({
         ...client!,
         adresses: [...(client!.adresses ?? []), createSite!],
@@ -178,16 +179,14 @@ const AddJob = () => {
             updated.adresses = client?.adresses;
           })
         ).then((e) => {
-          console.log("site done");
+          console.log(" we are here ..");
           console.log(e);
-          console.log(client);
-          console.log(client?.adresses?.length ?? 0);
+          console.log(updatedPost);
+
           setSelectSiteIndex(client?.adresses?.length ?? 0);
           createSiteModal.onClose();
           setClientSite(e);
-          // setClientSite(
-          //   e?.adresses![e?.adresses!.length -1] ?? client
-          // );
+
           Swal.fire({
             title: "Congratulations",
             text: "Address have been added successfully",
@@ -246,25 +245,25 @@ const AddJob = () => {
       });
     }
   };
-  // signIn();
-  console.log("start");
+  //signIn();
+
   Geocode.setApiKey("AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ");
 
   // console.log(
   //   Geocode.fromAddress("Çamlık, Sevin Sokağı No:2-14, 34774 Ümraniye/İstanbul")
   // );
-  console.log("End");
-  Geocode.fromAddress(
-    "Çamlık, Sevin Sokağı No:2-14, 34774 Ümraniye/İstanbul"
-  ).then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
+
+  // Geocode.fromAddress(
+  //   "Çamlık, Sevin Sokağı No:2-14, 34774 Ümraniye/İstanbul"
+  // ).then(
+  //   (response) => {
+  //     const { lat, lng } = response.results[0].geometry.location;
+  //     console.log(lat, lng);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //   }
+  // );
 
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
@@ -394,7 +393,7 @@ const AddJob = () => {
         type: new JobType({ name: jobType?.name, subType: jobSubType }),
         proirty: priority,
         enginer: [engineer?.id!],
-        status: "stats test",
+        status: engineer?.id! ? "ASSIGENED" : "OPEN",
         schadule: Temporal.Instant.from(schedule!.toISOString()).toString(),
         estDuration: duration,
         disc: desc,
@@ -410,7 +409,7 @@ const AddJob = () => {
         type: new JobType({ name: jobType?.name, subType: jobSubType }),
         proirty: priority,
         enginer: [engineer?.id!],
-        status: "stats test",
+        status: engineer?.id! ? "ASSIGENED" : "OPEN",
         schadule: Temporal.Instant.from(schedule!.toISOString()).toString(),
         estDuration: duration,
         disc: desc,
@@ -683,7 +682,12 @@ const AddJob = () => {
             </Card>
           </TableContainer> */}
 
-          <Button w={"xs"} colorScheme="blackAlpha" bg={"black"}>
+          <Button
+            onClick={() => onCreate()}
+            w={"xs"}
+            colorScheme="blackAlpha"
+            bg={"black"}
+          >
             {" "}
             Save{" "}
           </Button>
@@ -719,7 +723,6 @@ const AddJob = () => {
 
                     <Input
                       onChange={(e) => {
-                        console.log(createClient);
                         return setCreateClient({
                           ...createClient,
                           code: e.target.value,
@@ -734,8 +737,6 @@ const AddJob = () => {
                     <FormLabel>Client Name</FormLabel>
                     <Input
                       onChange={(e) => {
-                        console.log(createClient);
-
                         return setCreateClient({
                           ...createClient,
                           name: e.target.value,
@@ -940,7 +941,6 @@ const AddJob = () => {
 
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         name: e.target.value,
@@ -955,7 +955,6 @@ const AddJob = () => {
                   <FormLabel> Site Email </FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         email: e.target.value,
@@ -971,7 +970,6 @@ const AddJob = () => {
                   <FormLabel> Phone </FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         tel: e.target.value,
@@ -987,7 +985,6 @@ const AddJob = () => {
                   <FormLabel> Address Line 1 </FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         address1: e.target.value,
@@ -1003,7 +1000,6 @@ const AddJob = () => {
                   <FormLabel> Address Line 2 </FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         address2: e.target.value,
@@ -1018,7 +1014,6 @@ const AddJob = () => {
                   <FormLabel> City </FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         city: e.target.value,
@@ -1033,7 +1028,6 @@ const AddJob = () => {
                   <FormLabel> Postcode</FormLabel>
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreateSite({
                         ...createSite,
                         postcode: e.target.value,
@@ -1178,7 +1172,6 @@ const AddJob = () => {
 
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreatePart({
                         ...createPart!,
                         code: e.target.value,
@@ -1194,7 +1187,6 @@ const AddJob = () => {
 
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreatePart({
                         ...createPart!,
                         name: e.target.value,
@@ -1210,7 +1202,6 @@ const AddJob = () => {
 
                   <Input
                     onChange={(e) => {
-                      console.log(createClient);
                       return setCreatePart({
                         ...createPart!,
                         cost: e.target.value,

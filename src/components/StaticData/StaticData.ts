@@ -1,15 +1,11 @@
 //this file is for static data that rarely change and doesn't require backend configuration.
 export const PMFrequencyList = [
-{ name: 'Daily', value: 'daily' },
-{ name: 'Weekly', value: 'weekly' },
-{ name: 'Monthly', value: 'monthly' },
-{ name: 'Quarterly', value: 'quarterly' },
-{ name: 'Semi-Annual', value: 'semi-annual' },
-{ name: 'Annual', value: 'annual' }
- ];
-export const BillingType=[
- {name: 'Invoice per visit', value: 'invoice per visit' },
-  { name: 'Invoice per client', value: 'invoice per client' }
+  { name: 'Daily', value: 'daily' },
+  { name: 'Weekly', value: 'weekly' },
+  { name: 'Monthly', value: 'monthly' },
+  { name: 'Quarterly', value: 'quarterly' },
+  { name: 'Semi-Annual', value: 'semi-annual' },
+  { name: 'Annual', value: 'annual' }
 ];
 export interface Contract {
   id: number;

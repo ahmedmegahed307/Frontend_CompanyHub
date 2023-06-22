@@ -2,6 +2,28 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
+export enum BillingType {
+  INVOICE_PER_VISIT = "INVOICE_PER_VISIT",
+  INVOICE_PER_CONTRACT = "INVOICE_PER_CONTRACT"
+}
+
+export enum PmFreq {
+  DAILY = "DAILY",
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
+  QUARTERLY = "QUARTERLY",
+  SEMI_ANNUAL = "SEMI_ANNUAL",
+  ANNUAL = "ANNUAL"
+}
+
+export enum JobStatus {
+  CANCELLED = "CANCELLED",
+  OPEN = "OPEN",
+  ASSIGENED = "ASSIGENED",
+  PENDING = "PENDING",
+  CLOSED = "CLOSED"
+}
+
 export enum CheckListItemType {
   HEADER = "HEADER",
   SUBHEADER = "SUBHEADER",
@@ -169,6 +191,120 @@ type LazyPart = {
 export declare type Part = LazyLoading extends LazyLoadingDisabled ? EagerPart : LazyPart
 
 export declare const Part: (new (init: ModelInit<Part>) => Part)
+
+type EagerContract = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Contract, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly clientId?: string | null;
+  readonly description?: string | null;
+  readonly jobType?: JobType | null;
+  readonly jobSubtype?: string | null;
+  readonly estDuration?: string | null;
+  readonly pmFreq?: PmFreq | keyof typeof PmFreq | null;
+  readonly contractCharge?: number | null;
+  readonly startDate?: string | null;
+  readonly expiryDate?: string | null;
+  readonly billingType?: BillingType | keyof typeof BillingType | null;
+  readonly pmActive?: boolean | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyContract = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Contract, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly clientId?: string | null;
+  readonly description?: string | null;
+  readonly jobType?: JobType | null;
+  readonly jobSubtype?: string | null;
+  readonly estDuration?: string | null;
+  readonly pmFreq?: PmFreq | keyof typeof PmFreq | null;
+  readonly contractCharge?: number | null;
+  readonly startDate?: string | null;
+  readonly expiryDate?: string | null;
+  readonly billingType?: BillingType | keyof typeof BillingType | null;
+  readonly pmActive?: boolean | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Contract = LazyLoading extends LazyLoadingDisabled ? EagerContract : LazyContract
+
+export declare const Contract: (new (init: ModelInit<Contract>) => Contract) & {
+  copyOf(source: Contract, mutator: (draft: MutableModel<Contract>) => MutableModel<Contract> | void): Contract;
+}
+
+type EagerTestData = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<TestData, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly data?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyTestData = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<TestData, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly data?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type TestData = LazyLoading extends LazyLoadingDisabled ? EagerTestData : LazyTestData
+
+export declare const TestData: (new (init: ModelInit<TestData>) => TestData) & {
+  copyOf(source: TestData, mutator: (draft: MutableModel<TestData>) => MutableModel<TestData> | void): TestData;
+}
+
+type EagerChatMessages = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ChatMessages, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly text?: string | null;
+  readonly senderId?: string | null;
+  readonly reciverId?: string | null;
+  readonly isRead?: boolean | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyChatMessages = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ChatMessages, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly text?: string | null;
+  readonly senderId?: string | null;
+  readonly reciverId?: string | null;
+  readonly isRead?: boolean | null;
+  readonly isActive?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type ChatMessages = LazyLoading extends LazyLoadingDisabled ? EagerChatMessages : LazyChatMessages
+
+export declare const ChatMessages: (new (init: ModelInit<ChatMessages>) => ChatMessages) & {
+  copyOf(source: ChatMessages, mutator: (draft: MutableModel<ChatMessages>) => MutableModel<ChatMessages> | void): ChatMessages;
+}
 
 type EagerCheckListModule = {
   readonly [__modelMeta__]: {
@@ -411,7 +547,7 @@ type EagerJobs = {
   readonly type?: JobType | null;
   readonly proirty?: string | null;
   readonly enginer?: (string | null)[] | null;
-  readonly status?: string | null;
+  readonly status?: JobStatus | keyof typeof JobStatus | null;
   readonly schadule?: string | null;
   readonly estDuration?: string | null;
   readonly disc?: string | null;
@@ -442,7 +578,7 @@ type LazyJobs = {
   readonly type?: JobType | null;
   readonly proirty?: string | null;
   readonly enginer?: (string | null)[] | null;
-  readonly status?: string | null;
+  readonly status?: JobStatus | keyof typeof JobStatus | null;
   readonly schadule?: string | null;
   readonly estDuration?: string | null;
   readonly disc?: string | null;
