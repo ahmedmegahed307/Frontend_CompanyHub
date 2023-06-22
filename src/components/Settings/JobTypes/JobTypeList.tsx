@@ -25,9 +25,6 @@ import {
   AbsoluteCenter,
   FormControl,
   FormLabel,
-  Tag,
-  TagLabel,
-  TagCloseButton,
   AlertDialogFooter,
   AlertDialog,
   AlertDialogBody,
@@ -36,142 +33,48 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { DataStore } from "aws-amplify";
+import { useRef, useState } from "react";
 import { JobTypesList } from "../../../models";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import Swal from "sweetalert2";
-
+import useJobType from "../../../hooks/Settings/JobType/useJobType";
+import useCreateJobType from "../../../hooks/Settings/JobType/useCreateJobType";
+import useJobTypeMutation from "../../../hooks/Settings/JobType/useJobTypeMutation";
+import SubTypeRemoval from "./SubTypeRemoval";
 const JobTypeList = () => {
-  const [jobTypeList, setJobTypeLists] = useState<JobTypesList[]>([]);
-  const [createJobType, setCreateJobType] = useState({
-    name: "",
-    subTypeList: [] as string[],
-    newSubType: "",
+  // get jobTypeList
+  const { data: jobTypeList } = useJobType();
+
+  //create
+  const createJobTypeQuery = useCreateJobType(() => {
+    createModal.onClose();
   });
-  const [editJobType, setEditJobType] = useState({
-    id: "",
-    name: "",
-    subTypeList: [] as string[],
-    newSubType: "",
-  });
+  const [createJobType, setCreateJobType] = useState<JobTypesList>(
+    {} as JobTypesList
+  );
 
-  const handleCreate = async (event: FormEvent) => {
-    event.preventDefault();
-    console.log(createJobType);
-
-    try {
-      console.log(createJobType);
-
-      const post = await DataStore.save(
-        new JobTypesList({
-          name: createJobType.name,
-          subTypeList: createJobType.subTypeList,
-          isActive: true,
-        })
-      );
-
-      Swal.fire({
-        title: "Congratulations",
-        text: "Job type have been saved successfully",
-        icon: "success",
-      });
-      // createModal.onClose();
-
-      setCreateJobType({ name: "", subTypeList: [], newSubType: "" });
-    } catch (error: any) {
-      Swal.fire({
-        title: "Oops",
-        text: error,
-        icon: "error",
-      });
-    }
-  };
-
-  const handleUpdate = async (event: FormEvent) => {
-    event.preventDefault();
-    console.log(createJobType);
-
-    try {
-      console.log(createJobType);
-
-      const original = await DataStore.query(JobTypesList, editJobType!.id);
-
-      if (original) {
-        const updatedPost = await DataStore.save(
-          JobTypesList.copyOf(original, (updated) => {
-            updated.isActive = true;
-            updated.name = editJobType.name;
-            updated.subTypeList = editJobType.subTypeList;
-
-            deleteModal.onClose();
-          })
-        );
-        Swal.fire({
-          title: "Congratulations",
-          text: "Job type have been saved successfully",
-          icon: "success",
-        });
-        updateModal.onClose();
-      }
-
-      // createModal.onClose();
-
-      setCreateJobType({ name: "", subTypeList: [], newSubType: "" });
-    } catch (error: any) {
-      Swal.fire({
-        title: "Oops",
-        text: error,
-        icon: "error",
-      });
-    }
-  };
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const createModal = useDisclosure();
-  const deleteModal = useDisclosure();
-  const updateModal = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const lists = DataStore.observeQuery(JobTypesList, (c) =>
-      c.isActive.eq(true)
-    ).subscribe(({ items }) => {
-      setJobTypeLists(items);
-    });
-
-    return () => {
-      lists.unsubscribe();
-    };
-  }, []);
+  const handleCreate = () => {
+    createJobTypeQuery.mutate(createJobType);
+    setCreateJobType({} as JobTypesList);
+  };
 
   const handleAddSubType = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && createJobType.newSubType) {
+    if (event.key === "Enter") {
       event.preventDefault(); // Prevent form submission
-      setCreateJobType((prevJobType) => ({
-        ...prevJobType,
-        subTypeList: [...prevJobType.subTypeList, prevJobType.newSubType],
-        newSubType: "",
-      }));
-    }
-  };
-
-  const handleAddSubTypeUpdate = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (event.key === "Enter" && editJobType.newSubType) {
-      event.preventDefault(); // Prevent form submission
-      setEditJobType((prevJobType) => ({
-        ...prevJobType,
-        subTypeList: [...prevJobType.subTypeList, prevJobType.newSubType],
-        newSubType: "",
-      }));
+      const newSubType = event.currentTarget.value.trim();
+      if (newSubType) {
+        setCreateJobType((prevJobType) => ({
+          ...prevJobType,
+          subTypeList: [...(prevJobType.subTypeList || []), newSubType],
+        }));
+        event.currentTarget.value = ""; // Clear the input value after adding
+      }
     }
   };
 
   const handleRemoveSubType = (index: number) => {
     setCreateJobType((prevJobType) => {
-      const updatedSubTypeList = [...prevJobType.subTypeList];
+      const updatedSubTypeList = [...(prevJobType.subTypeList || [])];
       updatedSubTypeList.splice(index, 1);
 
       return {
@@ -180,6 +83,54 @@ const JobTypeList = () => {
       };
     });
   };
+
+  //update
+  const updateModal = useDisclosure();
+  const [editJobType, setEditJobType] = useState<JobTypesList>(
+    {} as JobTypesList
+  );
+
+  const updateJobType = useJobTypeMutation(() => {
+    updateModal.onClose();
+  }, true);
+
+  const handleRemoveSubType2 = (index: number) => {
+    setEditJobType((prevJobType) => {
+      const updatedSubTypeList = [...(prevJobType.subTypeList || [])];
+      updatedSubTypeList.splice(index, 1);
+
+      return {
+        ...prevJobType,
+        subTypeList: updatedSubTypeList,
+      };
+    });
+  };
+
+  const handleUpdateSubType = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission
+      const newSubType = event.currentTarget.value.trim();
+      if (newSubType) {
+        setEditJobType((prevJobType) => ({
+          ...prevJobType,
+          subTypeList: [...(prevJobType.subTypeList || []), newSubType],
+          newSubType: "",
+        }));
+        event.currentTarget.value = ""; // Clear the input value after adding
+      }
+    }
+  };
+
+  //delete
+  const deleteModal = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const [deleteJobTypeId, setDeleteJobTypeId] = useState("");
+
+  const deleteJobType = useJobTypeMutation(() => {
+    deleteModal.onClose();
+  }, false);
 
   return (
     <>
@@ -202,13 +153,10 @@ const JobTypeList = () => {
             JobType List
           </Heading>
           <Spacer />
-          {/* <Button my={10} onClick={() => {}} colorScheme="blue" size={'sm'} variant={'outline'}  color={"#294c58"}>
-            New Order
-          </Button> */}
 
           <Button
             onClick={() => {
-              onOpen();
+              createModal.onOpen();
             }}
             leftIcon={<AddIcon />}
             my={10}
@@ -243,7 +191,7 @@ const JobTypeList = () => {
                         jobTypeList.map((jobtype) => (
                           <Tr key={jobtype.id}>
                             <Td>{jobtype.name}</Td>
-                            <Td>{jobtype.subTypeList}</Td>
+                            <Td>{jobtype.subTypeList?.join(", ")}</Td>
                             <Td>
                               <IconButton
                                 aria-label="Search database"
@@ -270,11 +218,12 @@ const JobTypeList = () => {
                                 aria-label="Search database"
                                 icon={<DeleteIcon />}
                                 onClick={() => {
-                                  setEditJobType({
-                                    ...editJobType,
-                                    id: jobtype.id!,
-                                  });
+                                  setDeleteJobTypeId(jobtype.id);
                                   deleteModal.onOpen();
+                                  // setEditJobType({
+                                  //   ...editJobType,
+                                  //   id: jobtype.id!,
+                                  // });
                                 }}
                                 colorScheme="blue"
                                 variant={"solid"}
@@ -293,7 +242,11 @@ const JobTypeList = () => {
         </Tabs>
       </Flex>
 
-      <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
+      <Drawer
+        onClose={createModal.onClose}
+        isOpen={createModal.isOpen}
+        size={"lg"}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -302,7 +255,12 @@ const JobTypeList = () => {
 
           <DrawerBody>
             <AbsoluteCenter>
-              <form onSubmit={handleCreate}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCreate();
+                }}
+              >
                 <Heading my={5} size={"md"}>
                   Create JobType
                 </Heading>
@@ -311,7 +269,7 @@ const JobTypeList = () => {
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={createJobType.name}
+                    value={createJobType?.name || ""}
                     onChange={(e) =>
                       setCreateJobType({
                         ...createJobType,
@@ -324,33 +282,14 @@ const JobTypeList = () => {
 
                 <FormControl pb={5} w={"lg"}>
                   <FormLabel>Associated Job SubTypes</FormLabel>
-                  <Flex wrap="wrap">
-                    {createJobType.subTypeList.map((subType, index) => (
-                      <Tag
-                        key={index}
-                        borderRadius="full"
-                        variant="solid"
-                        colorScheme="blue"
-                        mr={2}
-                        mb={2}
-                      >
-                        <TagLabel>{subType}</TagLabel>
-                        <TagCloseButton
-                          onClick={() => handleRemoveSubType(index)}
-                        />
-                      </Tag>
-                    ))}
-                  </Flex>
+                  <SubTypeRemoval
+                    subTypeList={createJobType.subTypeList || []}
+                    onRemoveSubType={handleRemoveSubType}
+                  />
+
                   <Input
                     className="FormControl"
                     placeholder="Click Enter to add more than one subtype"
-                    value={createJobType.newSubType}
-                    onChange={(e) =>
-                      setCreateJobType({
-                        ...createJobType,
-                        newSubType: e.target.value,
-                      })
-                    }
                     onKeyDown={(e) => handleAddSubType(e)}
                   />
                 </FormControl>
@@ -380,20 +319,27 @@ const JobTypeList = () => {
         <DrawerContent>
           <DrawerCloseButton />
 
-          {/* <DrawerHeader>Create JobType</DrawerHeader> */}
-
           <DrawerBody>
             <AbsoluteCenter>
-              <form onSubmit={handleUpdate}>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const updatedJobType: JobTypesList = {
+                    ...editJobType,
+                    isActive: true,
+                  };
+                  updateJobType.mutate(updatedJobType);
+                }}
+              >
                 <Heading my={5} size={"md"}>
-                  Create JobType
+                  Update JobType
                 </Heading>
                 <FormControl pb={5} w={"lg"}>
                   <FormLabel>Name</FormLabel>
                   <Input
                     className="FormControl"
                     placeholder=""
-                    value={editJobType.name}
+                    value={editJobType?.name || ""}
                     onChange={(e) =>
                       setEditJobType({
                         ...editJobType,
@@ -406,34 +352,20 @@ const JobTypeList = () => {
 
                 <FormControl pb={5} w={"lg"}>
                   <FormLabel>Associated Job SubTypes</FormLabel>
-                  <Flex wrap="wrap">
-                    {editJobType.subTypeList.map((subType, index) => (
-                      <Tag
-                        key={index}
-                        borderRadius="full"
-                        variant="solid"
-                        colorScheme="blue"
-                        mr={2}
-                        mb={2}
-                      >
-                        <TagLabel>{subType}</TagLabel>
-                        <TagCloseButton
-                          onClick={() => handleRemoveSubType(index)}
-                        />
-                      </Tag>
-                    ))}
-                  </Flex>
+                  <SubTypeRemoval
+                    subTypeList={editJobType.subTypeList || []}
+                    onRemoveSubType={handleRemoveSubType2}
+                  />
                   <Input
                     className="FormControl"
                     placeholder="Click Enter to add more than one subtype"
-                    value={createJobType.newSubType}
                     onChange={(e) =>
-                      setEditJobType({
-                        ...editJobType,
+                      setEditJobType((prevJobType) => ({
+                        ...prevJobType,
                         newSubType: e.target.value,
-                      })
+                      }))
                     }
-                    onKeyDown={(e) => handleAddSubTypeUpdate(e)}
+                    onKeyDown={(e) => handleUpdateSubType(e)}
                   />
                 </FormControl>
 
@@ -474,20 +406,8 @@ const JobTypeList = () => {
             </Button>
             <Button
               colorScheme="red"
-              onClick={async () => {
-                const original = await DataStore.query(
-                  JobTypesList,
-                  editJobType!.id
-                );
-
-                if (original) {
-                  const updatedPost = await DataStore.save(
-                    JobTypesList.copyOf(original, (updated) => {
-                      updated.isActive = false;
-                      deleteModal.onClose();
-                    })
-                  );
-                }
+              onClick={() => {
+                deleteJobType.mutate(deleteJobTypeId);
               }}
               ml={3}
             >
