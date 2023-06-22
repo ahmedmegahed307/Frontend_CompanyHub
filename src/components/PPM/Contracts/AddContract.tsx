@@ -18,7 +18,7 @@ import Geocode from "react-geocode";
 import moment from "moment";
 
 import { useState, useEffect } from "react";
-import { BillingType, PMFrequencyList } from "../../StaticData";
+import { BillingType, PMFrequencyList } from "../../StaticData/StaticData";
 import {
   UsersObject,
   JobTypesList,

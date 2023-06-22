@@ -1,8 +1,8 @@
 import "./App.css";
 import { Box, HStack } from "@chakra-ui/react";
 
-import TopNav from "./components/TopNav";
-import SideBar from "./components/SideBar";
+import TopNav from "./components/Navbar/TopNav";
+import SideBar from "./components/Sidebar/SideBar";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 

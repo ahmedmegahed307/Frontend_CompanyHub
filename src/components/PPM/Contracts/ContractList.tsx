@@ -23,7 +23,7 @@ import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DeleteContract from "./DeleteContract";
-import { Contract, ContractMockList } from "../../StaticData";
+import { Contract, ContractMockList } from "../../StaticData/StaticData";
 
 const ContractList = () => {
   const [selectedContract, setSelectedContract] = useState<Contract | null>(
@@ -72,7 +72,7 @@ const ContractList = () => {
 
           <Button
             as={NavLink}
-            to="/contracts/addContract"
+            to="/ppm/contracts/addContract"
             onClick={() => {}}
             variant={"outline"}
             color={"#416D77"}
@@ -116,7 +116,7 @@ const ContractList = () => {
                             <Td>{contract.nextVisitDate}</Td>
                             <Td>
                               <NavLink
-                                to={`/contracts/editContract/${contract.id}`}
+                                to={`/ppm/contracts/editContract/${contract.id}`}
                               >
                                 <IconButton
                                   aria-label="Search database"
