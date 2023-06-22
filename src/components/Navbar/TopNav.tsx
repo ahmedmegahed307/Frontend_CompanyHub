@@ -62,6 +62,9 @@ function TopNav({ onSearch }: Props) {
           <MenuItem as={NavLink} to="/settings/resolution/list">
             Standard Resolutions
           </MenuItem>
+          <MenuItem as={NavLink} to="/settings/company/info">
+            Manage Company
+          </MenuItem>
         </MenuList>
       </Menu>
     </>
