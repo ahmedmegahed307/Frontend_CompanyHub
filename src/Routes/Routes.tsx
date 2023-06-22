@@ -23,6 +23,8 @@ import Invoicing from "../components/Reports/Invoicing/Invoicing";
 import JobDetails from "../components/Jobs/JobDetails/Details/JobDetails";
 import CompanyInfo from "../components/Settings/Company/CompanyInfo";
 import JobInfo from "../components/Jobs/JobDetails/JobInfo";
+import GoogleMap from "../components/Map/GoogleMap";
+import Chat from "../components/Chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
         element: <PPMTabs />,
       },
       {
+        path: "/chat",
+        element: <Chat username="Ahmed" />,
+      },
+      {
+        path: "/map",
+        element: <GoogleMap apiKey={""} />,
+      },
+      {
         path: "/ppm/contracts/addContract",
         element: <AddContract />,
       },
@@ -88,7 +98,7 @@ const router = createBrowserRouter([
         element: <EditContract />,
       },
       {
-        path: "/job/jobInfo",
+        path: "/job/:id/jobInfo",
         element: <JobInfo />,
       },
       {
