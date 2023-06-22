@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
 import useJobType from "../../../../hooks/Settings/JobType/useJobType";
-
-const JobTypeSelect = () => {
+interface JobTypeProps {
+  onSelectedJobType: (priority: string | undefined) => void;
+}
+const JobTypeSelect = ({ onSelectedJobType }: JobTypeProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string>();
   const { data: JobTypes } = useJobType();
 
@@ -11,6 +13,7 @@ const JobTypeSelect = () => {
   };
   useEffect(() => {
     console.log(selectedOptions);
+    onSelectedJobType(selectedOptions);
   }, [selectedOptions]);
 
   return (

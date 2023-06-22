@@ -16,14 +16,17 @@ import {
   TagCloseButton,
 } from "@chakra-ui/react";
 import useClient from "../../../hooks/Settings/Client/useClient";
-
-const ClientSelect = () => {
+interface ClientProps {
+  onSelectedClients: (clients: string[] | undefined) => void;
+}
+const ClientSelect = ({ onSelectedClients }: ClientProps) => {
   const { data: clientList } = useClient();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     console.log("Selected Clients:", selectedOptions);
+    onSelectedClients(selectedOptions);
   }, [selectedOptions]);
 
   const handleSelectChange = (selectedValues: string[]) => {

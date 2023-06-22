@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
 import { Priority } from "../../../StaticData/StaticData";
-
-const PrioritySelect = () => {
+interface PriorityProps {
+  onSelectedPriority: (priority: string | undefined) => void;
+}
+const PrioritySelect = ({ onSelectedPriority }: PriorityProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string>();
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -10,6 +12,7 @@ const PrioritySelect = () => {
   };
   useEffect(() => {
     console.log(selectedOptions);
+    onSelectedPriority(selectedOptions);
   }, [selectedOptions]);
 
   return (

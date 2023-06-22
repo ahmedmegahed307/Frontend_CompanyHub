@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select, Input } from "@chakra-ui/react";
-
-const DateToSelect = () => {
+interface DateToProps {
+  onSelectedDateTo: (dateType: Date | undefined) => void;
+}
+const DateToSelect = ({ onSelectedDateTo }: DateToProps) => {
   const [scheduleTo, setScheduleTo] = useState<Date>();
 
   useEffect(() => {
     console.log("date to", formatDate(scheduleTo));
+    onSelectedDateTo(scheduleTo);
   }, [scheduleTo]);
 
   const formatDate = (date: Date | undefined): string => {
