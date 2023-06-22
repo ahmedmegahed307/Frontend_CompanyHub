@@ -18,7 +18,6 @@ import Geocode from "react-geocode";
 import moment from "moment";
 
 import { useState, useEffect } from "react";
-import { BillingType, PMFrequencyList } from "../../StaticData/StaticData";
 import {
   UsersObject,
   JobTypesList,
@@ -27,6 +26,7 @@ import {
   JobType,
   Contract,
   PmFreq,
+  BillingType,
 } from "../../../models";
 import { Link } from "react-router-dom";
 import { Temporal } from "@js-temporal/polyfill";
@@ -41,8 +41,8 @@ const AddContract = () => {
   const [jobTypeList, setJobTypeList] = useState<JobTypesList[]>();
   const [jobType, setJobType] = useState<JobTypesList>();
   const [jobSubType, setJobSubType] = useState<string>();
-  const [frequency, setFrequency] = useState<string>();
-  const [billType, setBillType] = useState<string>();
+  const [frequency, setFrequency] = useState<PmFreq>();
+  const [billType, setBillType] = useState<BillingType>();
   const [duration, setDuration] = useState<string>();
   const [contractCharge, setContractCharge] = useState<number>();
   const [startDate, setStartDate] = useState<Date>();
@@ -54,6 +54,7 @@ const AddContract = () => {
 
   // get CLients
   useEffect(() => {
+    console.log("xxxxxx");
     /**
      * This keeps `post` fresh.
      */
@@ -90,23 +91,21 @@ const AddContract = () => {
 
   const handleCreate = async () => {
     try {
-      console.log(moment(startDate).format("DD-MM-yyyy"));
-      console.log(expiryDate!.toISOString());
       // console.log(createClient);
 
       var newContract = new Contract({
         clientId: client?.id,
         // jobType: jobType,
         jobSubtype: jobSubType,
-        startDate: moment(startDate).format("yyyy-DD-MM"),
-        expiryDate: moment(expiryDate).format("yyyy-DD-MM"),
+        startDate: moment(startDate).format("yyyy-MM-DD"),
+        expiryDate: moment(expiryDate).format("yyyy-MM-DD"),
         contractCharge: contractCharge,
         isActive: true,
         pmActive: true,
         estDuration: estDuration,
 
-        // pmFreq: ,
-        // billingType:,
+        pmFreq: frequency ?? PmFreq.ANNUAL,
+        billingType: billType ?? BillingType.INVOICE_PER_CONTRACT,
       });
 
       console.log(newContract);
@@ -207,6 +206,8 @@ const AddContract = () => {
                 <Input
                   onChange={(e) => setStartDate(new Date(e.target.value))}
                   type="date"
+                  name="sDate"
+                  id="sDate"
                   className="FormControl"
                   placeholder="Select Schedule Date"
                 />
@@ -237,25 +238,31 @@ const AddContract = () => {
               <FormControl w={"lg"}>
                 <FormLabel>PM Frequency</FormLabel>
                 <Select
-                  onChange={(e) => setFrequency(e.target.value)}
+                  onChange={(e) => setFrequency(e.target.value as PmFreq)}
                   variant="outline"
                   placeholder="Select the job priority"
                 >
-                  {PMFrequencyList.map((options) => (
-                    <option value={options.value}>{options.name}</option>
-                  ))}
+                  <option value={PmFreq.DAILY}>Daily</option>
+                  <option value={PmFreq.WEEKLY}>Weekly</option>
+                  <option value={PmFreq.MONTHLY}>Daily</option>
+                  <option value={PmFreq.QUARTERLY}>Quarterly</option>
+                  <option value={PmFreq.SEMI_ANNUAL}>Semi-annual</option>
+                  <option value={PmFreq.ANNUAL}>annually</option>
                 </Select>
               </FormControl>
               <FormControl w={"lg"}>
                 <FormLabel>Billing Type</FormLabel>
                 <Select
-                  onChange={(e) => setBillType(e.target.value)}
+                  onChange={(e) => setBillType(e.target.value as BillingType)}
                   variant="outline"
                   placeholder="Select type"
                 >
-                  {BillingType.map((options) => (
-                    <option value={options.value}>{options.name}</option>
-                  ))}
+                  <option value={BillingType.INVOICE_PER_CONTRACT}>
+                    Invoice per contract
+                  </option>
+                  <option value={BillingType.INVOICE_PER_VISIT}>
+                    Invoice per visit
+                  </option>
                 </Select>
               </FormControl>
               <FormControl w={"lg"}>
@@ -265,6 +272,8 @@ const AddContract = () => {
                   onChange={(e) => setExpiryDate(new Date(e.target.value))}
                   type="date"
                   className="FormControl"
+                  name="exDate"
+                  id="exDate"
                   placeholder="Select Schedule Date"
                 />
               </FormControl>

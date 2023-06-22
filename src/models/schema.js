@@ -51,7 +51,7 @@ export const schema = {
                     "name": "pmFreq",
                     "isArray": false,
                     "type": {
-                        "enum": "BillingType"
+                        "enum": "PmFreq"
                     },
                     "isRequired": false,
                     "attributes": []
@@ -1590,5 +1590,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "de016475aa007a4aaab6713053f6ee5f"
+    "version": "4dca3dadd7db5fb6756f9ad86ce8d81b"
 };

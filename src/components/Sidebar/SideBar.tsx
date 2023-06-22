@@ -69,42 +69,42 @@ function TopNav() {
   const NavItems = () => (
     <VStack spacing={1} m={0} align="start">
       <SideBarItem
-        icon={<InfoOutlineIcon fontSize={"xs"} mx="2px" />}
+        icon={<InfoOutlineIcon fontSize={"sm"} mx="2px" />}
         text="Operational"
         url="/operational"
       />
       <SideBarItem
-        icon={<DragHandleIcon fontSize={"xs"} mx="2px" />}
+        icon={<DragHandleIcon fontSize={"sm"} mx="0px" />}
         text="Statistical Dashboard"
         url="/statistical"
       />
       <SideBarItem
-        icon={<RepeatIcon fontSize={"xs"} mx="2px" />}
+        icon={<RepeatIcon fontSize={"md"} mx="2px" />}
         text="Jobs"
         url="/jobs"
       />
       <SideBarItem
-        icon={<SettingsIcon fontSize={"xs"} mx="2px" />}
+        icon={<SettingsIcon fontSize={"md"} mx="2px" />}
         text="PPM"
         url="/ppm"
       />
       <SideBarItem
-        icon={<CalendarIcon fontSize={"xs"} mx="2px" />}
+        icon={<CalendarIcon fontSize={"sm"} mx="2px" />}
         text="Scheduler"
         url="/scheduler"
       />
       <SideBarItem
-        icon={<ViewIcon fontSize={"xs"} mx="2px" />}
+        icon={<ViewIcon fontSize={"md"} mx="2px" />}
         text="Map"
         url=""
       />
       <SideBarItem
-        icon={<ChatIcon fontSize={"xs"} mx="2px" />}
+        icon={<ChatIcon fontSize={"sm"} mx="2px" />}
         text="Chat"
         url=""
       />
       <SideBarItem
-        icon={<SunIcon fontSize={"xs"} mx="2px" />}
+        icon={<SunIcon fontSize={"md"} mx="2px" />}
         text="Reports"
         url=""
       />

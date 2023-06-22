@@ -19,7 +19,7 @@ type Contract @model @auth(rules: [{allow: public}]) {
   jobType: JobType
   jobSubtype: String
   estDuration: String
-  pmFreq: BillingType
+  pmFreq: PmFreq
   contractCharge: Float
   startDate: AWSDate
   expiryDate: AWSDate

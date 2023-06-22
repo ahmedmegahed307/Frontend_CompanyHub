@@ -17,13 +17,13 @@ import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
 
 import { useState, useEffect } from "react";
-import { BillingType, PMFrequencyList } from "../../StaticData/StaticData";
 import {
   UsersObject,
   JobTypesList,
   PartsList,
   Jobs,
   JobType,
+  BillingType,
 } from "../../../models";
 import { Link } from "react-router-dom";
 
@@ -184,11 +184,7 @@ const EditContract = () => {
                   onChange={(e) => setFrequency(e.target.value)}
                   variant="outline"
                   placeholder="Select the job priority"
-                >
-                  {PMFrequencyList.map((options) => (
-                    <option value={options.value}>{options.name}</option>
-                  ))}
-                </Select>
+                ></Select>
               </FormControl>
               <FormControl w={"lg"}>
                 <FormLabel>Billing Type</FormLabel>
@@ -196,11 +192,7 @@ const EditContract = () => {
                   onChange={(e) => setBillType(e.target.value)}
                   variant="outline"
                   placeholder="Select type"
-                >
-                  {BillingType.map((options) => (
-                    <option value={options.value}>{options.name}</option>
-                  ))}
-                </Select>
+                ></Select>
               </FormControl>
               <FormControl w={"lg"}>
                 <FormLabel> Expiry Date</FormLabel>

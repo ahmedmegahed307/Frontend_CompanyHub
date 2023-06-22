@@ -203,7 +203,7 @@ type EagerContract = {
   readonly jobType?: JobType | null;
   readonly jobSubtype?: string | null;
   readonly estDuration?: string | null;
-  readonly pmFreq?: BillingType | keyof typeof BillingType | null;
+  readonly pmFreq?: PmFreq | keyof typeof PmFreq | null;
   readonly contractCharge?: number | null;
   readonly startDate?: string | null;
   readonly expiryDate?: string | null;
@@ -225,7 +225,7 @@ type LazyContract = {
   readonly jobType?: JobType | null;
   readonly jobSubtype?: string | null;
   readonly estDuration?: string | null;
-  readonly pmFreq?: BillingType | keyof typeof BillingType | null;
+  readonly pmFreq?: PmFreq | keyof typeof PmFreq | null;
   readonly contractCharge?: number | null;
   readonly startDate?: string | null;
   readonly expiryDate?: string | null;

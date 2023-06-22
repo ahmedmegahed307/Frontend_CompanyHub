@@ -342,14 +342,34 @@ export default function ContractCreateForm(props) {
         {...getOverrideProps(overrides, "pmFreq")}
       >
         <option
-          children="Invoice per visit"
-          value="INVOICE_PER_VISIT"
+          children="Daily"
+          value="DAILY"
           {...getOverrideProps(overrides, "pmFreqoption0")}
         ></option>
         <option
-          children="Invoice per contract"
-          value="INVOICE_PER_CONTRACT"
+          children="Weekly"
+          value="WEEKLY"
           {...getOverrideProps(overrides, "pmFreqoption1")}
+        ></option>
+        <option
+          children="Monthly"
+          value="MONTHLY"
+          {...getOverrideProps(overrides, "pmFreqoption2")}
+        ></option>
+        <option
+          children="Quarterly"
+          value="QUARTERLY"
+          {...getOverrideProps(overrides, "pmFreqoption3")}
+        ></option>
+        <option
+          children="Semi annual"
+          value="SEMI_ANNUAL"
+          {...getOverrideProps(overrides, "pmFreqoption4")}
+        ></option>
+        <option
+          children="Annual"
+          value="ANNUAL"
+          {...getOverrideProps(overrides, "pmFreqoption5")}
         ></option>
       </SelectField>
       <TextField
