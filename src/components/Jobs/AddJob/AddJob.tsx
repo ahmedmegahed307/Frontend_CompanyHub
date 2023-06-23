@@ -535,7 +535,7 @@ const AddJob = () => {
             
           </VStack>
           <Box>
-<GoogleMap apiKey={"AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ"}></GoogleMap>
+{/* <GoogleMap apiKey={"AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ"}></GoogleMap> */}
           </Box>
     
           <HStack>
