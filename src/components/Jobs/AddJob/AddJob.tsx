@@ -166,22 +166,52 @@ const AddJob = () => {
       console.log("site created .. ");
       console.log(createSite);
 
+      var xx =JSON.parse(JSON.stringify(createSite));
+
+     await   Geocode.fromAddress(
+    ""+createSite?.address1+' '+createSite?.address2+' '+createSite?.city+' '+createSite?.postcode
+  ).then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
+      
+ 
+      xx.lat = lat ;
+      xx.long = lng ;
+
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+  console.log('xx');
+  console.log(xx);
+      
+
+
+
+  console.log('xx@');
+  console.log(xx);
+      
       setClient({
         ...client!,
-        adresses: [...(client!.adresses ?? []), createSite!],
+        adresses: [...client!.adresses ?? [], xx!],
       });
 
+      console.log("site Client .. ");
+      console.log(client);
+
       const original = await DataStore.query(UsersObject, client!.id);
+      console.log('original');
       console.log(original);
       if (original) {
         const updatedPost = await DataStore.save(
           UsersObject.copyOf(original, (updated) => {
-            updated.adresses = client?.adresses;
+            updated.adresses = [...client!.adresses ?? [], xx!];
           })
         ).then((e) => {
           console.log(" we are here ..");
           console.log(e);
-          console.log(updatedPost);
 
           setSelectSiteIndex(client?.adresses?.length ?? 0);
           createSiteModal.onClose();
@@ -201,6 +231,9 @@ const AddJob = () => {
             return createSiteModal.onClose();
           });
         });
+
+
+        console.log('updatedPost');
         console.log(updatedPost);
       }
     } catch (error: any) {
@@ -485,7 +518,7 @@ const AddJob = () => {
                   {client &&
                     client.adresses &&
                     client.adresses!.map((item, index) => (
-                      <option value={index} key={item?.name}>
+                      <option value={index} key={index}>
                         {item!.name}
                       </option>
                     ))}

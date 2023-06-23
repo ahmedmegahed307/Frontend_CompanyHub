@@ -133,8 +133,8 @@ type EagerAddress = {
   readonly city?: string | null;
   readonly country?: string | null;
   readonly postcode?: string | null;
-  readonly long?: string | null;
-  readonly lat?: string | null;
+  readonly long?: number | null;
+  readonly lat?: number | null;
 }
 
 type LazyAddress = {
@@ -148,8 +148,8 @@ type LazyAddress = {
   readonly city?: string | null;
   readonly country?: string | null;
   readonly postcode?: string | null;
-  readonly long?: string | null;
-  readonly lat?: string | null;
+  readonly long?: number | null;
+  readonly lat?: number | null;
 }
 
 export declare type Address = LazyLoading extends LazyLoadingDisabled ? EagerAddress : LazyAddress

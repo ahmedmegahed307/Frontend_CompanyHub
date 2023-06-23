@@ -157,8 +157,8 @@ type Address {
   city: String
   country: String
   postcode: String
-  long: String
-  lat: String
+  long: Int
+  lat: Int
 }
 
 type JobType {

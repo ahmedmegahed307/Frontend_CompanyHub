@@ -1509,14 +1509,14 @@ export const schema = {
                 "long": {
                     "name": "long",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
                 "lat": {
                     "name": "lat",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 }
@@ -1590,5 +1590,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "4dca3dadd7db5fb6756f9ad86ce8d81b"
+    "version": "9ee005d74c7f8722f17fbdc1d7b94c9d"
 };
