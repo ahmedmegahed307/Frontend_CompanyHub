@@ -25,6 +25,7 @@ import CompanyInfo from "../components/Settings/Company/CompanyInfo";
 import JobInfo from "../components/Jobs/JobDetails/JobInfo";
 import GoogleMap from "../components/Map/GoogleMap";
 import Chat from "../components/Chat/Chat";
+import UserInfo from "../components/Settings/Users/UserInfo";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/settings/company/info",
         element: <CompanyInfo />,
+      },
+      {
+        path: "/settings/user/info",
+        element: <UserInfo />,
       },
 
       {

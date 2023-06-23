@@ -9,13 +9,12 @@ import {
   Tabs,
   useColorModeValue,
 } from "@chakra-ui/react";
-import CompanyDetails from "./CompanyDetails/CompanyDetails";
-import FinancialDetails from "./FinancialDetails/FinancialDetails";
-import SLA from "./SLA/SLA";
-import CompanyAddress from "./CompanyAddress/CompanyAddress";
-import CompanyLogo from "./CompanyLogo/CompanyLogo";
+import UserDetails from "./UserDetails/UserDetails";
+import UserPhoto from "./UserPhoto/UserPhoto";
+import UserAddress from "./UserAddress/UserAddress";
+import ChangePassword from "./ChangePassword/ChangePassword";
 
-const CompanyInfo = () => {
+const UserInfo = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (index: number) => {
@@ -42,7 +41,7 @@ const CompanyInfo = () => {
                 color: selectedTab === 0 ? "white" : undefined,
               }}
             >
-              Company Details
+              Profile Details
             </Tab>
             <Tab
               sx={{
@@ -51,7 +50,7 @@ const CompanyInfo = () => {
                 color: selectedTab === 1 ? "white" : undefined,
               }}
             >
-              Financial Details
+              Address
             </Tab>
             <Tab
               sx={{
@@ -60,7 +59,7 @@ const CompanyInfo = () => {
                 color: selectedTab === 2 ? "white" : undefined,
               }}
             >
-              SLA Settings
+              Profile Photo
             </Tab>
             <Tab
               sx={{
@@ -69,16 +68,7 @@ const CompanyInfo = () => {
                 color: selectedTab === 3 ? "white" : undefined,
               }}
             >
-              Company Address
-            </Tab>
-            <Tab
-              sx={{
-                marginBottom: "1rem",
-                bg: selectedTab === 4 ? tabColor : undefined,
-                color: selectedTab === 4 ? "white" : undefined,
-              }}
-            >
-              Company Logo
+              Change Password
             </Tab>
           </TabList>
         </Tabs>
@@ -94,19 +84,16 @@ const CompanyInfo = () => {
         <Tabs w="full" index={selectedTab} onChange={handleTabChange}>
           <TabPanels>
             <TabPanel>
-              <CompanyDetails />
+              <UserDetails />
             </TabPanel>
             <TabPanel>
-              <FinancialDetails />
+              <UserAddress />
             </TabPanel>
             <TabPanel>
-              <SLA />
+              <UserPhoto />
             </TabPanel>
             <TabPanel>
-              <CompanyAddress />
-            </TabPanel>
-            <TabPanel>
-              <CompanyLogo />
+              <ChangePassword />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -115,7 +102,7 @@ const CompanyInfo = () => {
           position="absolute"
           top={0}
           bottom={0}
-          width="2px"
+          width="1px"
           bg="gray.300"
         ></Box>
       </Box>
@@ -123,4 +110,4 @@ const CompanyInfo = () => {
   );
 };
 
-export default CompanyInfo;
+export default UserInfo;

@@ -14,6 +14,9 @@ import Attachment from "./Attachements/Attachement";
 import JobDetails from "./Details/JobDetails";
 import CheckList from "./CheckLists/CheckList";
 import PartList from "./Part/PartList";
+import SessionsList from "./Sessions/SessionsList";
+import Resolution from "./Resolution/Resolution";
+import Photo from "./Photos/Photo";
 
 const JobInfo = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -80,6 +83,33 @@ const JobInfo = () => {
             >
               CheckLists
             </Tab>
+            <Tab
+              sx={{
+                marginBottom: "1rem",
+                bg: selectedTab === 5 ? tabColor : undefined,
+                color: selectedTab === 5 ? "white" : undefined,
+              }}
+            >
+              Sessions
+            </Tab>
+            <Tab
+              sx={{
+                marginBottom: "1rem",
+                bg: selectedTab === 6 ? tabColor : undefined,
+                color: selectedTab === 6 ? "white" : undefined,
+              }}
+            >
+              Resolutions
+            </Tab>
+            <Tab
+              sx={{
+                marginBottom: "1rem",
+                bg: selectedTab === 7 ? tabColor : undefined,
+                color: selectedTab === 7 ? "white" : undefined,
+              }}
+            >
+              Photos
+            </Tab>
           </TabList>
         </Tabs>
       </Box>
@@ -111,6 +141,15 @@ const JobInfo = () => {
             </TabPanel>
             <TabPanel>
               <CheckList />
+            </TabPanel>
+            <TabPanel>
+              <SessionsList />
+            </TabPanel>
+            <TabPanel>
+              <Resolution />
+            </TabPanel>
+            <TabPanel>
+              <Photo />
             </TabPanel>
           </TabPanels>
         </Tabs>

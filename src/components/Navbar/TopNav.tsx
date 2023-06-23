@@ -3,48 +3,52 @@ import {
   Flex,
   IconButton,
   useBreakpointValue,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  VStack,
   Spacer,
   Image,
   MenuButton,
   Menu,
   MenuItem,
   MenuList,
-  HStack,
   Heading,
-  Input,
-  Link,
-  Container,
 } from "@chakra-ui/react";
-import { MdSettings } from "react-icons/md";
-import { HamburgerIcon, SunIcon } from "@chakra-ui/icons";
-import { NavLink } from "react-router-dom";
+import { MdHelpOutline, MdLogout, MdSettings } from "react-icons/md";
+import { Link, NavLink } from "react-router-dom";
 import SearchInput from "../SearchBar/SearchInput";
+import { FaUserCircle } from "react-icons/fa";
 interface Props {
   onSearch: (searchText: string) => void;
 }
 function TopNav({ onSearch }: Props) {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const NavItems = () => (
     <>
-      {/* <IconButton aria-label='Search database' icon={<MdSettings />} /> */}
       <Menu>
+        <IconButton
+          as={Link}
+          to="/settings/user/info"
+          aria-label="User Profile"
+          icon={<FaUserCircle />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+          marginLeft={10}
+        />
+        <IconButton
+          aria-label="Help"
+          icon={<MdHelpOutline />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+        />
         <MenuButton
           as={IconButton}
           aria-label="Options"
           icon={<MdSettings />}
           variant="ghost"
-          marginRight={5}
-          marginLeft={20}
+          fontSize="xl"
+          marginRight={2}
+          title="Settings"
         />
         <MenuList>
           <MenuItem as={NavLink} to="/settings/checkLists">
@@ -66,6 +70,14 @@ function TopNav({ onSearch }: Props) {
             Manage Company
           </MenuItem>
         </MenuList>
+        <IconButton
+          aria-label="Logout"
+          icon={<MdLogout />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+          title="Logout"
+        />
       </Menu>
     </>
   );
@@ -78,11 +90,12 @@ function TopNav({ onSearch }: Props) {
             <Link href="/">YourLogo</Link>
           </Text> */}
           <Box>
-            <Image src="src/assets/img/fav.svg"></Image>
+            <Image
+              src="/src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
+              title="logo"
+            ></Image>
           </Box>
-          <Heading mx={2} size={"lg"} color={"#1396ab"}>
-            UK Field Service
-          </Heading>
+
           {/* <HStack mx={5} spacing={5}>
             <Link
               as={NavLink}

@@ -9,7 +9,6 @@ import {
   HStack,
   Spacer,
 } from "@chakra-ui/react";
-import { AddIcon, EditIcon } from "@chakra-ui/icons";
 import SettingRow from "../RowSetting";
 
 const JobDetails = () => {
@@ -20,6 +19,16 @@ const JobDetails = () => {
           Job 115 - Pending: Low
         </Heading>
         <Spacer />
+        <Button
+          w={"auto"}
+          colorScheme="blue"
+          alignItems={"center"}
+          variant={"solid"}
+          size={"sm"}
+          bg={"#1396ab"}
+        >
+          Notify Client
+        </Button>
         <Button
           w={"auto"}
           colorScheme="blue"
@@ -71,7 +80,7 @@ const JobDetails = () => {
       </VStack>
       <HStack m={8}>
         <Heading color="#1396ab" fontSize="lg" ml={4}>
-          Actions
+          Actions:
         </Heading>
         <Spacer />
         <Button
@@ -102,7 +111,7 @@ const JobDetails = () => {
           size={"sm"}
           bg={"#1396ab"}
         >
-          Send Job Back As Open
+          Cancel Job
         </Button>
         <Button
           w={"auto"}
@@ -112,7 +121,28 @@ const JobDetails = () => {
           size={"sm"}
           bg={"#1396ab"}
         >
-          Notify Client
+          Send Job Back As Open
+        </Button>
+
+        <Button
+          w={"auto"}
+          colorScheme="blue"
+          alignItems={"center"}
+          variant={"solid"}
+          size={"sm"}
+          bg={"#1396ab"}
+        >
+          Work Docket
+        </Button>
+        <Button
+          w={"auto"}
+          colorScheme="blue"
+          alignItems={"center"}
+          variant={"solid"}
+          size={"sm"}
+          bg={"#1396ab"}
+        >
+          Close Job
         </Button>
       </HStack>
     </Flex>
