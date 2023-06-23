@@ -22,6 +22,7 @@ import {
   ViewIcon,
   SunIcon,
   ChevronDownIcon,
+  UnlockIcon,
 } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 interface SubItemProps {
@@ -138,12 +139,17 @@ function TopNav() {
   const NavItems = () => (
     <VStack spacing={5} m={0} align="start">
       <SideBarItem
-        icon={<InfoOutlineIcon fontSize={"xs"} mx="2px" />}
+        icon={<InfoOutlineIcon fontSize={"sm"} mx="2px" />}
         text="Company Info"
         url="/settings/company/info"
       />
       <SideBarItem
-        icon={<SunIcon fontSize={"xs"} mx="2px" />}
+        icon={<UnlockIcon fontSize={"sm"} mx="2px" />}
+        text="User Profile"
+        url="/settings/user/info"
+      />
+      <SideBarItem
+        icon={<SunIcon fontSize={"sm"} mx="2px" />}
         text="Operational"
         url="/operational"
       />
@@ -153,12 +159,12 @@ function TopNav() {
         url="/statistical"
       />
       <SideBarItem
-        icon={<RepeatIcon fontSize={"md"} mx="2px" />}
+        icon={<RepeatIcon fontSize={"sm"} mx="2px" />}
         text="Jobs"
         url="/jobs"
       />
       <SideBarItem
-        icon={<SettingsIcon fontSize={"md"} mx="2px" />}
+        icon={<SettingsIcon fontSize={"sm"} mx="2px" />}
         text="PPM"
         url="/ppm"
       />
@@ -168,7 +174,7 @@ function TopNav() {
         url="/scheduler"
       />
       <SideBarItem
-        icon={<ViewIcon fontSize={"md"} mx="2px" />}
+        icon={<ViewIcon fontSize={"sm"} mx="2px" />}
         text="Map"
         url="/map"
       />
@@ -178,7 +184,7 @@ function TopNav() {
         url="/chat"
       />
       <SideBarItem
-        icon={<SunIcon fontSize={"md"} mx="2px" />}
+        icon={<SunIcon fontSize={"sm"} mx="2px" />}
         text="Reports"
         url=""
         subItems={[

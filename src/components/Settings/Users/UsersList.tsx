@@ -140,7 +140,7 @@ const UsersList = () => {
           <Button
             marginRight={2}
             as={NavLink}
-            to="#"
+            to="/settings/user/profile"
             my={10}
             px={10}
             py={5}

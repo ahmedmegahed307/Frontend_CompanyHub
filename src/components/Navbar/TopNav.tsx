@@ -3,28 +3,15 @@ import {
   Flex,
   IconButton,
   useBreakpointValue,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  VStack,
   Spacer,
   Image,
   MenuButton,
   Menu,
   MenuItem,
   MenuList,
-  HStack,
   Heading,
-  Input,
-  Link,
-  Container,
 } from "@chakra-ui/react";
-import { MdSettings } from "react-icons/md";
-import { HamburgerIcon, SunIcon } from "@chakra-ui/icons";
+import { MdHelpOutline, MdLogout, MdSettings } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import SearchInput from "../SearchBar/SearchInput";
 interface Props {
@@ -32,19 +19,26 @@ interface Props {
 }
 function TopNav({ onSearch }: Props) {
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const NavItems = () => (
     <>
-      {/* <IconButton aria-label='Search database' icon={<MdSettings />} /> */}
       <Menu>
+        <IconButton
+          aria-label="Help"
+          icon={<MdHelpOutline />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+          marginLeft={20}
+        />
         <MenuButton
           as={IconButton}
           aria-label="Options"
           icon={<MdSettings />}
           variant="ghost"
-          marginRight={5}
-          marginLeft={20}
+          fontSize="xl"
+          marginRight={2}
+          title="Settings"
         />
         <MenuList>
           <MenuItem as={NavLink} to="/settings/checkLists">
@@ -66,6 +60,14 @@ function TopNav({ onSearch }: Props) {
             Manage Company
           </MenuItem>
         </MenuList>
+        <IconButton
+          aria-label="Logout"
+          icon={<MdLogout />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+          title="Logout"
+        />
       </Menu>
     </>
   );
