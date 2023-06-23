@@ -12,8 +12,9 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { MdHelpOutline, MdLogout, MdSettings } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SearchInput from "../SearchBar/SearchInput";
+import { FaUserCircle } from "react-icons/fa";
 interface Props {
   onSearch: (searchText: string) => void;
 }
@@ -24,12 +25,21 @@ function TopNav({ onSearch }: Props) {
     <>
       <Menu>
         <IconButton
+          as={Link}
+          to="/settings/user/info"
+          aria-label="User Profile"
+          icon={<FaUserCircle />}
+          variant="ghost"
+          fontSize="xl"
+          marginRight={2}
+          marginLeft={10}
+        />
+        <IconButton
           aria-label="Help"
           icon={<MdHelpOutline />}
           variant="ghost"
           fontSize="xl"
           marginRight={2}
-          marginLeft={20}
         />
         <MenuButton
           as={IconButton}
