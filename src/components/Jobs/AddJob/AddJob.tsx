@@ -44,7 +44,6 @@ import {
 import { Auth, DataStore } from "aws-amplify";
 import Geocode from "react-geocode";
 import Swal from "sweetalert2";
-
 import { useState, useEffect } from "react";
 import {
   UsersObject,
@@ -54,7 +53,7 @@ import {
   Jobs,
   JobType,
 } from "../../../models";
-import GoogleMap from "../../Map/GoogleMap";
+ import GoogleMap from "../../Map/GoogleMap";
 import { AddIcon } from "@chakra-ui/icons";
 import { MdAdd, MdArrowBack, MdRemove } from "react-icons/md";
 import { Temporal } from "@js-temporal/polyfill";
@@ -533,7 +532,12 @@ const AddJob = () => {
                 />
               </HStack>
             </FormControl>
+            
           </VStack>
+          <Box>
+<GoogleMap apiKey={"AIzaSyCI2PFz1BE74zQa13ssmP1A0DDEmlOXOGQ"}></GoogleMap>
+          </Box>
+    
           <HStack>
             <Heading size={"md"} m={5}>
               Job{" "}
