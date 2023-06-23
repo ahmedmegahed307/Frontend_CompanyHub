@@ -80,11 +80,12 @@ function TopNav({ onSearch }: Props) {
             <Link href="/">YourLogo</Link>
           </Text> */}
           <Box>
-            <Image src="src/assets/img/fav.svg"></Image>
+            <Image
+              src="/src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
+              title="logo"
+            ></Image>
           </Box>
-          <Heading mx={2} size={"lg"} color={"#1396ab"}>
-            UK Field Service
-          </Heading>
+
           {/* <HStack mx={5} spacing={5}>
             <Link
               as={NavLink}
