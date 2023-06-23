@@ -39,7 +39,7 @@ const Chat = ({ username }: ChatProps) => {
 
   const { colorMode } = useColorMode();
   const bubbleColor = useColorModeValue("gray.200", "gray.700");
-  const selectedUserColor = "#009688";
+  const selectedUserColor = "gray.100";
 
   const [selectedUser, setSelectedUser] = useState<string | null>(
     users[0].name
