@@ -29,7 +29,7 @@ const useUserMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
             title: "Success",
             text: isUpdate
               ? "User has been updated successfully"
-              : "User has been DeActivated successfully",
+              : "User has been Deactivated successfully",
             icon: "success",
           });
           onUpdateOrDelete();

@@ -3,7 +3,6 @@ import JobList from "../components/Jobs/JobList/JobList";
 import App from "../App";
 import { Table } from "@chakra-ui/react";
 import ForgotPassword from "../components/Authentication/ForgotPassword";
-import UsersList from "../components/Settings/Users/UsersList";
 import CheckLists from "../components/Settings/CheckLists/CheckLists";
 import Statistical from "../components/StatisticalDashboard/Statistical";
 import Scheduler from "../components/Scheduler/Scheduler";
@@ -23,8 +22,9 @@ import CompanyInfo from "../components/Settings/Company/CompanyInfo";
 import JobInfo from "../components/Jobs/JobDetails/JobInfo";
 import GoogleMap from "../components/Map/GoogleMap";
 import Chat from "../components/Chat/Chat";
-import UserInfo from "../components/Settings/Users/UserInfo";
 import ResolutionMain from "../components/Settings/Resolution/ResolutionMain";
+import UsersMain from "../components/Settings/Users/UsersMain";
+import UserInfo from "../components/Settings/Users/UserInfo/UserInfo";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings/users/usersList",
-        element: <UsersList />,
+        element: <UsersMain />,
       },
       {
         path: "/settings/jobtype/list",

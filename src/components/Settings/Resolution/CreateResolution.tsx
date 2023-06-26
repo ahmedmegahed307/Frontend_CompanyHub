@@ -9,6 +9,7 @@ import {
   DrawerContent,
   DrawerOverlay,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Text,
@@ -49,14 +50,18 @@ const CreateResolution = ({ onSubmit }: ResolutionFormProps) => {
         <DrawerBody>
           <AbsoluteCenter>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
-              <FormControl pb={5} w={"lg"}>
+              <FormControl pb={5} w={"lg"} isInvalid={!!errors.name}>
                 <FormLabel>Name</FormLabel>
                 <Input
                   {...register("name")}
                   className="FormControl"
                   placeholder=""
                 />
-                {errors.name && <Text color="red">{errors.name.message}</Text>}
+                {errors.name && (
+                  <FormErrorMessage color="red">
+                    {errors.name.message}
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
               <Button

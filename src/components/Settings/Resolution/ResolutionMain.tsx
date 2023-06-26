@@ -35,7 +35,7 @@ const ResolutionMain = () => {
   //update
 
   const handleUpdateForm = (data: FormUpdateValidation) => {
-    console.log("data", data);
+    // console.log("data", data);
     updateResolution.mutate({
       name: data.name,
       id: updateResolutionId,
@@ -50,9 +50,7 @@ const ResolutionMain = () => {
   const [updateResolutionId, setUpdateResolutionId] = useState("");
 
   //delete
-  const deleteResolution = useResolutionMutation(() => {
-    deleteModal.onClose();
-  }, false);
+
   const [deleteResolutionId, setDeleteResolutionId] = useState("");
   const deleteModal = useDisclosure();
 

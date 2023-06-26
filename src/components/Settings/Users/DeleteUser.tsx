@@ -1,35 +1,27 @@
-import { useRef } from "react";
 import {
   AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogCloseButton,
   AlertDialogBody,
+  AlertDialogCloseButton,
+  AlertDialogContent,
   AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
 } from "@chakra-ui/react";
-import useResolutionMutation from "../../../hooks/Settings/Resolution/useResolutionMutation";
+import { useRef } from "react";
+import useUserMutation from "../../../hooks/Settings/User/useUserMutation";
 
-type DeleteResolutionModalProps = {
+type DeleteModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  resolutionId: string;
+  userId: string;
 };
 
-const DeleteResolution = ({
-  isOpen,
-  onClose,
-  resolutionId,
-}: DeleteResolutionModalProps) => {
-  const deleteResolution = useResolutionMutation(() => {
+const DeleteModal = ({ isOpen, onClose, userId }: DeleteModalProps) => {
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const deleteUser = useUserMutation(() => {
     onClose();
   }, false);
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
-  const handleDeleteResolution = () => {
-    deleteResolution.mutate(resolutionId);
-  };
 
   return (
     <AlertDialog
@@ -40,18 +32,24 @@ const DeleteResolution = ({
       isCentered
     >
       <AlertDialogOverlay />
+
       <AlertDialogContent>
         <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
         <AlertDialogCloseButton />
         <AlertDialogBody>
-          Are you sure you want to discard all of your notes? 44 words will be
-          deleted.
+          Are you sure you want to Deactivate User?
         </AlertDialogBody>
         <AlertDialogFooter>
           <Button ref={cancelRef} onClick={onClose}>
             No
           </Button>
-          <Button colorScheme="red" onClick={handleDeleteResolution} ml={3}>
+          <Button
+            colorScheme="red"
+            onClick={() => {
+              deleteUser.mutate(userId);
+            }}
+            ml={3}
+          >
             Yes
           </Button>
         </AlertDialogFooter>
@@ -60,4 +58,4 @@ const DeleteResolution = ({
   );
 };
 
-export default DeleteResolution;
+export default DeleteModal;
