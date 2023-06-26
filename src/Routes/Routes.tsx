@@ -13,19 +13,18 @@ import AddContract from "../components/PPM/Contracts/AddContract";
 import EditContract from "../components/PPM/Contracts/EditContract";
 import ClientList from "../components/Settings/Clients/ClientList";
 import JobTypeList from "../components/Settings/JobTypes/JobTypeList";
-import StandardResolutionList from "../components/Settings/Resolution/StandardResolutionList";
 import AddJob from "../components/Jobs/AddJob/AddJob";
 import Login from "../components/Authentication/Login";
 import JobQuery from "../components/Reports/JobQuery/JobQuery";
 import TimeSheet from "../components/Reports/TimeSheet/TimeSheet";
 import Survey from "../components/Reports/Survey/Survey";
 import Invoicing from "../components/Reports/Invoicing/Invoicing";
-import JobDetails from "../components/Jobs/JobDetails/Details/JobDetails";
 import CompanyInfo from "../components/Settings/Company/CompanyInfo";
 import JobInfo from "../components/Jobs/JobDetails/JobInfo";
 import GoogleMap from "../components/Map/GoogleMap";
 import Chat from "../components/Chat/Chat";
 import UserInfo from "../components/Settings/Users/UserInfo";
+import ResolutionMain from "../components/Settings/Resolution/ResolutionMain";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings/resolution/list",
-        element: <StandardResolutionList />,
+        element: <ResolutionMain />,
       },
       {
         path: "/settings/company/info",
