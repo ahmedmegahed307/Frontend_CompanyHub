@@ -42,6 +42,7 @@ import { JobTypesList } from "../../../../models";
 import useCreateJobType from "../../hooks/JobType/useCreateJobType";
 import useJobType from "../../hooks/JobType/useJobType";
 import useJobTypeMutation from "../../hooks/JobType/useJobTypeMutation";
+import DeleteJobType from "./DeleteJobType";
 const JobTypeList = () => {
   // get jobTypeList
   const { data: jobTypeList } = useJobType();
@@ -386,38 +387,12 @@ const JobTypeList = () => {
         </DrawerContent>
       </Drawer>
       {/* Delete Modal  */}
-      <AlertDialog
-        motionPreset="slideInBottom"
-        leastDestructiveRef={cancelRef}
-        onClose={deleteModal.onClose}
-        isOpen={deleteModal.isOpen}
-        isCentered
-      >
-        <AlertDialogOverlay />
-
-        <AlertDialogContent>
-          <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
-          <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want to discard all of your notes? 44 words will be
-            deleted.
-          </AlertDialogBody>
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={deleteModal.onClose}>
-              No
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={() => {
-                deleteJobType.mutate(deleteJobTypeId);
-              }}
-              ml={3}
-            >
-              Yes
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteJobType
+        deleteModal={deleteModal}
+        cancelRef={cancelRef}
+        deleteJobType={deleteJobType}
+        deleteJobTypeId={deleteJobTypeId}
+      />
     </>
   );
 };

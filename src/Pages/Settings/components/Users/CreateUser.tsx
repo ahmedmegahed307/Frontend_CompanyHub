@@ -69,6 +69,7 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
                   <FormErrorMessage>{errors.name.message}</FormErrorMessage>
                 )}
               </FormControl>
+
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.email}>
                 <FormLabel>Email</FormLabel>
                 <Input {...register("email")} placeholder="Enter email" />

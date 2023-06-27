@@ -27,18 +27,8 @@ import {
   FormLabel,
   Input,
   Select,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogCloseButton,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { DataStore } from "aws-amplify";
-import { FaAngleRight } from "react-icons/fa";
+import { useState } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { MdArrowBack } from "react-icons/md";
 
@@ -46,6 +36,7 @@ import { UsersObject } from "../../../../models";
 import useClient from "../../hooks/Client/useClient";
 import useClientMutation from "../../hooks/Client/useClientMutation";
 import useCreateClient from "../../hooks/Client/useCreateClient";
+import DeleteClient from "./DeleteClient";
 
 const ClientList = () => {
   // get clientList
@@ -79,11 +70,13 @@ const ClientList = () => {
 
   //delete
   const deleteModal = useDisclosure();
+  const handleDelete = () => {
+    deleteClient.mutate(deleteClientId);
+  };
   const deleteClient = useClientMutation(() => {
     deleteModal.onClose();
   }, false);
   const [deleteClientId, setDeleteClientId] = useState("");
-  const cancelRef = useRef<HTMLButtonElement>(null);
 
   // new Client
   const [modelSection, setModelSection] = useState<String>("newClint");
@@ -630,38 +623,11 @@ const ClientList = () => {
       </Drawer>
 
       {/* Delete Modal  */}
-      <AlertDialog
-        motionPreset="slideInBottom"
-        leastDestructiveRef={cancelRef}
-        onClose={deleteModal.onClose}
+      <DeleteClient
         isOpen={deleteModal.isOpen}
-        isCentered
-      >
-        <AlertDialogOverlay />
-
-        <AlertDialogContent>
-          <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
-          <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want to discard all of your notes? 44 words will be
-            deleted.
-          </AlertDialogBody>
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={deleteModal.onClose}>
-              No
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={() => {
-                deleteClient.mutate(deleteClientId);
-              }}
-              ml={3}
-            >
-              Yes
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onClose={deleteModal.onClose}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

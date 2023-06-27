@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataStore } from "aws-amplify";
 import Swal from "sweetalert2";
-import { JobType, JobTypesList } from "../../../../models";
+import { JobTypesList } from "../../../../models";
 
 const useCreateJobType = (onCreate:()=>void) =>{
     const queryClient = useQueryClient();
