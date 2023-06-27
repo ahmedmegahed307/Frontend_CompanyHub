@@ -14,8 +14,8 @@ import { AddIcon } from "@chakra-ui/icons";
 import DeleteModal from "./DeleteUser";
 import UsersList from "./UsersList";
 import CreateUser, { CreateUserValidation } from "./CreateUser";
-import useCreateUserMutation from "../../../../hooks/Settings/User/useCreateUser";
-import useUser from "../../../../hooks/Settings/User/useUser";
+import useCreateUserMutation from "../../hooks/User/useCreateUser";
+import useUser from "../../hooks/User/useUser";
 
 const UsersMain = () => {
   // get usersLists

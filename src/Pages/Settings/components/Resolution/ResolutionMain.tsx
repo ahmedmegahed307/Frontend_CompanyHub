@@ -13,10 +13,11 @@ import CreateResolution, { FormCreateValidation } from "./CreateResolution";
 import UpdateResolution, { FormUpdateValidation } from "./UpdateResolution";
 import DeleteResolution from "./DeleteResolution";
 import ResolutionList from "./ResolutionList";
-import useCreateResolution from "../../../../hooks/Settings/Resolution/useCreateResolution";
-import useResolution from "../../../../hooks/Settings/Resolution/useResolution";
-import useResolutionMutation from "../../../../hooks/Settings/Resolution/useResolutionMutation";
+
 import { Resolutions } from "../../../../models";
+import useCreateResolution from "../../hooks/Resolution/useCreateResolution";
+import useResolution from "../../hooks/Resolution/useResolution";
+import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
 
 const ResolutionMain = () => {
   // get resolutionList

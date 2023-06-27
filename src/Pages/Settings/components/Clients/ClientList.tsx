@@ -41,10 +41,11 @@ import { DataStore } from "aws-amplify";
 import { FaAngleRight } from "react-icons/fa";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { MdArrowBack } from "react-icons/md";
-import useClient from "../../../../hooks/Settings/Client/useClient";
-import useClientMutation from "../../../../hooks/Settings/Client/useClientMutation";
-import useCreateClient from "../../../../hooks/Settings/Client/useCreateClient";
+
 import { UsersObject } from "../../../../models";
+import useClient from "../../hooks/Client/useClient";
+import useClientMutation from "../../hooks/Client/useClientMutation";
+import useCreateClient from "../../hooks/Client/useCreateClient";
 
 const ClientList = () => {
   // get clientList

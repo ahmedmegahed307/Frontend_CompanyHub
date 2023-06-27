@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import useJobType from "../../../../../../hooks/Settings/JobType/useJobType";
+import useJobType from "../../../../../Settings/hooks/JobType/useJobType";
 interface JobSubTypeProps {
   onSelectedJobSubType: (priority: string | undefined) => void;
 }

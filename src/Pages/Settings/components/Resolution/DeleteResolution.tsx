@@ -9,7 +9,7 @@ import {
   AlertDialogFooter,
   Button,
 } from "@chakra-ui/react";
-import useResolutionMutation from "../../../../hooks/Settings/Resolution/useResolutionMutation";
+import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
 
 type DeleteResolutionModalProps = {
   isOpen: boolean;

@@ -15,7 +15,7 @@ import {
   MenuOptionGroup,
   TagCloseButton,
 } from "@chakra-ui/react";
-import useClient from "../../../../hooks/Settings/Client/useClient";
+import useClient from "../../../Settings/hooks/Client/useClient";
 
 interface ClientProps {
   onSelectedClients: (clients: string[] | undefined) => void;

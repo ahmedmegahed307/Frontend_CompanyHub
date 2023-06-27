@@ -37,10 +37,11 @@ import { useRef, useState } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 import SubTypeRemoval from "./SubTypeRemoval";
-import useCreateJobType from "../../../../hooks/Settings/JobType/useCreateJobType";
-import useJobType from "../../../../hooks/Settings/JobType/useJobType";
-import useJobTypeMutation from "../../../../hooks/Settings/JobType/useJobTypeMutation";
+
 import { JobTypesList } from "../../../../models";
+import useCreateJobType from "../../hooks/JobType/useCreateJobType";
+import useJobType from "../../hooks/JobType/useJobType";
+import useJobTypeMutation from "../../hooks/JobType/useJobTypeMutation";
 const JobTypeList = () => {
   // get jobTypeList
   const { data: jobTypeList } = useJobType();
