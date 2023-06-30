@@ -6,6 +6,7 @@ import awsExports from "./aws-exports";
 import { RouterProvider } from "react-router-dom";
 import router from "./Routes/Routes.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "@fontsource/montserrat";
 import theme from "./Theme.tsx";
 Amplify.configure(awsExports);
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
       {/* <Login/> */}
     </ChakraProvider>
+    <ReactQueryDevtools />
   </QueryClientProvider>
   // </React.StrictMode>,
 );

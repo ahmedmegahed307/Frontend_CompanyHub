@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuList,
   Heading,
+  Avatar,
 } from "@chakra-ui/react";
 import { MdHelpOutline, MdLogout, MdSettings } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
@@ -24,7 +25,7 @@ function TopNav({ onSearch }: Props) {
   const NavItems = () => (
     <>
       <Menu>
-        <IconButton
+        {/* <IconButton
           as={Link}
           to="/settings/user/info"
           aria-label="User Profile"
@@ -33,6 +34,14 @@ function TopNav({ onSearch }: Props) {
           fontSize="xl"
           marginRight={2}
           marginLeft={10}
+        /> */}
+        <Avatar
+          src="/src/assets/img/testavatar.png"
+          mr={2}
+          ml={10}
+          size={"md"}
+          as={Link}
+          to="/settings/user/info"
         />
         <IconButton
           aria-label="Help"
