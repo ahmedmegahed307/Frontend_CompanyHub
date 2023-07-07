@@ -27,8 +27,8 @@ const useResolutionMutation = (
         Swal.fire({
           title: "Success",
           text: isUpdate
-            ? "Resolution has been updated successfully"
-            : "Resolution has been deleted successfully",
+            ? "Resolution has been updated successfully!"
+            : "Resolution has been deleted successfully!",
           icon: "success",
         });
         onUpdateOrDelete();
