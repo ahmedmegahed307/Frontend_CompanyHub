@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DataStore } from "aws-amplify";
+import { ResolutionMutationAPI, Resolutions } from "../../../../services/ResolutionService/resolution-service";
 import Swal from "sweetalert2";
-import { Resolutions } from "../../../../models";
 
 const useResolutionMutation = (
   onUpdateOrDelete: () => void,
@@ -9,37 +8,14 @@ const useResolutionMutation = (
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<Resolutions, Error, Resolutions | string>(
-    async (resolution: Resolutions | string) => {
+  return useMutation<Resolutions, Error, Resolutions | number>(
+    async (resolution: Resolutions | number) => {
       if (isUpdate) {
-        const original = await DataStore.query(
-          Resolutions,
-          (resolution as Resolutions).id || ""
-        );
-
-        if (original) {
-          return DataStore.save(
-            Resolutions.copyOf(original, (updated) => {
-              updated.name = (resolution as Resolutions).name;
-            })
-          );
-        }
-
-        throw new Error("Resolution not found");
-      } 
-      else {
-        const id = resolution as string;
-        const original = await DataStore.query(Resolutions, id);
-
-        if (original) {
-          return DataStore.save(
-            Resolutions.copyOf(original, (updated) => {
-              updated.isActive = false;
-            })
-          );
-        }
-
-        throw new Error("Resolution not found");
+        const id = (resolution as Resolutions).id;
+        return ResolutionMutationAPI.update(id, resolution);
+      } else {
+        const id = resolution as number;
+        return ResolutionMutationAPI.delete(id);
       }
     },
     {
@@ -47,6 +23,7 @@ const useResolutionMutation = (
         queryClient.invalidateQueries({
           queryKey: ["resolutionList"],
         });
+        // handle success
         Swal.fire({
           title: "Success",
           text: isUpdate
@@ -58,6 +35,7 @@ const useResolutionMutation = (
       },
       onError: (error: any) => {
         console.log("errorssss", error);
+        // handle error
       },
     }
   );

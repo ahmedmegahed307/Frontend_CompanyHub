@@ -1,33 +1,34 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DataStore } from "aws-amplify";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { Resolutions } from "../../../../models";
+import { Resolutions, createResolution } from "../../../../services/ResolutionService/resolution-service";
 
-const useCreateResolution = (onCreate:()=>void) =>{
-    const queryClient = useQueryClient();
-    return useMutation<Resolutions,Error,Resolutions>(
-        (resolution: Resolutions) =>
-          DataStore.save(
-            new Resolutions({ isActive: true, name: resolution.name })
-          ),
-        {
-          //savedResoltion -> object from databse , newResoltion ->object we created
-          onSuccess: (savedResolution, newResolution) => { 
-            console.log(savedResolution);
-            queryClient.invalidateQueries({
-              queryKey: ["resolutionList"],
-            });
-            Swal.fire({
-              title: "Congratulations",
-              text: "Resolutions have been saved successfully",
-              icon: "success",
-            });
-           onCreate();
-          },
-          onError: (error: any) => {
-            console.log("error", error);
-          },
-        }
-      );
-}
+const useCreateResolution = (onCreate: () => void) => {
+  const queryClient = useQueryClient();
+
+  const createResolutionMutation = useMutation<Resolutions, Error, Resolutions>(createResolution.post, {
+    onSuccess: (savedResolution) => {
+      queryClient.invalidateQueries(["resolutionList"]);
+
+      Swal.fire({
+        title: "Congratulations",
+        text: "Resolutions have been saved successfully",
+        icon: "success",
+      });
+
+      onCreate();
+      return savedResolution;
+    },
+    onError: (error) => {
+      console.log("error", error);
+      throw new Error("Failed to create resolution");
+    },
+  });
+
+  const createResolutionFn = async (newResolution: Resolutions) => {
+    await createResolutionMutation.mutateAsync(newResolution);
+  };
+
+  return createResolutionFn;
+};
+
 export default useCreateResolution;

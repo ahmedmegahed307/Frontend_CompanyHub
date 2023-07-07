@@ -14,7 +14,7 @@ import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation"
 type DeleteResolutionModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  resolutionId: string;
+  resolutionId: number;
 };
 
 const DeleteResolution = ({

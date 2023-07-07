@@ -10,15 +10,16 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Resolutions } from "../../../models";
+//import { Resolutions } from "../../../models";
 import { NavLink } from "react-router-dom";
+import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
 
 type ResolutionTableProps = {
   resolutionList: Resolutions[] | undefined;
   setUpdateResolutionInput: (input: string) => void;
-  setUpdateResolutionId: (id: string) => void;
+  setUpdateResolutionId: (id: number) => void;
   updateModal: any;
-  setDeleteResolutionId: (id: string) => void;
+  setDeleteResolutionId: (id: number) => void;
   deleteModal: any;
 };
 
@@ -30,6 +31,7 @@ const ResolutionList = ({
   setDeleteResolutionId,
   deleteModal,
 }: ResolutionTableProps) => {
+  console.log(resolutionList);
   return (
     <TableContainer borderRadius={"xl"} w={"full"}>
       <Card p={0} borderRadius={""} variant={"outline"}>

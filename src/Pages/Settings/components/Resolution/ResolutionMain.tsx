@@ -14,10 +14,10 @@ import UpdateResolution, { FormUpdateValidation } from "./UpdateResolution";
 import DeleteResolution from "./DeleteResolution";
 import ResolutionList from "./ResolutionList";
 
-import { Resolutions } from "../../../../models";
 import useCreateResolution from "../../hooks/Resolution/useCreateResolution";
 import useResolution from "../../hooks/Resolution/useResolution";
 import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
+import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
 
 const ResolutionMain = () => {
   // get resolutionList
@@ -28,8 +28,8 @@ const ResolutionMain = () => {
     createModal.onClose();
   });
   const createModal = useDisclosure();
-  const handleCreateForm = (data: FormCreateValidation) => {
-    createResolution.mutate({
+  const handleCreateForm = async (data: FormCreateValidation) => {
+    await createResolution({
       name: data.name,
     } as Resolutions);
   };
@@ -37,11 +37,11 @@ const ResolutionMain = () => {
   //update
 
   const handleUpdateForm = (data: FormUpdateValidation) => {
-    // console.log("data", data);
+    console.log("data", data);
     updateResolution.mutate({
       name: data.name,
       id: updateResolutionId,
-      isActive: true,
+      // isActive: true,
     } as Resolutions);
   };
   const updateResolution = useResolutionMutation(() => {
@@ -49,11 +49,11 @@ const ResolutionMain = () => {
   }, true);
   const updateModal = useDisclosure();
   const [updateResolutionInput, setUpdateResolutionInput] = useState("");
-  const [updateResolutionId, setUpdateResolutionId] = useState("");
+  const [updateResolutionId, setUpdateResolutionId] = useState<number>(0);
 
   //delete
 
-  const [deleteResolutionId, setDeleteResolutionId] = useState("");
+  const [deleteResolutionId, setDeleteResolutionId] = useState<number>(0);
   const deleteModal = useDisclosure();
 
   return (
