@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { DataStore } from "aws-amplify";
-import { UsersObject } from "../../../../models";
-
+export interface UsersObject{
+  id:string,
+  name:string,
+  email:string
+}
 const useUser = () =>{
 
-    return  useQuery<UsersObject[],Error>({
-        queryKey: ['userList'],
-        queryFn: () => {
-          return DataStore.query(UsersObject);
-        },
-      });
+   
 }
 export default useUser;

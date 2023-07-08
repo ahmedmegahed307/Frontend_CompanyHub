@@ -4,20 +4,20 @@ import App from "../App";
 import ForgotPassword from "../Pages/Authentication/components/ForgotPassword";
 import Login from "../Pages/Authentication/components/Login";
 import Chat from "../Pages/Chat/components/Chat";
-import AddJob from "../Pages/Jobs/AddJob/AddJob";
+
 import JobInfo from "../Pages/Jobs/JobDetails/JobInfo";
 import JobList from "../Pages/Jobs/JobList/JobList";
 import GoogleMap from "../Pages/Map/components/GoogleMap";
 import Operational from "../Pages/Operational/component/Operational";
 import AddContract from "../Pages/PPM/components/PPM/Contracts/AddContract";
-import EditContract from "../Pages/PPM/components/PPM/Contracts/EditContract";
+
 import PPMTabs from "../Pages/PPM/components/PPM/PPMTabs";
 import Invoicing from "../Pages/Reports/components/Reports/Invoicing/Invoicing";
 import JobQuery from "../Pages/Reports/components/Reports/JobQuery/JobQuery";
 import Survey from "../Pages/Reports/components/Reports/Survey/Survey";
 import TimeSheet from "../Pages/Reports/components/Reports/TimeSheet/TimeSheet";
 import Scheduler from "../Pages/Scheduler/components/Scheduler";
-import CheckLists from "../Pages/Settings/components/CheckLists/CheckLists";
+
 import ClientList from "../Pages/Settings/components/Clients/ClientList";
 import CompanyInfo from "../Pages/Settings/components/Company/CompanyInfo";
 import JobTypeList from "../Pages/Settings/components/JobTypes/JobTypeList";
@@ -32,10 +32,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Table /> },
-      {
-        path: "/jobs/addJob",
-        element: <AddJob />,
-      },
+
       {
         path: "/jobs",
         element: <JobList />,
@@ -66,10 +63,6 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/settings/checkLists",
-        element: <CheckLists />,
-      },
-      {
         path: "/statistical",
         element: <Statistical />,
       },
@@ -97,10 +90,7 @@ const router = createBrowserRouter([
         path: "/ppm/contracts/addContract",
         element: <AddContract />,
       },
-      {
-        path: "/ppm/contracts/editContract/:id",
-        element: <EditContract />,
-      },
+
       {
         path: "/job/:id/jobInfo",
         element: <JobInfo />,

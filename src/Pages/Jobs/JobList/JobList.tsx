@@ -1,8 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import React, { useEffect, useState } from "react";
 import { DataTable } from "../../table";
-import { DataStore } from "aws-amplify";
-import { Jobs, UsersObject } from "../../../models";
+
 import {
   Tabs,
   TabList,
@@ -37,30 +36,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { Link, NavLink } from "react-router-dom";
-import CustomTable from "./CustomTable";
-import OpenJobsTable from "./OpenJobsTable";
-import AssignedJobsTable from "./AssignedJobsTable";
+
 import { MdAdd } from "react-icons/md";
 import { AddIcon } from "@chakra-ui/icons";
 
 const JobList = () => {
-  const [jobsList, setJobsList] = useState<Jobs[]>();
+  const [jobsList, setJobsList] = useState();
 
   // get CLients
-  useEffect(() => {
-    /**
-     * This keeps `post` fresh.
-     */
-    const sub = DataStore.observeQuery(Jobs).subscribe(({ items }) => {
-      console.log(items);
-
-      setJobsList(items);
-    });
-
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
 
   return (
     <>
@@ -88,12 +71,12 @@ const JobList = () => {
 
           <Tabs my={4} w={"full"}>
             <TabList>
-              <Tab color={"black"}>Pending ({jobsList?.length})</Tab>
+              {/* <Tab color={"black"}>Pending ({jobsList?.length})</Tab>
               <Tab color={"black"}>Open ({jobsList?.length})</Tab>
               <Tab color={"black"}>Assigned ({jobsList?.length})</Tab>
               <Tab color={"black"}>Resolved ({jobsList?.length})</Tab>
               <Tab color={"black"}>Closed ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Cancelled ({jobsList?.length})</Tab>
+              <Tab color={"black"}>Cancelled ({jobsList?.length})</Tab> */}
             </TabList>
             <Flex w={"full"} direction={"row"}>
               {/* <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
@@ -123,7 +106,7 @@ const JobList = () => {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {jobsList &&
+                        {/* {jobsList &&
                           jobsList!.map((item, index) => (
                             <Tr key={item.id}>
                               <Link to={`/job/${item.id}/jobInfo`}>
@@ -135,13 +118,13 @@ const JobList = () => {
                               <Td>{item.createdAt}</Td>
                               <Td> </Td>
                             </Tr>
-                          ))}
+                          ))} */}
                       </Tbody>
                     </Table>
                   </Card>
                 </TableContainer>
               </TabPanel>
-              <TabPanel>
+              {/* <TabPanel>
                 <TableContainer>
                   {jobsList && <OpenJobsTable data1={jobsList ?? []} />}
                 </TableContainer>{" "}
@@ -150,7 +133,7 @@ const JobList = () => {
                 <TableContainer>
                   {jobsList && <AssignedJobsTable data1={jobsList ?? []} />}
                 </TableContainer>
-              </TabPanel>
+              </TabPanel> */}
             </TabPanels>
           </Tabs>
         </Flex>

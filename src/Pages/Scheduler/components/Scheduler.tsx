@@ -1,4 +1,3 @@
-import SchedulerJobs from "./SchedulerJobs";
 import Calendar from "./Calendar";
 import { VStack } from "@chakra-ui/react";
 import CalendarSelectLists from "./CalendarSelectLists";
@@ -9,7 +8,6 @@ const Scheduler = () => {
       <VStack align="stretch">
         <CalendarSelectLists />
         <Calendar />
-        <SchedulerJobs />
       </VStack>
     </>
   );
