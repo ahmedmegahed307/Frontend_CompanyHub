@@ -33,7 +33,6 @@
 // } from "@chakra-ui/react";
 // import { FormEvent, useEffect, useState } from "react";
 
-// import { DataStore } from "aws-amplify";
 // import { JobTypesList, CheckListModule } from "../../../../models";
 
 // const CheckLists = () => {

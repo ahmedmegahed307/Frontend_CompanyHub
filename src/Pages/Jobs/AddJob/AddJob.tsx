@@ -41,7 +41,7 @@
 //   VStack,
 //   Divider,
 // } from "@chakra-ui/react";
-// import { Auth, DataStore } from "aws-amplify";
+
 // import Geocode from "react-geocode";
 // import Swal from "sweetalert2";
 // import { useState, useEffect } from "react";

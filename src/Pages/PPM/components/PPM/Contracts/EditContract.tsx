@@ -13,7 +13,7 @@
 //   Checkbox,
 //   VStack,
 // } from "@chakra-ui/react";
-// import { Auth, DataStore } from "aws-amplify";
+
 // import Geocode from "react-geocode";
 
 // import { useState, useEffect } from "react";
