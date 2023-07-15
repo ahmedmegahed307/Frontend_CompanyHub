@@ -6,7 +6,6 @@ import {
   useDisclosure,
   Drawer,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import CreateResolution, { FormCreateValidation } from "./CreateResolution";
@@ -18,11 +17,13 @@ import useCreateResolution from "../../hooks/Resolution/useCreateResolution";
 import useResolution from "../../hooks/Resolution/useResolution";
 import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
 import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
+import useResolutionStore from "../../hooks/Resolution/store";
 
 const ResolutionMain = () => {
   // get resolutionList
   const { data: resolutionList } = useResolution();
-
+  const { updateResolutionId, updateResolutionInput, deleteResolutionId } =
+    useResolutionStore();
   //create
   const createResolution = useCreateResolution(() => {
     createModal.onClose();
@@ -48,12 +49,9 @@ const ResolutionMain = () => {
     updateModal.onClose();
   }, true);
   const updateModal = useDisclosure();
-  const [updateResolutionInput, setUpdateResolutionInput] = useState("");
-  const [updateResolutionId, setUpdateResolutionId] = useState<number>(0);
 
   //delete
 
-  const [deleteResolutionId, setDeleteResolutionId] = useState<number>(0);
   const deleteModal = useDisclosure();
 
   return (
@@ -97,10 +95,7 @@ const ResolutionMain = () => {
 
         <ResolutionList
           resolutionList={resolutionList}
-          setUpdateResolutionInput={setUpdateResolutionInput}
-          setUpdateResolutionId={setUpdateResolutionId}
           updateModal={updateModal}
-          setDeleteResolutionId={setDeleteResolutionId}
           deleteModal={deleteModal}
         />
       </Flex>

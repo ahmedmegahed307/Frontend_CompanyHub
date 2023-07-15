@@ -13,24 +13,24 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 //import { Resolutions } from "../../../models";
 import { NavLink } from "react-router-dom";
 import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
+import useResolutionStore from "../../hooks/Resolution/store";
 
 type ResolutionTableProps = {
   resolutionList: Resolutions[] | undefined;
-  setUpdateResolutionInput: (input: string) => void;
-  setUpdateResolutionId: (id: number) => void;
   updateModal: any;
-  setDeleteResolutionId: (id: number) => void;
   deleteModal: any;
 };
 
 const ResolutionList = ({
   resolutionList,
-  setUpdateResolutionInput,
-  setUpdateResolutionId,
   updateModal,
-  setDeleteResolutionId,
   deleteModal,
 }: ResolutionTableProps) => {
+  const {
+    setDeleteResolutionId,
+    setUpdateResolutionId,
+    setUpdateResolutionInput,
+  } = useResolutionStore();
   console.log(resolutionList);
   return (
     <TableContainer borderRadius={"xl"} w={"full"}>
