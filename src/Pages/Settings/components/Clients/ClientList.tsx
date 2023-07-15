@@ -31,33 +31,30 @@ import {
 import { useState } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { MdArrowBack } from "react-icons/md";
-
-import { UsersObject } from "../../../../models";
 import useClient from "../../hooks/Client/useClient";
 import useClientMutation from "../../hooks/Client/useClientMutation";
 import useCreateClient from "../../hooks/Client/useCreateClient";
 import DeleteClient from "./DeleteClient";
+import { Client } from "../../../../services/ClientService/client-service";
 
 const ClientList = () => {
   // get clientList
   const { data: clientsList } = useClient();
 
   //create
-  const [createClient, setCreateClient] = useState<UsersObject>(
-    {} as UsersObject
-  );
+  const [createClient, setCreateClient] = useState<Client>({} as Client);
   const createModal = useDisclosure();
   const createClientQuery = useCreateClient(() => {
     createModal.onClose();
   });
 
   const handleCreate = () => {
-    createClientQuery.mutate(createClient);
-    setCreateClient({} as UsersObject);
+    // createClientQuery.mutate(createClient);
+    setCreateClient({} as Client);
   };
 
   //update
-  const [editClient, setEditClient] = useState<UsersObject>({} as UsersObject);
+  const [editClient, setEditClient] = useState<Client>({} as Client);
   const updateModal = useDisclosure();
 
   const updateClient = useClientMutation(() => {
@@ -65,18 +62,18 @@ const ClientList = () => {
   }, true);
 
   const HandleUpdate = () => {
-    updateClient.mutate(editClient);
+    //  updateClient.mutate(editClient);
   };
 
   //delete
   const deleteModal = useDisclosure();
   const handleDelete = () => {
-    deleteClient.mutate(deleteClientId);
+    // deleteClient.mutate(deleteClientId);
   };
   const deleteClient = useClientMutation(() => {
     deleteModal.onClose();
   }, false);
-  const [deleteClientId, setDeleteClientId] = useState("");
+  const [deleteClientId, setDeleteClientId] = useState(0);
 
   // new Client
   const [modelSection, setModelSection] = useState<String>("newClint");
@@ -132,7 +129,7 @@ const ClientList = () => {
                   <Table variant="simple">
                     <Thead bg={"gray.100"} rounded={"xl"}>
                       <Tr>
-                        <Th>Name</Th>
+                        <Th>Code</Th>
                         <Th>Address</Th>
                         <Th>Contact Name</Th>
                         <Th>Contact Phone</Th>
@@ -144,17 +141,11 @@ const ClientList = () => {
                       {clientsList &&
                         clientsList.map((client) => (
                           <Tr key={client.id}>
-                            <Td>{client.name}</Td>
-                            <Td>
-                              {client.adresses && client.adresses![0]?.city}
-                            </Td>
-                            <Td>
-                              {client.adresses && client.adresses![0]?.city}
-                            </Td>
-                            <Td>
-                              {client.adresses && client.adresses![0]?.city}
-                            </Td>
-                            <Td>Not yet in Database</Td>
+                            <Td>{client.clientCode}</Td>
+                            <Td>{client.firstName + " " + client.lastName}</Td>
+                            <Td>{client.address}</Td>
+                            <Td>{client.phone}</Td>
+                            <Td>{client.clientPortalAccess}</Td>
                             <Td>
                               <IconButton
                                 aria-label="Search database"
@@ -163,20 +154,20 @@ const ClientList = () => {
                                   console.log("asd");
                                   console.log(client);
                                   setModelSection("newClint");
-                                  setEditClient({
-                                    ...editClient!,
-                                    id: client.id!,
-                                    name: client.name!,
-                                    currencyCode: client.currencyCode!,
-                                    financialContactEmail:
-                                      client.financialContactEmail!,
-                                    financialContactName:
-                                      client.financialContactName!,
-                                    siteType: client.siteType!,
-                                    vatNumber: client.vatNumber!,
-                                    vatRate: client.vatRate!,
-                                    vatValue: client.vatValue!,
-                                  });
+                                  // setEditClient({
+                                  //   ...editClient!,
+                                  //   id: client.id!,
+                                  //   name: client.name!,
+                                  //   currencyCode: client.currencyCode!,
+                                  //   financialContactEmail:
+                                  //     client.financialContactEmail!,
+                                  //   financialContactName:
+                                  //     client.financialContactName!,
+                                  //   siteType: client.siteType!,
+                                  //   vatNumber: client.vatNumber!,
+                                  //   vatRate: client.vatRate!,
+                                  //   vatValue: client.vatValue!,
+                                  // });
                                   updateModal.onOpen();
                                 }}
                                 colorScheme="blue"
@@ -286,13 +277,14 @@ const ClientList = () => {
                     <FormLabel> Financial Contact Name </FormLabel>
 
                     <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient!,
-                          financialContactName: e.target.value,
-                        })
-                      }
-                      value={createClient?.financialContactName || ""}
+                      // onChange={(e) =>
+                      //   setCreateClient({
+                      //     ...createClient!,
+                      //     financialContactName: e.target.value,
+                      //   }
+                      //   )
+                      // }
+                      // value={createClient?.financialContactName || ""}
                       className="FormControl"
                       placeholder=""
                     />
@@ -300,13 +292,13 @@ const ClientList = () => {
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Financial Contact Email </FormLabel>
                     <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient!,
-                          financialContactEmail: e.target.value,
-                        })
-                      }
-                      value={createClient?.financialContactEmail || ""}
+                      // onChange={(e) =>
+                      //   setCreateClient({
+                      //     ...createClient!,
+                      //     financialContactEmail: e.target.value,
+                      //   })
+                      // }
+                      // value={createClient?.financialContactEmail || ""}
                       className="FormControl"
                       placeholder=""
                     />
@@ -318,13 +310,13 @@ const ClientList = () => {
                       // onChange={(e) =>
                       //   setEngineer(engineersList![parseInt(e.target.value)])
                       // }
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient!,
-                          siteType: e.target.value,
-                        })
-                      }
-                      value={createClient?.siteType || ""}
+                      // onChange={(e) =>
+                      //   setCreateClient({
+                      //     ...createClient!,
+                      //     siteType: e.target.value,
+                      //   })
+                      // }
+                      // value={createClient?.siteType || ""}
                       variant="outline"
                       placeholder=" Select the Engineer for this job"
                     >
@@ -338,13 +330,13 @@ const ClientList = () => {
                       // onChange={(e) =>
                       //   setEngineer(engineersList![parseInt(e.target.value)])
                       // }
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient!,
-                          currencyCode: e.target.value,
-                        })
-                      }
-                      value={createClient?.currencyCode || ""}
+                      // onChange={(e) =>
+                      //   setCreateClient({
+                      //     ...createClient!,
+                      //     currencyCode: e.target.value,
+                      //   })
+                      // }
+                      // value={createClient?.currencyCode || ""}
                       variant="outline"
                       placeholder=" Select the Engineer for this job"
                     >
@@ -378,13 +370,13 @@ const ClientList = () => {
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> VAT Value </FormLabel>
                     <Input
-                      onChange={(e) =>
-                        setCreateClient({
-                          ...createClient!,
-                          vatValue: e.target.value,
-                        })
-                      }
-                      value={createClient?.vatValue || ""}
+                      // onChange={(e) =>
+                      //   setCreateClient({
+                      //     ...createClient!,
+                      //     vatValue: e.target.value,
+                      //   })
+                      // }
+                      // value={createClient?.vatValue || ""}
                       className="FormControl"
                       placeholder=""
                     />
@@ -487,13 +479,13 @@ const ClientList = () => {
                     <FormLabel> Financial Contact Name </FormLabel>
 
                     <Input
-                      onChange={(e) =>
-                        setEditClient({
-                          ...editClient!,
-                          financialContactName: e.target.value,
-                        })
-                      }
-                      value={editClient?.financialContactName || ""}
+                      // onChange={(e) =>
+                      //   setEditClient({
+                      //     ...editClient!,
+                      //     financialContactName: e.target.value,
+                      //   })
+                      // }
+                      // value={editClient?.financialContactName || ""}
                       className="FormControl"
                       placeholder=""
                     />
@@ -501,13 +493,13 @@ const ClientList = () => {
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> Financial Contact Email </FormLabel>
                     <Input
-                      onChange={(e) =>
-                        setEditClient({
-                          ...editClient!,
-                          financialContactEmail: e.target.value,
-                        })
-                      }
-                      value={editClient?.financialContactEmail || ""}
+                      // onChange={(e) =>
+                      //   setEditClient({
+                      //     ...editClient!,
+                      //     financialContactEmail: e.target.value,
+                      //   })
+                      // }
+                      // value={editClient?.financialContactEmail || ""}
                       className="FormControl"
                       placeholder=""
                     />
@@ -519,13 +511,13 @@ const ClientList = () => {
                       // onChange={(e) =>
                       //   setEngineer(engineersList![parseInt(e.target.value)])
                       // }
-                      onChange={(e) =>
-                        setEditClient({
-                          ...editClient!,
-                          siteType: e.target.value,
-                        })
-                      }
-                      value={editClient?.siteType || ""}
+                      // onChange={(e) =>
+                      //   setEditClient({
+                      //     ...editClient!,
+                      //     siteType: e.target.value,
+                      //   })
+                      // }
+                      // value={editClient?.siteType || ""}
                       variant="outline"
                       placeholder=" Select the Engineer for this job"
                     >
@@ -539,13 +531,13 @@ const ClientList = () => {
                       // onChange={(e) =>
                       //   setEngineer(engineersList![parseInt(e.target.value)])
                       // }
-                      onChange={(e) =>
-                        setEditClient({
-                          ...editClient!,
-                          currencyCode: e.target.value,
-                        })
-                      }
-                      value={editClient?.currencyCode || ""}
+                      // onChange={(e) =>
+                      //   setEditClient({
+                      //     ...editClient!,
+                      //     currencyCode: e.target.value,
+                      //   })
+                      // }
+                      // value={editClient?.currencyCode || ""}
                       variant="outline"
                       placeholder=" Select the Engineer for this job"
                     >
@@ -579,13 +571,13 @@ const ClientList = () => {
                   <FormControl pb={5} w={"lg"}>
                     <FormLabel> VAT Value </FormLabel>
                     <Input
-                      onChange={(e) =>
-                        setEditClient({
-                          ...editClient!,
-                          vatValue: e.target.value,
-                        })
-                      }
-                      value={editClient?.vatValue || ""}
+                      // onChange={(e) =>
+                      //   setEditClient({
+                      //     ...editClient!,
+                      //     vatValue: e.target.value,
+                      //   })
+                      // }
+                      // value={editClient?.vatValue || ""}
                       className="FormControl"
                       placeholder=""
                     />

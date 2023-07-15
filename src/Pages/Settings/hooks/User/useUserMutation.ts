@@ -1,12 +1,12 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { UsersObject } from "./useUser";
+import { User } from "../../../../services/UserService/user-service";
 
 
 const useUserMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
     const queryClient = useQueryClient();
   
-    return useMutation<UsersObject, Error, UsersObject | string>(
+    return useMutation<User, Error, User | string>(
    
       {
         onSuccess: () => {

@@ -14,7 +14,7 @@ import useUserMutation from "../../hooks/User/useUserMutation";
 type DeleteModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  userId: string;
+  userId: number;
 };
 
 const DeleteModal = ({ isOpen, onClose, userId }: DeleteModalProps) => {

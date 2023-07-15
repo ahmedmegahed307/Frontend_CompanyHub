@@ -28,14 +28,13 @@ const UsersMain = () => {
   });
 
   const handleCreateForm = (data: CreateUserValidation) => {
-    console.log("my", data);
-    createUserQuery.mutate(data);
+    // createUserQuery.mutate(data);
   };
 
   //delete
   const deleteModal = useDisclosure();
 
-  const [deleteUserId, setDeleteUserId] = useState("");
+  const [deleteUserId, setDeleteUserId] = useState(0);
 
   return (
     <>

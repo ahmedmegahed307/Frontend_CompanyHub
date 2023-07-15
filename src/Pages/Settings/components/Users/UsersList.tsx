@@ -14,11 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-import { UsersObject } from "../../../../models";
+import { User } from "../../../../services/UserService/user-service";
 
 type UsersListProps = {
-  usersList: UsersObject[] | undefined;
-  setDeleteUserId: (id: string) => void;
+  usersList: User[] | undefined;
+  setDeleteUserId: (id: number) => void;
   deleteModal: any;
 };
 
@@ -48,13 +48,11 @@ const UsersList = ({
                   {usersList &&
                     usersList.map((user) => (
                       <Tr key={user.id}>
-                        <Td>{user.name}</Td>
+                        <Td>{user.firstName + " " + user.lastName}</Td>
                         <Td>{user?.email}</Td>
-                        <Td>
-                          {user.adresses && user.adresses![0]?.contactName}
-                        </Td>
-                        <Td>{user.adresses && user.adresses![0]?.tel}</Td>
-                        <Td>{user.type}</Td>
+                        <Td>{user.roleName}</Td>
+                        <Td>{user.id}</Td>
+                        <Td>{user.roleName}</Td>
                         <Td>
                           <IconButton
                             aria-label="Search database"

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-export interface UsersObject{
-  id:string,
-  name:string,
-  email:string
-}
+import userService, { User } from "../../../../services/UserService/user-service";
+
 const useUser = () =>{
 
-   
+  return useQuery<User[], Error>({
+    queryKey: ['usersList'], 
+    queryFn: userService.getAll
+  });
 }
 export default useUser;
