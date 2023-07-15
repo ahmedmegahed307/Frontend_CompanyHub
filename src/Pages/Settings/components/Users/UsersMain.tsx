@@ -16,6 +16,7 @@ import UsersList from "./UsersList";
 import CreateUser, { CreateUserValidation } from "./CreateUser";
 import useCreateUserMutation from "../../hooks/User/useCreateUser";
 import useUser from "../../hooks/User/useUser";
+import { User } from "../../../../services/UserService/user-service";
 
 const UsersMain = () => {
   // get usersLists
@@ -28,7 +29,12 @@ const UsersMain = () => {
   });
 
   const handleCreateForm = (data: CreateUserValidation) => {
-    // createUserQuery.mutate(data);
+    createUserQuery({
+      firstName: data.name,
+      lastName: data.name,
+      email: data.email,
+      roleName: data.role,
+    } as User);
   };
 
   //delete

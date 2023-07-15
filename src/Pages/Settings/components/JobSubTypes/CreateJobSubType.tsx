@@ -18,16 +18,17 @@ import {
 import useJobSubType from "../../JobSubType/useJobSubType";
 
 const schema = z.object({
-  name: z.string().min(3, { message: "JobType must be at least 3 characters" }),
-  jobSubTypeId: z.string().min(1, { message: "Job Subtype is required" }),
+  name: z
+    .string()
+    .min(3, { message: "JobSubType must be at least 3 characters" }),
 });
 export type FormCreateValidation = z.infer<typeof schema>;
 
-type JobTypeFormProps = {
+type JobSubTypeFormProps = {
   onSubmit: (data: FormCreateValidation) => void;
 };
 
-const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
+const CreateJobSubType = ({ onSubmit }: JobSubTypeFormProps) => {
   const {
     register,
     handleSubmit,
@@ -66,26 +67,6 @@ const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
                 )}
               </FormControl>
 
-              <FormControl pb={5} w={"lg"} isInvalid={!!errors.jobSubTypeId}>
-                <FormLabel>Job SubTypes</FormLabel>
-
-                <Select
-                  {...register("jobSubTypeId")}
-                  placeholder="Select Job SubType"
-                >
-                  {jobSubTypes?.map((subtype) => (
-                    <option key={subtype.id} value={subtype.id}>
-                      {subtype.name}
-                    </option>
-                  ))}
-                </Select>
-                {errors.jobSubTypeId && (
-                  <FormErrorMessage>
-                    {errors.jobSubTypeId.message}
-                  </FormErrorMessage>
-                )}
-              </FormControl>
-
               <Button
                 type="submit"
                 colorScheme="blue"
@@ -103,4 +84,4 @@ const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
   );
 };
 
-export default CreateJobType;
+export default CreateJobSubType;

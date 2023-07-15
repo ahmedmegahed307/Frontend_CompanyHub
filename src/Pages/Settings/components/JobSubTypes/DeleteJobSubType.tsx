@@ -8,17 +8,21 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import useJobTypeMutation from "../../hooks/JobType/useJobTypeMutation";
+import useJobSubTypeMutation from "../../hooks/JobSubType/useJobSubTypeMutation";
 
-interface DeleteJobTypeProps {
+interface DeleteJobSubTypeProps {
   isOpen: boolean;
-  jobTypeId: number;
+  jobSubTypeId: number;
   onClose: () => void;
 }
 
-const DeleteJobType = ({ onClose, isOpen, jobTypeId }: DeleteJobTypeProps) => {
+const DeleteJobSubType = ({
+  onClose,
+  isOpen,
+  jobSubTypeId,
+}: DeleteJobSubTypeProps) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const deleteJobType = useJobTypeMutation(() => {
+  const deleteJobSubType = useJobSubTypeMutation(() => {
     onClose();
   }, false);
   return (
@@ -34,7 +38,7 @@ const DeleteJobType = ({ onClose, isOpen, jobTypeId }: DeleteJobTypeProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
         <AlertDialogBody>
-          Are you sure you want to delete JobType deleted.
+          Are you sure you want to delete JobSubType deleted.
         </AlertDialogBody>
         <AlertDialogFooter>
           <Button ref={cancelRef} onClick={onClose}>
@@ -43,7 +47,7 @@ const DeleteJobType = ({ onClose, isOpen, jobTypeId }: DeleteJobTypeProps) => {
           <Button
             colorScheme="red"
             onClick={() => {
-              deleteJobType.mutate(jobTypeId);
+              deleteJobSubType.mutate(jobSubTypeId);
             }}
             ml={3}
           >
@@ -55,4 +59,4 @@ const DeleteJobType = ({ onClose, isOpen, jobTypeId }: DeleteJobTypeProps) => {
   );
 };
 
-export default DeleteJobType;
+export default DeleteJobSubType;

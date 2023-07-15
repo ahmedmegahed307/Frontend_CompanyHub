@@ -69,6 +69,9 @@ function TopNav({ onSearch }: Props) {
           <MenuItem as={NavLink} to="/settings/jobtype/list">
             Job Types
           </MenuItem>
+          <MenuItem as={NavLink} to="/settings/jobsubtype/list">
+            Job SubTypes
+          </MenuItem>
           <MenuItem as={NavLink} to="/settings/users/usersList">
             Users
           </MenuItem>

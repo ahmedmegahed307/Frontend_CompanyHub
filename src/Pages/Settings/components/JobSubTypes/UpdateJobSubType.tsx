@@ -17,22 +17,24 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import useJobSubType from "../../JobSubType/useJobSubType";
-import { JobType } from "../../../../services/JobTypeService/jobtype-service";
+import { JobSubType } from "../../../../services/JobSubTypesService/jobsubtype-service";
 
 const updateSchema = z.object({
   name: z
     .string()
     .min(3, { message: "Resolution must be at least 3 characters" }),
-  jobSubTypeId: z.string().min(1, { message: "Job Subtype is required" }),
 });
 export type FormUpdateValidation = z.infer<typeof updateSchema>;
 
-type UpdateJobTypeFormProps = {
+type UpdateJobSubTypeFormProps = {
   onSubmit: (data: FormUpdateValidation) => void;
-  defaultValue: JobType;
+  defaultValue: string;
 };
 
-const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
+const UpdateJobSubType = ({
+  onSubmit,
+  defaultValue,
+}: UpdateJobSubTypeFormProps) => {
   const {
     register,
     handleSubmit,
@@ -40,8 +42,7 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
   } = useForm<FormUpdateValidation>({
     resolver: zodResolver(updateSchema),
     defaultValues: {
-      name: defaultValue.name,
-      jobSubTypeId: defaultValue.jobSubType.trim(),
+      name: defaultValue,
     },
   });
 
@@ -49,7 +50,6 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
     onSubmit(data);
   };
   const { data: jobSubTypes } = useJobSubType();
-  console.log("defaultValue.jobSubType:", defaultValue.jobSubType);
 
   return (
     <>
@@ -61,7 +61,7 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
           <AbsoluteCenter>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <Heading my={5} size={"md"}>
-                Update JobType
+                Update JobSubType
               </Heading>
               <FormControl pb={5} w={"lg"}>
                 <FormLabel>Name</FormLabel>
@@ -71,25 +71,6 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
                   {...register("name")}
                 />
                 {errors.name && <Text color="red">{errors.name.message}</Text>}
-              </FormControl>
-              <FormControl pb={5} w={"lg"} isInvalid={!!errors.jobSubTypeId}>
-                <FormLabel>Job SubTypes</FormLabel>
-
-                <Select
-                  {...register("jobSubTypeId")}
-                  placeholder="Select Job Subtype"
-                >
-                  {jobSubTypes?.map((subtype) => (
-                    <option key={subtype.id} value={subtype.id}>
-                      {subtype.name}
-                    </option>
-                  ))}
-                </Select>
-                {errors.jobSubTypeId && (
-                  <FormErrorMessage>
-                    {errors.jobSubTypeId.message}
-                  </FormErrorMessage>
-                )}
               </FormControl>
 
               <Button
@@ -109,4 +90,4 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
   );
 };
 
-export default UpdateJobType;
+export default UpdateJobSubType;

@@ -25,6 +25,8 @@ import ResolutionMain from "../Pages/Settings/components/Resolution/ResolutionMa
 import UserInfo from "../Pages/Settings/components/Users/UserInfo/UserInfo";
 import UsersMain from "../Pages/Settings/components/Users/UsersMain";
 import Statistical from "../Pages/Statistical/components/Statistical";
+import JobTypesMain from "../Pages/Settings/components/JobTypes/JobTypesMain";
+import JobSubTypesMain from "../Pages/Settings/components/JobSubTypes/JobSubTypesMain";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +49,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings/jobtype/list",
-        element: <JobTypeList />,
+        element: <JobTypesMain />,
+      },
+      {
+        path: "/settings/jobsubtype/list",
+        element: <JobSubTypesMain />,
       },
       {
         path: "/settings/resolution/list",

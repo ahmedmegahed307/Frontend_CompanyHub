@@ -14,24 +14,24 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-import { User } from "../../../../services/UserService/user-service";
-import { JobType } from "../../../../services/JobTypeService/jobtype-service";
-import useJobTypeStore from "../../hooks/JobType/store";
+import useJobSubTypeStore from "../../hooks/JobSubType/store";
+import { JobSubType } from "../../../../services/JobSubTypesService/jobsubtype-service";
 
-type UsersListProps = {
-  jobTypeList: JobType[] | undefined;
-  setDeleteJobTypeId: (id: number) => void;
+type SubTypeListProps = {
+  jobSubTypeList: JobSubType[] | undefined;
+  setDeleteJobSubTypeId: (id: number) => void;
   deleteModal: any;
   updateModal: any;
 };
 
-const JobTypeList = ({
-  jobTypeList,
-  setDeleteJobTypeId,
+const JobSubTypeList = ({
+  jobSubTypeList,
+  setDeleteJobSubTypeId,
   deleteModal,
   updateModal,
-}: UsersListProps) => {
-  const { setUpdateJobType, setUpdateJobTypeInput } = useJobTypeStore();
+}: SubTypeListProps) => {
+  const { setUpdateJobSubType, setUpdateJobSubTypeInput } =
+    useJobSubTypeStore();
   return (
     <Tabs w={"full"}>
       <TabPanels pt={5} h={"50vh"}>
@@ -42,17 +42,15 @@ const JobTypeList = ({
                 <Thead bg={"gray.100"} rounded={"xl"}>
                   <Tr>
                     <Th>Name</Th>
-                    <Th>Job Type</Th>
 
                     <Th>Actions</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {jobTypeList &&
-                    jobTypeList.map((jobType) => (
-                      <Tr key={jobType.id}>
-                        <Td>{jobType.name}</Td>
-                        <Td>{jobType.jobSubType}</Td>
+                  {jobSubTypeList &&
+                    jobSubTypeList.map((jobSubType) => (
+                      <Tr key={jobSubType.id}>
+                        <Td>{jobSubType.name}</Td>
 
                         <Td>
                           <IconButton
@@ -60,8 +58,8 @@ const JobTypeList = ({
                             as={NavLink}
                             icon={<EditIcon />}
                             onClick={() => {
-                              setUpdateJobType(jobType.id),
-                                setUpdateJobTypeInput(jobType),
+                              setUpdateJobSubType(jobSubType.id),
+                                setUpdateJobSubTypeInput(jobSubType.name),
                                 updateModal.onOpen();
                             }}
                             colorScheme="blue"
@@ -75,7 +73,7 @@ const JobTypeList = ({
                             as={NavLink}
                             icon={<DeleteIcon />}
                             onClick={() => {
-                              setDeleteJobTypeId(jobType.id);
+                              setDeleteJobSubTypeId(jobSubType.id);
                               deleteModal.onOpen();
                             }}
                             colorScheme="blue"
@@ -96,4 +94,4 @@ const JobTypeList = ({
   );
 };
 
-export default JobTypeList;
+export default JobSubTypeList;
