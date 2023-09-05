@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:44370/api/",
+  baseURL: "https://localhost:44380/api/",
 });
 class ApiFetchData<T> {
   endpoint: string;

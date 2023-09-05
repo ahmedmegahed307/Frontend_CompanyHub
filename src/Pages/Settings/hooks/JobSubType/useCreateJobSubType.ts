@@ -14,7 +14,7 @@ const useCreateJobSubType = (onCreate: () => void) => {
         text: "JobSubType have been saved successfully",
         icon: "success",
       });
-
+          
       onCreate();
       return savedJobSubType;
     },

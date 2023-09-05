@@ -7,4 +7,5 @@ export interface Resolutions {
 export  const ResolutionMutationAPI = new ApiFetchData<Resolutions>('/Resolution'); //update-delete
  export const createResolution = new ApiFetchData<Resolutions>('/Resolution/add');
 
-  export default new ApiFetchData<Resolutions>('/Resolution/resolutions');
+  export default new ApiFetchData<Resolutions>('/Resolution');
+  
