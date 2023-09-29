@@ -96,7 +96,7 @@ function App() {
                       Client
                     </Button>
                   </Link>
-                  <Link to="/users">
+                  <Link to="/settings/users/usersList">
                     <Button
                       w={100}
                       variant="outline"

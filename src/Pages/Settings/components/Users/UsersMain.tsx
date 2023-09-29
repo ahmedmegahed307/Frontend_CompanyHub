@@ -5,6 +5,12 @@ import {
   Button,
   useDisclosure,
   Drawer,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  HStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -17,9 +23,12 @@ import CreateUser, { CreateUserValidation } from "./CreateUser";
 import useCreateUserMutation from "../../hooks/User/useCreateUser";
 import useUser from "../../hooks/User/useUser";
 import { User } from "../../../../services/UserService/user-service";
+import { useUserStore } from "../../hooks/User/store";
 
 const UsersMain = () => {
-  // get usersLists
+  const { isCreateModalOpen, setIsCreateModalOpen } = useUserStore();
+
+  // get active usersLists
   const { data: usersList } = useUser();
 
   //create
@@ -42,83 +51,115 @@ const UsersMain = () => {
 
   const [deleteUserId, setDeleteUserId] = useState(0);
 
+    //retore
+    const restoreModal = useDisclosure();
+    const [restoreUserId, setRestoreUserId] = useState("");
+    const [selectedTab, setSelectedTab] = useState(0);
+  
+    const handleTabChange = (index: number) => {
+      setSelectedTab(index);
+    };
+    const [activeTab, setActiveTab] = useState("Active");
+    const [InactiveusersList, setInactiveUsersList] = useState<User[]>([]);
+
   return (
     <>
-      <Flex
-        direction={"column"}
-        alignItems="center"
-        maxW="7xl"
-        mx="auto"
-        px="4"
-        w={"full"}
-      >
-        <Flex w={"full"} direction={"row"}>
-          <Heading
-            size={"lg"}
-            w={"full"}
-            py={10}
-            textAlign={"left"}
-            color={"#1396ab"}
-          >
-            Users List
-          </Heading>
-          <Spacer />
+    <Tabs
+      orientation="horizontal"
+      variant="line"
+      index={selectedTab}
+      onChange={handleTabChange}
+    >
+      <TabList>
+        <Tab
+          color={activeTab === "Active" ? "Primary.700" : "gray.500"}
+          onClick={() => setActiveTab("Active")}
+        >
+          Active Users
+        </Tab>
+        <Tab
+          color={activeTab === "InActive" ? "Primary.700" : "gray.500"}
+          onClick={() => setActiveTab("InActive")}
+        >
+          Inactive Users
+        </Tab>
+      </TabList>
+    </Tabs>
 
-          <Button
-            marginRight={2}
-            as={NavLink}
-            to="/settings/user/info"
-            my={10}
-            px={10}
-            py={5}
-            onClick={() => {}}
-            colorScheme="blue"
-            variant={"solid"}
-            size={"sm"}
-            bg={"#294c58"}
-            leftIcon={<FaUser />}
-          >
-            My Profile
-          </Button>
-          <Button
-            onClick={() => {
-              createModal.onOpen();
-            }}
-            leftIcon={<AddIcon />}
-            my={10}
-            px={10}
-            py={5}
-            colorScheme="blue"
-            variant={"solid"}
-            size={"sm"}
-            bg={"#294c58"}
-          >
-            Add User
-          </Button>
-        </Flex>
+    <Tabs w="full" index={selectedTab} onChange={handleTabChange}>
+      <TabPanels>
+        <TabPanel>
+          <HStack justify={"end"} w={"full"}>
+            <Button
+              leftIcon={<FaUser />}
+              marginRight={2}
+              as={NavLink}
+              to={`/settings/users/${1}`}
+              onClick={() => {}}
+              variant={"solid"}
+              size="md"
+            >
+              {"My Profile"}
+            </Button>
+            <Button
+              leftIcon={<AddIcon />}
+              variant="solid"
+              size="md"
+              onClick={() => {
+                createModal.onOpen();
+              }}
+            >
+              Add User
+            </Button>
+          </HStack>
+          <UsersList
+            data={usersList || []}
+            setDeleteUserId={setDeleteUserId}
+            deleteModal={deleteModal}
+          />
+        </TabPanel>
 
-        <UsersList
-          usersList={usersList}
-          setDeleteUserId={setDeleteUserId}
-          deleteModal={deleteModal}
-        />
-      </Flex>
-      {/* Create Modal */}
-      <Drawer
-        onClose={createModal.onClose}
-        isOpen={createModal.isOpen}
-        size={"lg"}
-      >
-        <CreateUser onSubmit={handleCreateForm} />
-      </Drawer>
+        <TabPanel>
+          {/* <InactiveUsersList
+            data={InactiveusersList ?? []}
+            setRestoreUserId={setRestoreUserId}
+            restoreModal={restoreModal}
+          /> */}
+          <UsersList
+            data={usersList || []}
+            setDeleteUserId={setDeleteUserId}
+            deleteModal={deleteModal}
+          />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
 
-      {/* Delete Modal  */}
-      <DeleteModal
-        isOpen={deleteModal.isOpen}
-        onClose={deleteModal.onClose}
-        userId={deleteUserId}
-      />
-    </>
+    {/* Create Modal */}
+    <Drawer
+      onClose={() => {
+        setIsCreateModalOpen(false);
+        createModal.onClose();
+      }}
+      isOpen={createModal.isOpen || isCreateModalOpen}
+      size={"lg"}
+    >
+      <CreateUser onSubmit={handleCreateForm} />
+    </Drawer>
+
+    {/* Delete Modal  */}
+    <DeleteModal
+      isOpen={deleteModal.isOpen}
+      onClose={deleteModal.onClose}
+      userId={deleteUserId}
+    />
+
+    {/* Restore Modal  */}
+    {/* <RestoreUser
+      isOpen={restoreModal.isOpen}
+      onClose={restoreModal.onClose}
+      userId={restoreUserId}
+    /> */}
+  </>
   );
 };
 

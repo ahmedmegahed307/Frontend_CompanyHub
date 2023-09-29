@@ -188,7 +188,7 @@ const TopNav = () => {
         url="/settings/clients/clientsList"
       />
 
-      <SideBarItem icon={<PPMIcon />} text="Users " url="/users" />
+      <SideBarItem icon={<PPMIcon />} text="Users " url="/settings/users/usersList" />
 
       <SideBarItem
         icon={<SettingsIcon fontSize="sm" mx="2px" />}
