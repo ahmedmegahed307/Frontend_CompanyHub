@@ -1,34 +1,15 @@
 import {
-  Tabs,
-  TabPanels,
-  TabPanel,
   Flex,
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Card,
   Spacer,
   Button,
   Input,
-  IconButton,
   useDisclosure,
   Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerBody,
-  AbsoluteCenter,
-  FormControl,
-  FormLabel,
-  Select,
+  InputLeftElement,
+  InputGroup,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import { AddIcon } from "@chakra-ui/icons";
 
 import useCreateJobType from "../../hooks/JobType/useCreateJobType";
 import useJobType from "../../hooks/JobType/useJobType";
@@ -39,6 +20,8 @@ import JobTypeList from "./JobTypeList";
 import CreateJobType, { FormCreateValidation } from "./CreateJobType";
 import UpdateJobType, { FormUpdateValidation } from "./UpdateJobType";
 import useJobTypeStore from "../../hooks/JobType/store";
+import { BsSearch } from "react-icons/bs";
+import ExportToExcel from "../../../Excel/ExportToExcel";
 const JobTypesMain = () => {
   // get jobTypeList
   const { data: jobTypeList } = useJobType();
@@ -80,40 +63,39 @@ const JobTypesMain = () => {
 
   return (
     <>
-      <Flex
-        direction={"column"}
-        alignItems="center"
-        maxW="7xl"
-        mx="auto"
-        px="4"
-        w={"full"}
-      >
+      <Flex direction={"column"} alignItems="center" w={"full"}>
         <Flex w={"full"} direction={"row"}>
-          <Heading
-            size={"lg"}
-            w={"full"}
-            py={10}
-            textAlign={"left"}
-            color={"#1396ab"}
-          >
-            JobType List
-          </Heading>
+          <InputGroup width={"35%"} m={5}>
+            <InputLeftElement pointerEvents="none">
+              <BsSearch />
+            </InputLeftElement>
+            <Input
+              borderRadius={"xl"}
+              placeholder="Enter JobType Name"
+
+              // onChange={(e) => setFiltering(e.target.value)}
+            />
+          </InputGroup>
           <Spacer />
 
+          <ExportToExcel
+            data={[]}
+            headers={[]}
+            keys={[]}
+            sheetName={"JobTypes_List"}
+          />
+
           <Button
+            leftIcon={<AddIcon />}
+            my={4}
+            mx={2}
+            variant="solid"
+            size="md"
             onClick={() => {
               createModal.onOpen();
             }}
-            leftIcon={<AddIcon />}
-            my={10}
-            px={10}
-            py={5}
-            colorScheme="blue"
-            variant={"solid"}
-            size={"sm"}
-            bg={"#294c58"}
           >
-            Add Job Type
+            {"Create JobType"}
           </Button>
         </Flex>
 
