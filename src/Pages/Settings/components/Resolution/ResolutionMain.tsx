@@ -1,12 +1,8 @@
 import {
   Flex,
-  Heading,
-  Spacer,
-  Button,
   useDisclosure,
   Drawer,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 
 import CreateResolution, { FormCreateValidation } from "./CreateResolution";
 import UpdateResolution, { FormUpdateValidation } from "./UpdateResolution";
@@ -16,87 +12,64 @@ import ResolutionList from "./ResolutionList";
 import useCreateResolution from "../../hooks/Resolution/useCreateResolution";
 import useResolution from "../../hooks/Resolution/useResolution";
 import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
+import useResolutionStore from "../../hooks/Resolution/ResolutionStore";
+import { useEffect } from "react";
 import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
-import useResolutionStore from "../../hooks/Resolution/store";
+import usePageTitleStore from "../../../NavBar/hooks/PageTitleStore";
 
 const ResolutionMain = () => {
   // get resolutionList
   const { data: resolutionList } = useResolution();
   const { updateResolutionId, updateResolutionInput, deleteResolutionId } =
     useResolutionStore();
+
   //create
+  const createModal = useDisclosure();
   const createResolution = useCreateResolution(() => {
     createModal.onClose();
   });
-  const createModal = useDisclosure();
+  
   const handleCreateForm = async (data: FormCreateValidation) => {
+      
     await createResolution({
       name: data.name,
     } as Resolutions);
+    
+   console.log("data", data);
   };
 
   //update
+  const updateModal = useDisclosure();
 
-  const handleUpdateForm = (data: FormUpdateValidation) => {
-    console.log("data", data);
-    updateResolution.mutate({
-      name: data.name,
-      id: updateResolutionId,
-      // isActive: true,
-    } as Resolutions);
-  };
   const updateResolution = useResolutionMutation(() => {
     updateModal.onClose();
   }, true);
-  const updateModal = useDisclosure();
+  const handleUpdateForm = (data: FormUpdateValidation) => {
+    console.log("data", data);
+    // console.log("data", data);
+    // updateResolution.mutate({
+    //   name: data.name,
+    //   id: updateResolutionId,
+    //   isActive: true,
+    // } as Resolutions);
+  };
 
   //delete
 
   const deleteModal = useDisclosure();
+  const pageTitleStore = usePageTitleStore();
 
+  useEffect(() => {
+    pageTitleStore.setPageTitle("Resolutions List");
+  }, []);
   return (
     <>
-      <Flex
-        direction={"column"}
-        alignItems="center"
-        maxW="7xl"
-        mx="auto"
-        px="5"
-        w={"full"}
-      >
-        <Flex w={"full"} direction={"row"}>
-          <Heading
-            size={"lg"}
-            w={"full"}
-            py={10}
-            textAlign={"left"}
-            color={"#1396ab"}
-          >
-            Standard Resolution List
-          </Heading>
-          <Spacer />
-
-          <Button
-            onClick={() => {
-              createModal.onOpen();
-            }}
-            leftIcon={<AddIcon />}
-            my={10}
-            px={10}
-            py={5}
-            colorScheme="blue"
-            variant={"solid"}
-            size={"sm"}
-            bg={"#294c58"}
-          >
-            Add Resolution
-          </Button>
-        </Flex>
-
+      <Flex direction={"column"} w={"full"} alignItems="center">
         <ResolutionList
-          resolutionList={resolutionList}
+          data={resolutionList?.filter(item => item.isActive) ?? []}
           updateModal={updateModal}
           deleteModal={deleteModal}
+          createModal={createModal}
         />
       </Flex>
       {/* create */}
@@ -125,7 +98,7 @@ const ResolutionMain = () => {
       <DeleteResolution
         isOpen={deleteModal.isOpen}
         onClose={deleteModal.onClose}
-        resolutionId={deleteResolutionId}
+        resolutionId={parseInt(deleteResolutionId)}
       />
     </>
   );

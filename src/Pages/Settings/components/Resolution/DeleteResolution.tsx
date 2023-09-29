@@ -41,11 +41,10 @@ const DeleteResolution = ({
     >
       <AlertDialogOverlay />
       <AlertDialogContent>
-        <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+        <AlertDialogHeader color={"darkred"}>Warning!</AlertDialogHeader>
         <AlertDialogCloseButton />
         <AlertDialogBody>
-          Are you sure you want to discard all of your notes? 44 words will be
-          deleted.
+          Are you sure you want to delete this resolution?
         </AlertDialogBody>
         <AlertDialogFooter>
           <Button ref={cancelRef} onClick={onClose}>

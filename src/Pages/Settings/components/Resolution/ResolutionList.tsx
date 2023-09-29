@@ -1,88 +1,250 @@
 import {
-  TableContainer,
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  EditIcon,
+  DeleteIcon,
+  AddIcon,
+} from "@chakra-ui/icons";
+import {
   Card,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
+  Flex,
+  Text,
   IconButton,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
+  Table,
+  TableCaption,
+  Tbody,
+  Td,
+  Tfoot,
+  Th,
+  Thead,
+  Tooltip,
+  Tr,
+  Tag,
+  Spacer,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  Box,
+  Button,
 } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-//import { Resolutions } from "../../../models";
-import { NavLink } from "react-router-dom";
-import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
-import useResolutionStore from "../../hooks/Resolution/store";
+import moment from "moment";
+import {
+  ColumnDef,
+  SortingState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import React, { useEffect, useState } from "react";
 
-type ResolutionTableProps = {
-  resolutionList: Resolutions[] | undefined;
+import { BsSearch } from "react-icons/bs";
+import useResolutionStore from "../../hooks/Resolution/ResolutionStore";
+import { NavLink } from "react-router-dom";
+import { IconSortArrow } from "../../../../assets/icons/IconSortArrow";
+import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
+import ExportToExcel from "../../../Excel/ExportToExcel";
+import PaginationTable from "../PaginationTable/PaginationTable";
+
+const columnHelper = createColumnHelper<Resolutions>();
+
+const columns = [
+  columnHelper.accessor("name", {
+    header: "Resolutions",
+
+    cell: (info) => info.getValue(),
+  }),
+];
+interface ResolutionTableProps {
+  data: Resolutions[];
+  createModal: any;
   updateModal: any;
   deleteModal: any;
-};
+}
 
 const ResolutionList = ({
-  resolutionList,
+  data,
   updateModal,
   deleteModal,
+  createModal,
 }: ResolutionTableProps) => {
   const {
     setDeleteResolutionId,
     setUpdateResolutionId,
     setUpdateResolutionInput,
   } = useResolutionStore();
-  console.log(resolutionList);
+  const rerender = React.useReducer(() => ({}), {})[1];
+  const [sorting, setSorting] = useState<SortingState>([]); // 1
+
+  const [filtering, setFiltering] = useState<string>(""); //2
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(), //3
+    state: {
+      sorting: sorting,
+      globalFilter: filtering,
+    },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering, // *3
+
+    debugTable: true,
+  });
+  const headers = ["Resolutions"];
+  const keys = ["name"];
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <TableContainer borderRadius={"xl"} w={"full"}>
-      <Card p={0} borderRadius={""} variant={"outline"}>
-        <Table variant="simple">
-          <Thead bg={"gray.100"} rounded={"xl"}>
-            <Tr>
-              <Th>Resolution</Th>
-              <Th>Actions</Th>
-            </Tr>
+    <>
+      <Flex w={"full"} direction={"row"}>
+        <InputGroup width={"35%"} m={5}>
+          <InputLeftElement pointerEvents="none">
+            <BsSearch />
+          </InputLeftElement>
+          <Input
+            borderRadius={"xl"}
+            placeholder="Enter filter"
+            onChange={(e) => setFiltering(e.target.value)}
+          />
+        </InputGroup>
+        <Spacer />
+
+        <ExportToExcel
+          data={data || []}
+          headers={headers || []}
+          keys={keys || []}
+          sheetName={"Resolutions"}
+        />
+        <Button
+          leftIcon={<AddIcon />}
+          m={2}
+          as={NavLink}
+          onClick={() => {
+            createModal.onOpen();
+          }}
+          variant={"solid"}
+          size="md"
+        >
+          {"Add Resolution"}
+        </Button>
+      </Flex>
+      <Card
+        p={0}
+        borderRadius={"xl"}
+        width={"full"}
+        variant={"outline"}
+        borderRight={"hidden"}
+        overflow={"scroll"}
+      >
+        <Table size="md" rounded={"xl"} borderRadius={"xl"}>
+          <Thead
+            p={0}
+            m={0}
+            borderRadius={"xl"}
+            bg={"#F7F7FB"}
+            shadow={"none"}
+            w={"full"}
+          >
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Th
+                    key={header.id}
+                    border="none"
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    <Flex
+                      color={"Neutral.500"}
+                      fontSize={"sm"}
+                      fontWeight={"medium"}
+                      alignItems="center"
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+
+                      <Box color={"#1396ab"} fontSize={"md"} ml={1}>
+                        <IconSortArrow />
+                      </Box>
+                    </Flex>
+                  </Th>
+                ))}
+                <Th>Actions</Th>
+              </Tr>
+            ))}
           </Thead>
           <Tbody>
-            {resolutionList &&
-              resolutionList.map((resolution) => (
-                <Tr key={resolution.id}>
-                  <Td>{resolution.name}</Td>
-                  <Td>
-                    <IconButton
-                      aria-label="Search database"
-                      as={NavLink}
-                      icon={<EditIcon />}
-                      onClick={() => {
-                        setUpdateResolutionInput(resolution.name);
-                        setUpdateResolutionId(resolution.id);
-                        updateModal.onOpen();
-                      }}
-                      colorScheme="blue"
-                      variant={"solid"}
-                      size={"sm"}
-                      bg={"#294c58"}
-                      m={1}
-                    />
-                    <IconButton
-                      aria-label="Search database"
-                      as={NavLink}
-                      icon={<DeleteIcon />}
-                      onClick={() => {
-                        setDeleteResolutionId(resolution.id);
-                        deleteModal.onOpen();
-                      }}
-                      colorScheme="blue"
-                      variant={"solid"}
-                      size={"sm"}
-                      bg={"#294c58"}
-                    />
-                  </Td>
-                </Tr>
-              ))}
+            {table.getRowModel().rows.map((row, index) => (
+              <Tr key={row.id} bg={index % 2 != 0 ? "Neutral.100" : "white"}>
+                {row.getVisibleCells().map((cell) => (
+                  <>
+                    <Td
+                      key={cell.id}
+                      // _hover={{
+                      //   background: "#1396ab",
+                      //   color: "white",
+                      //   cursor: "pointer",
+                      // }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Td>
+                    <Td>
+                      <IconButton
+                        aria-label="Search database"
+                        as={NavLink}
+                        icon={<EditIcon />}
+                        onClick={() => {
+                          setUpdateResolutionInput(row.original.name);
+                          setUpdateResolutionId(row.original.id.toString());
+                          updateModal.onOpen();
+                        }}
+                        variant={"outline"}
+                        size={"sm"}
+                        m={1}
+                      />
+                      <IconButton
+                        aria-label="Search database"
+                        as={NavLink}
+                        icon={<DeleteIcon />}
+                        onClick={() => {
+                          setDeleteResolutionId(row.original.id.toString());
+                          deleteModal.onOpen();
+                        }}
+                        variant={"outline"}
+                        size={"sm"}
+                      />
+                    </Td>
+                  </>
+                ))}
+              </Tr>
+            ))}
           </Tbody>
         </Table>
+        <Spacer></Spacer>
+        <PaginationTable data={data} table={table} />
       </Card>
-    </TableContainer>
+    </>
   );
 };
 

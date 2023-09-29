@@ -38,7 +38,6 @@ const CreateResolution = ({ onSubmit }: ResolutionFormProps) => {
 
   const handleFormSubmit = (data: FormCreateValidation) => {
     onSubmit(data);
-    console.log("tester", data);
     reset();
   };
 
