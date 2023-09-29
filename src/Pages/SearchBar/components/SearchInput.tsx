@@ -4,15 +4,21 @@ import {
   InputLeftElement,
   InputRightElement,
   IconButton,
+  Spinner,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsSearch, BsX } from "react-icons/bs";
+//import useSearchStore from "../hooks/searchStore";
+import { useNavigate } from "react-router-dom";
+//import useFindJobById from "../../Jobs/hooks/JobDetails/useFindJobById";
+//import useFindClientByName from "../../Settings/hooks/Client/useFindClientByName";
+import Swal from "sweetalert2";
+import { IconSearch } from "../../../assets/icons/IconSearch";
+const SearchInput = () => {
+  // const { setSearchText } = useSearchStore();
+  const [searchText, setSearchText] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false); // New state
 
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-
-const SearchInput = ({ onSearch }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -29,31 +35,77 @@ const SearchInput = ({ onSearch }: Props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch(inputValue);
+    //setSearchText(inputValue);
+    setFormSubmitted(true);
+    setSearchText(inputValue);
   };
+  const navigate = useNavigate();
+  //const findJobById = useFindJobById({ id: searchText });
+  //const findClientByName = useFindClientByName({ name: searchText });
+
+  // useEffect(() => {
+  //   if (searchText) {
+  //     if (findJobById.data && findJobById.data[0]?.id) {
+  //       const jobId = findJobById.data[0].id;
+  //       //  navigate(`/job/${jobId}`);
+  //       location.href = `/job/${jobId}`;
+  //     } else if (findClientByName.data?.[0]?.id) {
+  //       const clientId = findClientByName.data[0].id;
+  //       location.href = `/settings/clients/${clientId}`;
+  //       //  navigate(`/settings/clients/${clientId}`);
+  //     } else {
+  //       setTimeout(() => {
+  //         Swal.fire({
+  //           title: "No results found",
+  //           text: "Please try again",
+  //           icon: "error",
+  //         });
+  //       }, 1000);
+  //     }
+  //   }
+  //   setFormSubmitted(false);
+  // }, [
+  //   formSubmitted,
+  //   searchText,
+  //   findJobById.data,
+  //   findClientByName.data,
+  //   navigate,
+  // ]);
 
   return (
-    <form style={{ width: "50%" }} onSubmit={handleSubmit}>
-      <InputGroup>
-        <InputLeftElement pointerEvents="none">
-          <BsSearch />
+    <form onSubmit={handleSubmit}>
+      <InputGroup marginRight={5}>
+        <InputLeftElement pl={3} pr={2.5} pointerEvents="none">
+          <IconSearch />
         </InputLeftElement>
         <Input
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
-          borderRadius={"sm"}
-          placeholder="Enter a job ID (e.g. 70) or client name.."
+          borderRadius={"10"}
+          w={"300px"}
+          py={2.5}
+          bg={"Neutral.100"}
+          border={"none"}
+          placeholder="Search jobs, clients, users..."
         />
         {inputValue && (
           <InputRightElement>
-            <IconButton
-              aria-label="Clear input"
-              icon={<BsX />}
-              borderRadius={"sm"}
-              variant="ghost"
-              onClick={handleClearInput}
-            />
+            {/* {findJobById.isLoading || findClientByName.isLoading ? (
+              <Spinner size="sm" />
+            ) : ( */}
+              <IconButton
+                aria-label="Clear input"
+                mr={5}
+                size={"lg"}
+                icon={<BsX />}
+                borderRadius={"10"}
+                bg={"transparent"}
+                variant="ghost"
+                _hover={{ bg: "none" }}
+                onClick={handleClearInput}
+              />
+            {/* )} */}
           </InputRightElement>
         )}
       </InputGroup>

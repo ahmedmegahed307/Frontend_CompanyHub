@@ -2,93 +2,39 @@ import {
   Box,
   Flex,
   IconButton,
-  useBreakpointValue,
   Spacer,
-  Image,
-  MenuButton,
   Menu,
-  MenuItem,
-  MenuList,
   Heading,
-  Avatar,
+  useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
-import { MdHelpOutline, MdLogout, MdSettings } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SearchInput from "../../SearchBar/components/SearchInput";
-import { FaUserCircle } from "react-icons/fa";
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-function TopNav({ onSearch }: Props) {
-  const isMobileNav = useBreakpointValue({ base: true, lg: false });
+import { IconMessage } from "../../../assets/icons/IconMessage";
+//import usePageTitleStore from "../hooks/PageTitleStore";
+import moment from "moment";
+//import NotificationPopover from "./NotificationPopover";
+
+function TopNav() {
+  const { isOpen, onClose } = useDisclosure();
+  //const { pageTitle } = usePageTitleStore();
 
   const NavItems = () => (
     <>
       <Menu>
-        {/* <IconButton
-          as={Link}
-          to="/settings/user/info"
-          aria-label="User Profile"
-          icon={<FaUserCircle />}
-          variant="ghost"
-          fontSize="xl"
-          marginRight={2}
-          marginLeft={10}
-        /> */}
-        <Avatar
-          src="/src/assets/img/testavatar.png"
-          mr={2}
-          ml={10}
-          size={"md"}
-          as={Link}
-          to="/settings/user/info"
-        />
+        {/* <NotificationPopover /> */}
         <IconButton
-          aria-label="Help"
-          icon={<MdHelpOutline />}
+          as={NavLink}
+          to="/chat"
+          onClick={async () => {}}
+          aria-label="message"
+          icon={<IconMessage />}
           variant="ghost"
           fontSize="xl"
-          marginRight={2}
-        />
-        <MenuButton
-          as={IconButton}
-          aria-label="Options"
-          icon={<MdSettings />}
-          variant="ghost"
-          fontSize="xl"
-          marginRight={2}
-          title="Settings"
-        />
-        <MenuList>
-          <MenuItem as={NavLink} to="/settings/checkLists">
-            CheckLists
-          </MenuItem>{" "}
-          <MenuItem as={NavLink} to="/settings/clients/clientsList">
-            Clients
-          </MenuItem>
-          <MenuItem as={NavLink} to="/settings/jobtype/list">
-            Job Types
-          </MenuItem>
-          <MenuItem as={NavLink} to="/settings/jobsubtype/list">
-            Job SubTypes
-          </MenuItem>
-          <MenuItem as={NavLink} to="/settings/users/usersList">
-            Users
-          </MenuItem>
-          <MenuItem as={NavLink} to="/settings/resolution/list">
-            Standard Resolutions
-          </MenuItem>
-          <MenuItem as={NavLink} to="/settings/company/info">
-            Manage Company
-          </MenuItem>
-        </MenuList>
-        <IconButton
-          aria-label="Logout"
-          icon={<MdLogout />}
-          variant="ghost"
-          fontSize="xl"
-          marginRight={2}
-          title="Logout"
+          marginRight={5}
+          title="message"
+          color={"Neutral.500"}
+          _hover={{ bg: "none", color: "Primary.700" }}
         />
       </Menu>
     </>
@@ -96,99 +42,28 @@ function TopNav({ onSearch }: Props) {
 
   return (
     <>
-      <Box w={"full"} as="nav" border="1px" borderColor="gray.200" py={2}>
+      <Box w={"full"} as="nav" py={5}>
         <Flex alignItems={"center"} px={5}>
-          {/* <Text fontSize="2xl" fontWeight="bold">
-            <Link href="/">YourLogo</Link>
-          </Text> */}
-          <Box>
-            <Image
-              src="/src/assets/img/uk_field_service_darkblue-darkblue-premium.svg"
-              title="logo"
-            ></Image>
-          </Box>
-
-          {/* <HStack mx={5} spacing={5}>
-            <Link
-              as={NavLink}
-              _activeLink={{ fontWeight: "bold", color: "#294c58" }}
-              to="/home"
-              fontSize={"sm"}
-              color={"gray"}
-            >
-              Home
-            </Link>
-            <Link
-              as={NavLink}
-              _activeLink={{ fontWeight: "bold", color: "#333" }}
-              to="/table-example"
-              fontSize={"sm"}
-              color={"gray"}
-            >
-              Table One
-            </Link>{" "}
-            <Link
-              as={NavLink}
-              _activeLink={{ fontWeight: "bold", color: "#333" }}
-              to="/form-example"
-              fontSize={"sm"}
-              color={"gray"}
-            >
-              Form One
-            </Link>{" "}
-            <Link fontSize={"sm"} color={"gray"}>
-              Documentation
-            </Link>
-          </HStack> */}
+          <VStack justify={"start"} alignItems={"start"}>
+            <Heading fontWeight={"bold"} fontSize={"2xl"} color={"teal"}>
+              {"title" ?? ""}
+            </Heading>
+            { "Dashboard Overview" && (
+              <Heading fontSize={"md"} color={"Neutral.500"}>
+                {moment(new Date().toLocaleDateString()).format(
+                  "DD MMMM, dddd"
+                )}
+              </Heading>
+            )}
+          </VStack>
           <Spacer />
 
-          {/* <Input
-            type="text"
-            size={"sm"}
-            w={"60"}
-            mx={5}
-            borderRadius={"md"}
-            placeholder="Search.."
-          /> */}
-          <SearchInput onSearch={onSearch} />
+          <SearchInput  />
 
           <NavItems />
-          {/* {isMobileNav ? (
-            <>
-              <IconButton
-                aria-label="Open menu"
-                icon={<HamburgerIcon />}
-                onClick={onOpen}
-                variant="ghost"
-              />
-              <Drawer
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                size="xs"
-              >
-                <DrawerOverlay>
-                  <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader borderBottomWidth="1px">
-                      Navigation
-                    </DrawerHeader>
-                    <DrawerBody>
-                      <VStack spacing="24px" alignItems="start">
-                        <NavItems />
-                      </VStack>
-                    </DrawerBody>
-                  </DrawerContent>
-                </DrawerOverlay>
-              </Drawer>
-            </>
-          ) : (
-            <Flex alignItems="center">
-              <NavItems />
-            </Flex>
-          )} */}
         </Flex>
       </Box>
+     
     </>
   );
 }

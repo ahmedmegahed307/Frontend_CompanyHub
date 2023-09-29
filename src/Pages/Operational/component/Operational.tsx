@@ -1,26 +1,98 @@
-import { Flex, HStack, Heading } from "@chakra-ui/react";
-
+import {
+  Card,
+  Text,
+  Image,
+  CardBody,
+  HStack,
+  Heading,
+  VStack,
+  Badge,
+  Spacer,
+  Select,
+  Input,
+  IconButton,
+} from "@chakra-ui/react";
 import JobsData from "./Jobs/JobsData";
-import SLA from "./SLA/SLA";
-import NewsList from "./News/NewsList";
+import { useEffect } from "react";
+import EngineerActivity from "./EngineerActivity/EngineerActivity";
+import Productivity from "./Productivity/Productivity";
+import CustomerSatisfaction from "./CustomerSatisfaction/CustomerSatisfaction";
+import { IconMessage } from "../../../assets/icons/IconMessage";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import Calendar from "./Calendar/Calendar";
 export default function Operational() {
+  // const pageTitleStore = usePageTitleStore();
+  // useEffect(() => {
+  //   pageTitleStore.setPageTitle("Dashboard Overview");
+  // }, []);
   return (
     <>
-      <Flex direction={"column"} mx="auto" mt={5} px="4">
-        <HStack justify={"space-between"}>
-          <Heading color={"#1396ab"} size={"lg"}>
-            Operational Dashboard
-          </Heading>
-        </HStack>
-      </Flex>
+      <HStack spacing={4} mx={2}>
+        <Productivity />
 
-      <HStack m={5} mb={10}>
+        <EngineerActivity />
+
         <JobsData />
       </HStack>
+      <HStack my={4} mx={2}>
+        <Card  w={"auto"} borderRadius={"2xl"} variant={"outline"} width={"60%"}>
+          <HStack>
+            <Heading ml={5} size={"sm"} fontWeight={"bold"} pl={2}>
+              Timeline
+            </Heading>
+            <IconButton
+              aria-label=""
+              icon={<ChevronLeftIcon />}
+              variant="outline"
+              borderColor={"Neutral.300"}
+              fontSize="3xl"
+              title="message"
+              color={"Neutral.500"}
+              _hover={{ bg: "none", color: "Primary.700" }}
+            />
 
-      <HStack m={5} spacing={5}>
-        <SLA />
-        <NewsList />
+            <Input
+              w={160}
+              placeholder="September, 2023"
+              size={"md"}
+              pl={5}
+              pt={1}
+              borderRadius={"8px"}
+              color={"#8D8D8D"}
+              fontWeight={"bold"}
+            />
+            <IconButton
+              aria-label=""
+              icon={<ChevronRightIcon />}
+              variant="outline"
+              borderColor={"Neutral.300"}
+              fontSize="3xl"
+              title="message"
+              color={"Neutral.500"}
+              _hover={{ bg: "none", color: "Primary.700" }}
+            />
+            <Spacer />
+            <Select
+              w={100}
+              placeholder="Daily"
+              pt={2}
+              pr={2}
+              size={"md"}
+              borderRadius={"8px"}
+              color={"#8D8D8D"}
+              fontWeight={"bold"}
+            >
+              <option>Monthly</option>
+              <option>Quarterly</option>
+              <option>Annually</option>
+            </Select>
+          </HStack>
+          <CardBody>
+            <Calendar />
+          </CardBody>
+        </Card>
+        <Spacer />
+        <CustomerSatisfaction />
       </HStack>
     </>
   );
