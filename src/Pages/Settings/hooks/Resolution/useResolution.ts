@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import resolutionService,{Resolutions} from "../../../../services/ResolutionService/resolution-service";
+import resolutionService from "../../../../services/ResolutionService/resolution-service";
+import Resolution from "../../../../models/Resolution";
 
 const useResolution = () => {
-  return useQuery<Resolutions[], Error>({
-    queryKey: ['resolutionList'], // Update the queryKey to an array of strings
-    queryFn: resolutionService.getAll
+  return useQuery<Resolution[], Error>({
+    queryKey: ["resolutionList"],
+    queryFn: resolutionService.getAllResolutions,
   });
 };
 

@@ -1,8 +1,4 @@
-import {
-  Flex,
-  useDisclosure,
-  Drawer,
-} from "@chakra-ui/react";
+import { Flex, useDisclosure, Drawer } from "@chakra-ui/react";
 
 import CreateResolution, { FormCreateValidation } from "./CreateResolution";
 import UpdateResolution, { FormUpdateValidation } from "./UpdateResolution";
@@ -28,14 +24,13 @@ const ResolutionMain = () => {
   const createResolution = useCreateResolution(() => {
     createModal.onClose();
   });
-  
+
   const handleCreateForm = async (data: FormCreateValidation) => {
-      
     await createResolution({
       name: data.name,
     } as Resolutions);
-    
-   console.log("data", data);
+
+    console.log("data", data);
   };
 
   //update
@@ -62,11 +57,13 @@ const ResolutionMain = () => {
   useEffect(() => {
     pageTitleStore.setPageTitle("Resolutions List");
   }, []);
+  console.log("resolutionList", resolutionList);
   return (
     <>
       <Flex direction={"column"} w={"full"} alignItems="center">
         <ResolutionList
-          data={resolutionList?.filter(item => item.isActive) ?? []}
+          data={resolutionList?.filter((item) => item.isActive) ?? []}
+          //data={resolutionList.fi ?? []}
           updateModal={updateModal}
           deleteModal={deleteModal}
           createModal={createModal}

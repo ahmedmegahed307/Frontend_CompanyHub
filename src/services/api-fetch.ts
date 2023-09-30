@@ -1,29 +1,64 @@
 import axios from "axios";
-const axiosInstance = axios.create({
-  baseURL: "https://localhost:44380/api/",
+
+type QueryParams = Record<string, string | number | boolean>;
+
+const api = axios.create({
+  //baseURL: 'https://mitsubishistaging.azurewebsites.net/api',
+  baseURL: "https://localhost:44380/api",
+  headers: {
+    "Access-Control-Allow-Origins": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    "Access-Control-Allow-Headers":
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+    "Content-Type": "application/json",
+  },
 });
-class ApiFetchData<T> {
+
+class Api<TRequest> {
   endpoint: string;
+
   constructor(endpoint: string) {
     this.endpoint = endpoint;
+    api.defaults.headers.common["Authorization"] = `Bearer ${this.getToken()}`;
   }
 
-  getAll = () => {
-    return axiosInstance.get<T[]>(this.endpoint).then((res) => res.data);
+  getToken = (): string | null => {
+    return sessionStorage.getItem("token");
   };
-  post = (data: T) => {
-    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
+
+  removeToken = (): void => {
+    sessionStorage.removeItem("token");
   };
-  update = (id: number, data: any) => {
-    return axiosInstance
-      .put<T>(`${this.endpoint}/${id}`, data)
+
+  getAll = (): Promise<ResponseData> => {
+    return api.get<ResponseData>(this.endpoint).then((res) => res.data);
+  };
+
+  get = (params?: QueryParams): Promise<ResponseData> => {
+    return api
+      .get<ResponseData>(this.endpoint, { params })
       .then((res) => res.data);
   };
 
-  delete = (id: number) => {
-    return axiosInstance
-      .delete(`${this.endpoint}/${id}`)
+  post = (data: TRequest): Promise<ResponseData> => {
+    return api.post<ResponseData>(this.endpoint, data).then((res) => res.data);
+  };
+
+  postQuery = (): Promise<ResponseData> => {
+    return api.post<ResponseData>(this.endpoint).then((res) => res.data);
+  };
+
+  update = (id: number, data: TRequest): Promise<ResponseData> => {
+    return api
+      .put<ResponseData>(`${this.endpoint}/${id}`, data)
+      .then((res) => res.data);
+  };
+
+  delete = (id: number): Promise<ResponseData> => {
+    return api
+      .delete<ResponseData>(`${this.endpoint}/${id}`)
       .then((res) => res.data);
   };
 }
-export default ApiFetchData;
+
+export default Api;

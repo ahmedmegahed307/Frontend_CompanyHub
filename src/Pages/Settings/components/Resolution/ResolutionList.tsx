@@ -58,8 +58,9 @@ import { IconSortArrow } from "../../../../assets/icons/IconSortArrow";
 import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
 import ExportToExcel from "../../../Excel/ExportToExcel";
 import PaginationTable from "../PaginationTable/PaginationTable";
+import Resolution from "../../../../models/Resolution";
 
-const columnHelper = createColumnHelper<Resolutions>();
+const columnHelper = createColumnHelper<Resolution>();
 
 const columns = [
   columnHelper.accessor("name", {
@@ -69,7 +70,7 @@ const columns = [
   }),
 ];
 interface ResolutionTableProps {
-  data: Resolutions[];
+  data: Resolution[];
   createModal: any;
   updateModal: any;
   deleteModal: any;
@@ -215,7 +216,7 @@ const ResolutionList = ({
                         as={NavLink}
                         icon={<EditIcon />}
                         onClick={() => {
-                          setUpdateResolutionInput(row.original.name);
+                          setUpdateResolutionInput(row.original.name ?? "");
                           setUpdateResolutionId(row.original.id.toString());
                           updateModal.onOpen();
                         }}

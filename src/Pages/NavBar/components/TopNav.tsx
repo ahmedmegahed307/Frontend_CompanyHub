@@ -11,13 +11,13 @@ import {
 import { NavLink } from "react-router-dom";
 import SearchInput from "../../SearchBar/components/SearchInput";
 import { IconMessage } from "../../../assets/icons/IconMessage";
-//import usePageTitleStore from "../hooks/PageTitleStore";
 import moment from "moment";
+import usePageTitleStore from "../hooks/PageTitleStore";
 //import NotificationPopover from "./NotificationPopover";
 
 function TopNav() {
   const { isOpen, onClose } = useDisclosure();
-  //const { pageTitle } = usePageTitleStore();
+  const { pageTitle } = usePageTitleStore();
 
   const NavItems = () => (
     <>
@@ -46,9 +46,9 @@ function TopNav() {
         <Flex alignItems={"center"} px={5}>
           <VStack justify={"start"} alignItems={"start"}>
             <Heading fontWeight={"bold"} fontSize={"2xl"} color={"teal"}>
-              {"title" ?? ""}
+              {pageTitle ?? ""}
             </Heading>
-            { "Dashboard Overview" && (
+            {pageTitle === "Dashboard Overview" && (
               <Heading fontSize={"md"} color={"Neutral.500"}>
                 {moment(new Date().toLocaleDateString()).format(
                   "DD MMMM, dddd"
