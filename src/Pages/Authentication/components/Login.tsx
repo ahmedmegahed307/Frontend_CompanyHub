@@ -71,7 +71,6 @@ const Login = () => {
 
     try {
       const token = await authService.login(user.email, user.password);
-
       if (token) {
         sessionStorage.setItem("token", token);
         userService.getCurrentUser().then((res) => {
@@ -201,7 +200,6 @@ const Login = () => {
               >
                 <HStack>
                   <Input
-                    color={"black"}
                     className="FormControl"
                     placeholder="Email"
                     value={user.email}
@@ -212,7 +210,7 @@ const Login = () => {
                       });
                       setInputError({ ...inputError, email: false });
                     }}
-                    borderColor={inputError.email ? "red.300" : ""}
+                    borderColor={inputError.email ? "red.300" : "gray.500"}
                     onKeyDown={handleKeyDown}
                   />
                 </HStack>
@@ -237,7 +235,7 @@ const Login = () => {
                       setInputError({ ...inputError, password: false });
                     }}
                     onKeyDown={handleKeyDown}
-                    borderColor={inputError.password ? "red.300" : ""}
+                    borderColor={inputError.password ? "red.300" : "gray.500"}
                   />
                 </HStack>
               </FormControl>
@@ -279,7 +277,7 @@ const Login = () => {
                 <Text fontSize={"sm"}>Don’t you have an account?</Text>
                 <Link to="/signup">
                   <Text fontSize={"sm"} color={"#1396ab"}>
-                    Create an account{" "}
+                    Create an account
                   </Text>
                 </Link>
               </HStack>

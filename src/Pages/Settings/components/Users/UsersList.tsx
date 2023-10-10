@@ -1,6 +1,4 @@
-import {
-  DeleteIcon,
-} from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Card,
   Flex,
@@ -35,7 +33,7 @@ import { Link, NavLink } from "react-router-dom";
 import PaginationTable from "../PaginationTable/PaginationTable";
 import { IconSortArrow } from "../../../../assets/icons/IconSortArrow";
 import usePageTitleStore from "../../../NavBar/hooks/PageTitleStore";
-import { User } from "../../../../services/UserService/user-service";
+import User from "../../../../models/User";
 
 const columnHelper = createColumnHelper<User>();
 
@@ -45,7 +43,27 @@ const columns = [
 
     cell: (info) => info.getValue(),
   }),
- 
+  columnHelper.accessor("lastName", {
+    header: "Last Name",
+
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("email", {
+    header: "Email",
+
+    cell: (info) => info.getValue(),
+  }),
+
+  columnHelper.accessor("phone", {
+    header: "Phone Number",
+
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("role", {
+    header: "Role",
+
+    cell: (info) => info.getValue(),
+  }),
 ];
 interface UsersListProps {
   data: User[];
@@ -110,7 +128,7 @@ const UsersList = ({ data, setDeleteUserId, deleteModal }: UsersListProps) => {
         <Spacer />
 
         <ExportToExcel
-          data={  []}
+          data={[]}
           headers={headers || []}
           keys={keys || []}
           sheetName={"Users_List"}

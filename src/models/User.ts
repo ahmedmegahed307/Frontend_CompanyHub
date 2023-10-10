@@ -5,12 +5,13 @@ export class User extends EntityBase {
   middleName: string;
   lastName: string;
   initials: string;
-  gender: 'M' | 'F'; // Assuming only Male and Female for simplicity
+  gender: "M" | "F"; // Assuming only Male and Female for simplicity
   password: string;
   passwordSalt: string;
   generatedPassword: string;
   email: string;
   phone: string;
+  role: string;
   userRoleId: number;
   companyId: number;
   createdDate: Date;
@@ -36,13 +37,14 @@ export class User extends EntityBase {
     middleName = "",
     lastName = "",
     initials = "",
-    gender: 'M' = 'M',
+    gender: "M" = "M",
     password = "",
     passwordSalt = "",
     generatedPassword = "",
     email = "",
     phone = "",
     userRoleId = 0,
+    role = "",
     companyId = 0,
     createdDate = new Date(),
     modifiedDate: Date | null = null,
@@ -74,6 +76,8 @@ export class User extends EntityBase {
     this.email = email;
     this.phone = phone;
     this.userRoleId = userRoleId;
+    this.role = role;
+
     this.companyId = companyId;
     this.createdDate = createdDate;
     this.modifiedDate = modifiedDate;

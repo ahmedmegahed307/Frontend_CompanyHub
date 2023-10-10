@@ -39,7 +39,7 @@ import {
   StarIcon,
   AddIcon,
 } from "@chakra-ui/icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaList, FaUser } from "react-icons/fa";
 import { Briefcase } from "../../../assets/icons/IconBriefcase";
 import { MdGroupWork, MdLogout } from "react-icons/md";
@@ -52,6 +52,7 @@ import { Calendar } from "../../../assets/icons/IconCalendar";
 import { Setting } from "../../../assets/icons/IconSetting";
 import { InvoiceIcon } from "../../../assets/icons/IconInvoice";
 import { ReportsIcon } from "../../../assets/icons/IconReports";
+import useAuthStore from "../../Authentication/hooks/store";
 
 interface SubItemProps {
   text: string;
@@ -164,11 +165,15 @@ const SideBarItem = ({ text, url, icon, subItems }: SideBarItemProps) => {
 };
 
 const TopNav = () => {
-//  const { data: company } = useCompany();
+  //  const { data: company } = useCompany();
 
   const isMobileNav = useBreakpointValue({ base: true, lg: false });
- // const userStore = useAuthStore();
-
+  const navigate = useNavigate();
+  const userStore = useAuthStore();
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    navigate("/login");
+  };
   const NavItems = () => (
     <VStack h={"auto"} spacing={4} w={60} m={0} align="start">
       <Box mt={6} mb={10}>
@@ -188,7 +193,11 @@ const TopNav = () => {
         url="/settings/clients/clientsList"
       />
 
-      <SideBarItem icon={<PPMIcon />} text="Users " url="/settings/users/usersList" />
+      <SideBarItem
+        icon={<PPMIcon />}
+        text="Users "
+        url="/settings/users/usersList"
+      />
 
       <SideBarItem
         icon={<SettingsIcon fontSize="sm" mx="2px" />}
@@ -260,13 +269,15 @@ const TopNav = () => {
             <Stack pb={9} px={5} direction="row">
               <Avatar
                 size={"sm"}
-                name={"ahmaaaaaad"}
+                name={
+                  userStore.user?.firstName + " " + userStore.user?.lastName
+                }
                 src="https://bit.ly/broken-lisdsdsdnk"
               />
 
               <VStack align={"start"} spacing={0}>
                 <Heading fontWeight={"lg"} fontSize={"sm"}>
-                  {"ahmaaaaaad"}
+                  {userStore.user?.firstName + " " + userStore.user?.lastName}
                 </Heading>
                 <Heading fontSize={"sm"} color={"Primary.700"}>
                   Company Info
@@ -281,25 +292,24 @@ const TopNav = () => {
               justify={"center"}
               height={50}
               bgSize={"cover"}
-            //  bgImage={cdnPath + "/public/img/profileMenuBack.png"}
+              bgImage={"src/assets/img/profileMenuBack.png"}
             >
               <Avatar
                 size={"sm"}
-                name={"ahmaaaaaad"}
+                name={
+                  userStore.user?.firstName + " " + userStore.user?.lastName
+                }
                 src="https://bit.ly/broken-lisdsdsdnk"
               />
               <VStack align={"start"} spacing={0}>
                 <Heading fontWeight={"lg"} fontSize={"sm"}>
-                  {"ahmaaaaaad"}
+                  {userStore.user?.firstName + " " + userStore.user?.lastName}
                 </Heading>
                 <Heading fontSize={"xs"}>Company Info</Heading>
               </VStack>
             </HStack>
             <MenuGroup>
-              <Link
-                to={`/settings/users/${1}`}
-                target="_blank"
-              >
+              <Link to={`/settings/users/${1}`} target="_blank">
                 {" "}
                 <MenuItem icon={<AddIcon />}> My account</MenuItem>
               </Link>
@@ -312,11 +322,7 @@ const TopNav = () => {
               <MenuItem icon={<AddIcon />}> Dark mode</MenuItem>
             </MenuGroup>
             <MenuDivider />
-            <MenuItem
-            
-             
-              icon={<MdLogout />}
-            >
+            <MenuItem icon={<MdLogout />} onClick={() => handleLogout()}>
               {" "}
               Log Out
             </MenuItem>

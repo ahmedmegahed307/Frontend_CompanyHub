@@ -1,3 +1,4 @@
+import SignUp from "../../models/SignUp";
 import Api from "../api-fetch";
 
 interface LoginPayload {
@@ -24,6 +25,12 @@ class AuthenticationService {
       return response.data;
     }
     throw new Error("Token not received");
+  };
+
+  signup = async (payload: SignUp): Promise<any> => {
+    const signupApi = new Api<SignUp>("/Auth/registeradmin");
+    const response = await signupApi.post(payload);
+    return response;
   };
 
   forgotPassword = async (email: string): Promise<any> => {

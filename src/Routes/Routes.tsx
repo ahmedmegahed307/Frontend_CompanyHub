@@ -27,13 +27,14 @@ import UsersMain from "../Pages/Settings/components/Users/UsersMain";
 import Statistical from "../Pages/Statistical/components/Statistical";
 import JobTypesMain from "../Pages/Settings/components/JobTypes/JobTypesMain";
 import JobSubTypesMain from "../Pages/Settings/components/JobSubTypes/JobSubTypesMain";
+import SignUp from "../Pages/Authentication/components/SignUp";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Table /> },
+      { index: true, element: <Operational /> },
 
       {
         path: "/jobs",
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
   {
     path: "/forgotPassword",
