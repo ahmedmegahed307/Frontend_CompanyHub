@@ -8,7 +8,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import useJobTypeMutation from "../../hooks/JobType/useJobTypeMutation";
+import useJobTypeMutation from "../../../../hooks/Settings/JobType/useJobTypeMutation";
 
 interface DeleteJobTypeProps {
   isOpen: boolean;

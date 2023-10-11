@@ -31,11 +31,12 @@ import {
 import { useState } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { MdArrowBack } from "react-icons/md";
-import useClient from "../../hooks/Client/useClient";
-import useClientMutation from "../../hooks/Client/useClientMutation";
-import useCreateClient from "../../hooks/Client/useCreateClient";
+
 import DeleteClient from "./DeleteClient";
 import { Client } from "../../../../services/ClientService/client-service";
+import useClient from "../../../../hooks/Settings/Client/useClient";
+import useClientMutation from "../../../../hooks/Settings/Client/useClientMutation";
+import useCreateClient from "../../../../hooks/Settings/Client/useCreateClient";
 
 const ClientList = () => {
   // get clientList

@@ -24,7 +24,6 @@ import JobTypeList from "../Pages/Settings/components/JobTypes/JobTypeList";
 import ResolutionMain from "../Pages/Settings/components/Resolution/ResolutionMain";
 import UserInfo from "../Pages/Settings/components/Users/UserInfo/UserInfo";
 import UsersMain from "../Pages/Settings/components/Users/UsersMain";
-import Statistical from "../Pages/Statistical/components/Statistical";
 import JobTypesMain from "../Pages/Settings/components/JobTypes/JobTypesMain";
 import JobSubTypesMain from "../Pages/Settings/components/JobSubTypes/JobSubTypesMain";
 import SignUp from "../Pages/Authentication/components/SignUp";
@@ -69,10 +68,6 @@ const router = createBrowserRouter([
         element: <UserInfo />,
       },
 
-      {
-        path: "/statistical",
-        element: <Statistical />,
-      },
       {
         path: "/operational",
         element: <Operational />,

@@ -30,8 +30,11 @@ class Api<TRequest> {
     sessionStorage.removeItem("token");
   };
 
-  getAll = (): Promise<ResponseData> => {
-    return api.get<ResponseData>(this.endpoint).then((res) => res.data);
+  getAll = (isActive?: boolean): Promise<ResponseData> => {
+    const activeParam = isActive !== undefined ? `?isActive=${isActive}` : "";
+    return api
+      .get<ResponseData>(`${this.endpoint}${activeParam}`)
+      .then((res) => res.data);
   };
 
   get = (params?: QueryParams): Promise<ResponseData> => {

@@ -11,17 +11,17 @@ import {
 import { useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
 
-import useCreateJobType from "../../hooks/JobType/useCreateJobType";
-import useJobType from "../../hooks/JobType/useJobType";
-import useJobTypeMutation from "../../hooks/JobType/useJobTypeMutation";
 import DeleteJobType from "./DeleteJobType";
 import { JobType } from "../../../../services/JobTypeService/jobtype-service";
 import JobTypeList from "./JobTypeList";
 import CreateJobType, { FormCreateValidation } from "./CreateJobType";
 import UpdateJobType, { FormUpdateValidation } from "./UpdateJobType";
-import useJobTypeStore from "../../hooks/JobType/store";
 import { BsSearch } from "react-icons/bs";
 import ExportToExcel from "../../../Excel/ExportToExcel";
+import useJobTypeStore from "../../../../hooks/Settings/JobType/store";
+import useCreateJobType from "../../../../hooks/Settings/JobType/useCreateJobType";
+import useJobType from "../../../../hooks/Settings/JobType/useJobType";
+import useJobTypeMutation from "../../../../hooks/Settings/JobType/useJobTypeMutation";
 const JobTypesMain = () => {
   // get jobTypeList
   const { data: jobTypeList } = useJobType();

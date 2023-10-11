@@ -2,11 +2,19 @@ import { EntityBase } from "./EntityBase";
 
 export class Resolution extends EntityBase {
   name?: string;
-
-  constructor(name?: string) {
-    super();
+  companyId?: number;
+  constructor(
+    id: number = 0,
+    createdAt: Date = new Date(),
+    isDeleted: boolean = false,
+    isActive: boolean = true,
+    createdByUserId: number = 0,
+    name?: string
+  ) {
+    super(id, createdAt, isDeleted, isActive, createdByUserId);
 
     this.name = name;
+    this.companyId = 0;
   }
 }
 

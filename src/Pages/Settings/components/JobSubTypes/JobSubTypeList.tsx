@@ -14,8 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-import useJobSubTypeStore from "../../hooks/JobSubType/store";
 import { JobSubType } from "../../../../services/JobSubTypesService/jobsubtype-service";
+import useJobSubTypeStore from "../../../../hooks/Settings/JobSubType/store";
 
 type SubTypeListProps = {
   jobSubTypeList: JobSubType[] | undefined;

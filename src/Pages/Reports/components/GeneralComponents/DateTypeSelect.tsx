@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { DateType } from "../../../StaticData/StaticData";
+import { DateType } from "../../../../StaticData/StaticData";
 
 interface DateTypeProps {
   onSelectedDateType: (dateType: string | undefined) => void;

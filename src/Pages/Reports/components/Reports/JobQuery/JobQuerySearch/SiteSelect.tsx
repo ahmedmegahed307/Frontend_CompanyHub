@@ -15,7 +15,7 @@ import {
   MenuOptionGroup,
   TagCloseButton,
 } from "@chakra-ui/react";
-import useClient from "../../../../../Settings/hooks/Client/useClient";
+import useClient from "../../../../../../hooks/Settings/Client/useClient";
 
 interface SiteProps {
   onSelectedSites: (sites: string[] | undefined) => void;
@@ -46,12 +46,14 @@ const SiteSelect = ({ onSelectedSites }: SiteProps) => {
     setSelectedOptions(updatedOptions);
   };
 
-  const filteredOptions: { value: string; label: string }[] = clientList
-    ? clientList.map((client: any) => ({
-        value: client.id,
-        label: client.name,
-      }))
-    : [];
+  const filteredOptions: { value: string; label: string }[] =
+    // clientList
+    //   ? clientList.map((client: any) => ({
+    //       value: client.id,
+    //       label: client.name,
+    //     }))
+    //   :
+    [];
 
   return (
     <FormControl pb={5} w={"md"}>

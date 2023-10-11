@@ -52,7 +52,7 @@ import { Calendar } from "../../../assets/icons/IconCalendar";
 import { Setting } from "../../../assets/icons/IconSetting";
 import { InvoiceIcon } from "../../../assets/icons/IconInvoice";
 import { ReportsIcon } from "../../../assets/icons/IconReports";
-import useAuthStore from "../../Authentication/hooks/store";
+import useAuthStore from "../../../hooks/Authentication/store";
 
 interface SubItemProps {
   text: string;

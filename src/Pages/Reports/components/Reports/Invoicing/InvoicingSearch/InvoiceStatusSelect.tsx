@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { InvoiceStatus } from "../../../../../StaticData/StaticData";
+import { InvoiceStatus } from "../../../../../../StaticData/StaticData";
 
 const InvoiceStatusSelect = () => {
   const [selectedOptions, setSelectedOptions] = useState<string>();

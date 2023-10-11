@@ -3,18 +3,8 @@ import Api from "../api-fetch";
 const UserApi = new Api<any>("/User");
 
 // Fetch all Users
-export const getAllUsers = async () => {
-  const Users = await new Api<any>(
-    "/User/GetUserList" + "?isActive=true"
-  ).getAll();
-  return Users.data.$values;
-};
-
-// Fetch all Inactive Users
-export const getAllInactiveUsers = async () => {
-  const Users = await new Api<any>(
-    "/User/GetUserList" + "?isActive=false"
-  ).getAll();
+export const getAllUsers = async (isActive: boolean) => {
+  const Users = await UserApi.getAll(isActive);
   return Users.data.$values;
 };
 
@@ -57,7 +47,6 @@ export const createUser = async (userData: any) => {
 
 export default {
   getAllUsers,
-  getAllInactiveUsers,
   getUserByEmail,
   getUserById,
   getCurrentUser,

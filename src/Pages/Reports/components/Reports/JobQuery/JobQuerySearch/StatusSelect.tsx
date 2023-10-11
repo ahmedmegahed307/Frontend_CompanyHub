@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { Status } from "../../../../../StaticData/StaticData";
+import { Status } from "../../../../../../StaticData/StaticData";
 interface StatusProps {
   onSelectedStatus: (priority: string | undefined) => void;
 }

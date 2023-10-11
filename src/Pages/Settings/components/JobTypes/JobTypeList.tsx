@@ -17,8 +17,8 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import { User } from "../../../../services/UserService/user-service";
 import { JobType } from "../../../../services/JobTypeService/jobtype-service";
-import useJobTypeStore from "../../hooks/JobType/store";
 import PaginationTable from "../PaginationTable/PaginationTable";
+import useJobTypeStore from "../../../../hooks/Settings/JobType/store";
 
 type UsersListProps = {
   jobTypeList: JobType[] | undefined;

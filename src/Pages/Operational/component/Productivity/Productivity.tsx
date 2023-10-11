@@ -29,18 +29,12 @@ const Productivity = () => {
                   pos={"absolute"}
                   top={0}
                   h={100}
-                  src={"../../../../assets/img/rec"}
+                  src={"src/assets/img/rec.png"}
                   alt="Dan Abramov2"
                 />
               </VStack>
               <VStack>
-                <Text
-                  bgSize={"contain"}
-                  bgImage={"../../../assets/img/rec.png"}
-                >
-                  {" "}
-                  Productive
-                </Text>
+                <Text bgSize={"contain"}> Productive</Text>
                 <Badge borderRadius={10} px={2} py={0.5}>
                   {" "}
                   70%
@@ -77,18 +71,12 @@ const Productivity = () => {
                   pos={"absolute"}
                   top={0}
                   h={100}
-                  src={"../../../assets//img/rec.png"}
+                  src={"src/assets//img/rec.png"}
                   alt="Dan Abramov"
                 />
               </VStack>
               <VStack>
-                <Text
-                  bgSize={"contain"}
-                  bgImage={"../../../assets/img/rec.png"}
-                >
-                  {" "}
-                  Productive
-                </Text>
+                <Text bgSize={"contain"}> Productive</Text>
                 <Badge borderRadius={10} px={2} py={0.5}>
                   {" "}
                   60%
@@ -125,7 +113,7 @@ const Productivity = () => {
                   pos={"absolute"}
                   top={0}
                   h={100}
-                  src={"../../../assets//img/rec.png"}
+                  src={"src/assets//img/rec.png"}
                   alt="Dan Abramov"
                 />
               </VStack>

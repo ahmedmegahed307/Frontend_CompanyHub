@@ -40,7 +40,7 @@ import { IconChatSendDisabled } from "./assets/icons/IconChatSendDisabled";
 
 import { set } from "date-fns";
 import userService from "./services/UserService/userService";
-import useAuthStore from "./Pages/Authentication/hooks/store";
+import useAuthStore from "./hooks/Authentication/store";
 
 function App() {
   // const { setIsCreateModalOpen } = useUserStore();

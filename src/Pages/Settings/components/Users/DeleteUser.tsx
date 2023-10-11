@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import useUserMutation from "../../hooks/User/useUserMutation";
+import useUserMutation from "../../../../hooks/Settings/User/useUserMutation";
 
 type DeleteModalProps = {
   isOpen: boolean;

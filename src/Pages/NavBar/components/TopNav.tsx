@@ -13,8 +13,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import SearchInput from "../../SearchBar/components/SearchInput";
 import { IconMessage } from "../../../assets/icons/IconMessage";
 import moment from "moment";
-import usePageTitleStore from "../hooks/PageTitleStore";
-import useAuthStore from "../../Authentication/hooks/store";
+import usePageTitleStore from "../../../hooks/NavBar/PageTitleStore";
+import useAuthStore from "../../../hooks/Authentication/store";
 import { MdLogout } from "react-icons/md";
 //import NotificationPopover from "./NotificationPopover";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { InvoiceDateType } from "../../../../../StaticData/StaticData";
+import { InvoiceDateType } from "../../../../../../StaticData/StaticData";
 
 const InvoiceDateTypeSelect = () => {
   const [selectedOptions, setSelectedOptions] = useState<string>();

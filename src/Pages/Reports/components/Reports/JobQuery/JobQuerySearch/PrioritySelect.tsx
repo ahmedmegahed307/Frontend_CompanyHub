@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormControl, FormLabel, Flex, Select } from "@chakra-ui/react";
-import { Priority } from "../../../../../StaticData/StaticData";
+import { Priority } from "../../../../../../StaticData/StaticData";
 
 interface PriorityProps {
   onSelectedPriority: (priority: string | undefined) => void;

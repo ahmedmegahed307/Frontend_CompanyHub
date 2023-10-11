@@ -5,15 +5,19 @@ import UpdateResolution, { FormUpdateValidation } from "./UpdateResolution";
 import DeleteResolution from "./DeleteResolution";
 import ResolutionList from "./ResolutionList";
 
-import useCreateResolution from "../../hooks/Resolution/useCreateResolution";
-import useResolution from "../../hooks/Resolution/useResolution";
-import useResolutionMutation from "../../hooks/Resolution/useResolutionMutation";
-import useResolutionStore from "../../hooks/Resolution/ResolutionStore";
 import { useEffect } from "react";
 import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
-import usePageTitleStore from "../../../NavBar/hooks/PageTitleStore";
+import usePageTitleStore from "../../../../hooks/NavBar/PageTitleStore";
+import useResolutionStore from "../../../../hooks/Settings/Resolution/ResolutionStore";
+import useCreateResolution from "../../../../hooks/Settings/Resolution/useCreateResolution";
+import useResolution from "../../../../hooks/Settings/Resolution/useResolution";
+import useResolutionMutation from "../../../../hooks/Settings/Resolution/useResolutionMutation";
+import Resolution from "../../../../models/Resolution";
+import useAuthStore from "../../../../hooks/Authentication/store";
 
 const ResolutionMain = () => {
+  const { user } = useAuthStore();
+
   // get resolutionList
   const { data: resolutionList } = useResolution();
   const { updateResolutionId, updateResolutionInput, deleteResolutionId } =
@@ -39,14 +43,18 @@ const ResolutionMain = () => {
   const updateResolution = useResolutionMutation(() => {
     updateModal.onClose();
   }, true);
+  console.log("user", user);
   const handleUpdateForm = (data: FormUpdateValidation) => {
-    console.log("data", data);
-    // console.log("data", data);
-    // updateResolution.mutate({
-    //   name: data.name,
-    //   id: updateResolutionId,
-    //   isActive: true,
-    // } as Resolutions);
+    const resolutionData: Resolution = {
+      name: data.name,
+      id: updateResolutionId,
+      isActive: true,
+      companyId: user?.companyId,
+      isDeleted: false,
+      createdByUserId: user?.id,
+    };
+    console.log("resolutionData", resolutionData);
+    updateResolution.mutate(resolutionData);
   };
 
   //delete
@@ -63,7 +71,6 @@ const ResolutionMain = () => {
       <Flex direction={"column"} w={"full"} alignItems="center">
         <ResolutionList
           data={resolutionList?.filter((item) => item.isActive) ?? []}
-          //data={resolutionList.fi ?? []}
           updateModal={updateModal}
           deleteModal={deleteModal}
           createModal={createModal}
@@ -95,7 +102,7 @@ const ResolutionMain = () => {
       <DeleteResolution
         isOpen={deleteModal.isOpen}
         onClose={deleteModal.onClose}
-        resolutionId={parseInt(deleteResolutionId)}
+        resolutionId={deleteResolutionId}
       />
     </>
   );

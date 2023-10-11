@@ -23,7 +23,10 @@ import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DeleteContract from "./DeleteContract";
-import { Contract, ContractMockList } from "../../../../StaticData/StaticData";
+import {
+  Contract,
+  ContractMockList,
+} from "../../../../../StaticData/StaticData";
 
 const ContractList = () => {
   const [selectedContract, setSelectedContract] = useState<Contract | null>(

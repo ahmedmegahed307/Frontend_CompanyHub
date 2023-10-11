@@ -12,12 +12,12 @@ import { AddIcon } from "@chakra-ui/icons";
 import CreateJobSubType, { FormCreateValidation } from "./CreateJobSubType";
 import UpdateJobSubType, { FormUpdateValidation } from "./UpdateJobSubType";
 import { JobSubType } from "../../../../services/JobSubTypesService/jobsubtype-service";
-import useJobSubTypeMutation from "../../hooks/JobSubType/useJobSubTypeMutation";
-import useCreateJobSubType from "../../hooks/JobSubType/useCreateJobSubType";
-import useJobSubTypeStore from "../../hooks/JobSubType/store";
 import DeleteJobSubType from "./DeleteJobSubType";
-import useJobSubType from "../../hooks/JobSubType/useJobSubType";
 import JobSubTypeList from "./JobSubTypeList";
+import useJobSubTypeStore from "../../../../hooks/Settings/JobSubType/store";
+import useCreateJobSubType from "../../../../hooks/Settings/JobSubType/useCreateJobSubType";
+import useJobSubTypeMutation from "../../../../hooks/Settings/JobSubType/useJobSubTypeMutation";
+import useJobSubType from "../../JobSubType/useJobSubType";
 const JobSubTypesMain = () => {
   // get JobSubTypeList
   const { data } = useJobSubType();
@@ -94,7 +94,7 @@ const JobSubTypesMain = () => {
         </Flex>
 
         <JobSubTypeList
-          jobSubTypeList={data}
+          jobSubTypeList={[]}
           setDeleteJobSubTypeId={setDeleteJobSubTypeId}
           updateModal={updateModal}
           deleteModal={deleteModal}

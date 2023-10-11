@@ -32,7 +32,7 @@ import ExportToExcel from "../../../Excel/ExportToExcel";
 import { Link, NavLink } from "react-router-dom";
 import PaginationTable from "../PaginationTable/PaginationTable";
 import { IconSortArrow } from "../../../../assets/icons/IconSortArrow";
-import usePageTitleStore from "../../../NavBar/hooks/PageTitleStore";
+import usePageTitleStore from "../../../../hooks/NavBar/PageTitleStore";
 import User from "../../../../models/User";
 
 const columnHelper = createColumnHelper<User>();

@@ -13,11 +13,8 @@ import {
   Tr,
   Card,
 } from "@chakra-ui/react";
-import usePendingJobs from "../../../../Jobs/hooks/Pending/usePendingJobs";
 
 const FilterResult = () => {
-  const { data: jobsList } = usePendingJobs();
-
   return (
     <>
       <Box w={"full"} borderColor="gray.200" py={10}>
@@ -39,7 +36,7 @@ const FilterResult = () => {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {jobsList &&
+                        {/* {jobsList &&
                           jobsList!.map((item, index) => (
                             <Tr key={item.id}>
                               <Td>{item.jobNumber ?? "00" + index}</Td>
@@ -49,7 +46,7 @@ const FilterResult = () => {
                               <Td>{item.createdAt}</Td>
                               <Td> </Td>
                             </Tr>
-                          ))}
+                          ))} */}
                       </Tbody>
                     </Table>
                   </Card>

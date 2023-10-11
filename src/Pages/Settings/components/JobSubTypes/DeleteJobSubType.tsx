@@ -8,7 +8,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import useJobSubTypeMutation from "../../hooks/JobSubType/useJobSubTypeMutation";
+import useJobSubTypeMutation from "../../../../hooks/Settings/JobSubType/useJobSubTypeMutation";
 
 interface DeleteJobSubTypeProps {
   isOpen: boolean;
