@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import User from "../../../models/User";
-import userService from "../../../services/UserService/userService";
+import { getAllUsers } from "../../../services/UserService/userService";
+import useAuthStore from "../../Authentication/store";
 
 const useUser = (isActive: boolean) => {
+  const { user } = useAuthStore();
+
   return useQuery<User[], Error>({
-    queryKey: ["usersList", isActive],
-    queryFn: () => userService.getAllUsers(isActive),
+    queryKey: ["usersList", { isActive: isActive, companyId: user?.companyId }],
+    queryFn: getAllUsers,
   });
 };
 export default useUser;

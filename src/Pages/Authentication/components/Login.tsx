@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { LogoSVG } from "../../../assets/icons/logoSVG";
 import authService from "../../../services/AuthService/authService";
-import userService from "../../../services/UserService/userService";
+import { getCurrentUser } from "../../../services/UserService/userService";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const Login = () => {
       console.log(token);
       if (token) {
         sessionStorage.setItem("token", token);
-        userService.getCurrentUser().then((res) => {
+        getCurrentUser().then((res) => {
           if (res.userRole.role === "Admin") {
             location.href = "/";
           } else {

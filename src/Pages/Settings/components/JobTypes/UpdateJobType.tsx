@@ -16,8 +16,7 @@ import {
   Select,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import useJobSubType from "../../JobSubType/useJobSubType";
-import { JobType } from "../../../../services/JobTypeService/jobtype-service";
+import JobType from "../../../../models/JobType";
 
 const updateSchema = z.object({
   name: z
@@ -41,15 +40,13 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
     resolver: zodResolver(updateSchema),
     defaultValues: {
       name: defaultValue.name,
-      jobSubTypeId: defaultValue.jobSubType.trim(),
+      //jobSubTypeId: defaultValue.jobSubType.trim(),
     },
   });
 
   const handleFormSubmit = (data: FormUpdateValidation) => {
     onSubmit(data);
   };
-  const { data: jobSubTypes } = useJobSubType();
-  console.log("defaultValue.jobSubType:", defaultValue.jobSubType);
 
   return (
     <>
@@ -79,11 +76,7 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
                   {...register("jobSubTypeId")}
                   placeholder="Select Job Subtype"
                 >
-                  {jobSubTypes?.map((subtype) => (
-                    <option key={subtype.id} value={subtype.id}>
-                      {subtype.name}
-                    </option>
-                  ))}
+                  <option>test</option>
                 </Select>
                 {errors.jobSubTypeId && (
                   <FormErrorMessage>
@@ -92,13 +85,7 @@ const UpdateJobType = ({ onSubmit, defaultValue }: UpdateJobTypeFormProps) => {
                 )}
               </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme="blue"
-                w={"full"}
-                bg={"#294c58"}
-                my={10}
-              >
+              <Button type="submit" w={"full"} my={10}>
                 Update
               </Button>
             </form>

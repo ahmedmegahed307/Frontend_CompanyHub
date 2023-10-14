@@ -15,7 +15,6 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import useJobSubType from "../../JobSubType/useJobSubType";
 
 const schema = z.object({
   name: z.string().min(3, { message: "JobType must be at least 3 characters" }),
@@ -42,7 +41,6 @@ const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
     console.log("tester", data);
     reset();
   };
-  const { data: jobSubTypes } = useJobSubType();
   return (
     <>
       <DrawerOverlay />
@@ -73,11 +71,7 @@ const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
                   {...register("jobSubTypeId")}
                   placeholder="Select Job SubType"
                 >
-                  {jobSubTypes?.map((subtype) => (
-                    <option key={subtype.id} value={subtype.id}>
-                      {subtype.name}
-                    </option>
-                  ))}
+                  <option>test</option>
                 </Select>
                 {errors.jobSubTypeId && (
                   <FormErrorMessage>
@@ -86,13 +80,7 @@ const CreateJobType = ({ onSubmit }: JobTypeFormProps) => {
                 )}
               </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme="blue"
-                w={"full"}
-                bg={"#294c58"}
-                my={10}
-              >
+              <Button type="submit" w={"full"} my={10}>
                 Submit
               </Button>
             </form>

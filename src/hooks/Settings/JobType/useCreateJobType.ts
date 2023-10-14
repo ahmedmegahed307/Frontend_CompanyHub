@@ -1,40 +1,38 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import {
-  JobType,
-  createJobType,
-} from "../../../services/JobTypeService/jobtype-service";
+import Resolution from "../../../models/Resolution";
+import { createResolution } from "../../../services/ResolutionService/resolutionService";
+import useAuthStore from "../../Authentication/store";
 
-const useCreateJobType = (onCreate: () => void) => {
+const useCreateJobType = (OnClose: () => void) => {
   const queryClient = useQueryClient();
 
-  const createJobTypeMutation = useMutation<JobType, Error, JobType>(
-    createJobType.post,
+  return useMutation<ResponseData, Error, Resolution>(
+    async (resolution: Resolution): Promise<ResponseData> => {
+      return await createResolution(resolution);
+    },
     {
-      onSuccess: (savedJobType) => {
-        queryClient.invalidateQueries(["jobTypesList"]);
-
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["jobTypeList"],
+        });
+        // handle success
         Swal.fire({
-          title: "Congratulations",
-          text: "JobTypes have been saved successfully",
+          title: "Success",
+          text: "JobType has been Created successfully!",
           icon: "success",
         });
-
-        onCreate();
-        return savedJobType;
+        OnClose();
       },
-      onError: (error) => {
-        console.log("error", error);
-        throw new Error("Failed to create JobType");
+      onError: (error: any) => {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
       },
     }
   );
-
-  const createJobTypeFn = async (newJobType: JobType) => {
-    await createJobTypeMutation.mutateAsync(newJobType);
-  };
-
-  return createJobTypeFn;
 };
 
 export default useCreateJobType;

@@ -59,10 +59,10 @@ const columns = [
 
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("role", {
+  columnHelper.accessor("userRoleId", {
     header: "Role",
 
-    cell: (info) => info.getValue(),
+    cell: (info) => (info.getValue() === 1 ? "Admin" : "Engineer"),
   }),
 ];
 interface UsersListProps {
@@ -201,7 +201,7 @@ const UsersList = ({ data, setDeleteUserId, deleteModal }: UsersListProps) => {
                     as={NavLink}
                     icon={<DeleteIcon />}
                     onClick={() => {
-                      setDeleteUserId(row.original.id);
+                      setDeleteUserId(row.original.id || 0);
                       deleteModal.onOpen();
                     }}
                     variant={"outline"}

@@ -1,4 +1,3 @@
-import useAuthStore from "../../hooks/Authentication/store";
 import Resolution from "../../models/Resolution";
 import Api from "../api-fetch";
 

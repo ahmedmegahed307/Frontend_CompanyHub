@@ -20,16 +20,17 @@ import { AddIcon } from "@chakra-ui/icons";
 import DeleteModal from "./DeleteUser";
 import UsersList from "./UsersList";
 import CreateUser, { CreateUserValidation } from "./CreateUser";
-import { User } from "../../../../services/UserService/user-service";
 import useUser from "../../../../hooks/Settings/User/useUser";
 import { useUserStore } from "../../../../hooks/Settings/User/store";
 import InactiveUsersList from "./InactiveUsersList";
+import User from "../../../../models/User";
 
 const UsersMain = () => {
   const { isCreateModalOpen, setIsCreateModalOpen } = useUserStore();
 
   // get active usersLists
   const { data: activeUsersList } = useUser(true);
+  console.log("activeUsersList", activeUsersList);
   const { data: inActiveUsersList } = useUser(false);
 
   //create
@@ -39,6 +40,7 @@ const UsersMain = () => {
   // });
 
   const handleCreateForm = (data: CreateUserValidation) => {
+    console.log("data", data);
     // createUserQuery({
     //   firstName: data.name,
     //   lastName: data.name,
@@ -126,11 +128,6 @@ const UsersMain = () => {
               setRestoreUserId={setRestoreUserId}
               restoreModal={restoreModal}
             />
-            {/* <UsersList
-              data={inActiveUsersList || []}
-              setDeleteUserId={setDeleteUserId}
-              deleteModal={deleteModal}
-            /> */}
           </TabPanel>
         </TabPanels>
       </Tabs>

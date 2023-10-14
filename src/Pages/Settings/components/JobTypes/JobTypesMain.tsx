@@ -8,21 +8,27 @@ import {
   InputLeftElement,
   InputGroup,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import DeleteJobType from "./DeleteJobType";
-import { JobType } from "../../../../services/JobTypeService/jobtype-service";
-import JobTypeList from "./JobTypeList";
-import CreateJobType, { FormCreateValidation } from "./CreateJobType";
-import UpdateJobType, { FormUpdateValidation } from "./UpdateJobType";
 import { BsSearch } from "react-icons/bs";
 import ExportToExcel from "../../../Excel/ExportToExcel";
 import useJobTypeStore from "../../../../hooks/Settings/JobType/store";
 import useCreateJobType from "../../../../hooks/Settings/JobType/useCreateJobType";
 import useJobType from "../../../../hooks/Settings/JobType/useJobType";
 import useJobTypeMutation from "../../../../hooks/Settings/JobType/useJobTypeMutation";
+import CreateJobType, { FormCreateValidation } from "./CreateJobType";
+import UpdateJobType, { FormUpdateValidation } from "./UpdateJobType";
+import JobType from "../../../../models/JobType";
+import JobTypeList from "./JobTypeList";
+import usePageTitleStore from "../../../../hooks/NavBar/PageTitleStore";
 const JobTypesMain = () => {
+  const pageTitleStore = usePageTitleStore();
+
+  useEffect(() => {
+    pageTitleStore.setPageTitle("JobTypes List");
+  }, []);
   // get jobTypeList
   const { data: jobTypeList } = useJobType();
   console.log("dataJobType", jobTypeList);
@@ -35,12 +41,7 @@ const JobTypesMain = () => {
 
   const createModal = useDisclosure();
 
-  const handleCreateForm = (data: FormCreateValidation) => {
-    createJobTypeQuery({
-      name: data.name,
-      jobSubTypeId: parseInt(data.jobSubTypeId),
-    } as JobType);
-  };
+  const handleCreateForm = (data: FormCreateValidation) => {};
 
   //update
   const updateModal = useDisclosure();
@@ -65,26 +66,13 @@ const JobTypesMain = () => {
     <>
       <Flex direction={"column"} alignItems="center" w={"full"}>
         <Flex w={"full"} direction={"row"}>
-          <InputGroup width={"35%"} m={5}>
-            <InputLeftElement pointerEvents="none">
-              <BsSearch />
-            </InputLeftElement>
-            <Input
-              borderRadius={"xl"}
-              placeholder="Enter JobType Name"
-
-              // onChange={(e) => setFiltering(e.target.value)}
-            />
-          </InputGroup>
           <Spacer />
-
           <ExportToExcel
             data={[]}
             headers={[]}
             keys={[]}
             sheetName={"JobTypes_List"}
           />
-
           <Button
             leftIcon={<AddIcon />}
             my={4}
@@ -95,12 +83,12 @@ const JobTypesMain = () => {
               createModal.onOpen();
             }}
           >
-            {"Create JobType"}
+            Create JobType
           </Button>
         </Flex>
 
         <JobTypeList
-          jobTypeList={jobTypeList}
+          jobTypeList={jobTypeList || []}
           setDeleteJobTypeId={setDeleteJobTypeId}
           updateModal={updateModal}
           deleteModal={deleteModal}

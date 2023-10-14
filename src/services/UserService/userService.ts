@@ -3,8 +3,10 @@ import Api from "../api-fetch";
 const UserApi = new Api<any>("/User");
 
 // Fetch all Users
-export const getAllUsers = async (isActive: boolean) => {
-  const Users = await UserApi.getAll(isActive);
+export const getAllUsers = async ({ queryKey }: any) => {
+  const [, { isActive, companyId }] = queryKey;
+
+  const Users = await UserApi.getAll(isActive, companyId);
   return Users.data.$values;
 };
 
@@ -43,14 +45,4 @@ export const createUser = async (userData: any) => {
   const Create = new Api<any>("/Auth/registeruser");
   const newUser = await Create.post(userData);
   return newUser;
-};
-
-export default {
-  getAllUsers,
-  getUserByEmail,
-  getUserById,
-  getCurrentUser,
-  updateUser,
-  deleteUser,
-  createUser,
 };

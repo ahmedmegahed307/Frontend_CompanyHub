@@ -32,9 +32,11 @@ const DeleteJobType = ({ onClose, isOpen, jobTypeId }: DeleteJobTypeProps) => {
       <AlertDialogOverlay />
 
       <AlertDialogContent>
-        <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+        <AlertDialogHeader color={"darkred"}>
+          Discard Changes?
+        </AlertDialogHeader>
         <AlertDialogBody>
-          Are you sure you want to delete JobType deleted.
+          Are you sure you want to delete this JobType?
         </AlertDialogBody>
         <AlertDialogFooter>
           <Button ref={cancelRef} onClick={onClose}>

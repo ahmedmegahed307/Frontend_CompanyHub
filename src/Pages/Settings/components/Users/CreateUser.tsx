@@ -15,13 +15,19 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
+import RequiredFormLabel from "../../../RequiredFields/RequiredFormLabel";
 
 const schema = z.object({
-  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+  firstName: z
+    .string()
+    .min(3, { message: "First Name must be at least 3 characters" }),
+  lastName: z
+    .string()
+    .min(3, { message: "Last Name must be at least 3 characters" }),
   email: z.string().email({ message: "Invalid email" }),
   contactName: z.string().nonempty({ message: "Contact name is required" }),
   phoneNumber: z.string().nonempty({ message: "Phone number is required" }),
-  role: z.enum(["Admin", "Client", "Engineer"], {
+  role: z.enum(["1", "2"], {
     errorMap: () => ({
       message: "Role is required",
     }),
@@ -43,7 +49,6 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
     resolver: zodResolver(schema),
   });
   const handleFormSubmit = (data: CreateUserValidation) => {
-    //console.log("user data", data);
     onSubmit(data);
     reset();
   };
@@ -56,29 +61,41 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
 
         <DrawerBody>
           <AbsoluteCenter>
-            <Heading mb={6}>Create User</Heading>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
-              <FormControl pb={5} w={"lg"} isInvalid={!!errors.name}>
-                <FormLabel>Name</FormLabel>
+              <FormControl pb={5} w={"lg"} isInvalid={!!errors.firstName}>
+                <RequiredFormLabel label={"First Name"} />{" "}
                 <Input
-                  {...register("name")}
-                  placeholder="Enter name"
+                  {...register("firstName")}
+                  placeholder="Enter First Name"
                   autoFocus
                 />
-                {errors.name && (
-                  <FormErrorMessage>{errors.name.message}</FormErrorMessage>
+                {errors.firstName && (
+                  <FormErrorMessage>
+                    {errors.firstName.message}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl pb={5} w={"lg"} isInvalid={!!errors.lastName}>
+                <RequiredFormLabel label={"Last Name"} />{" "}
+                <Input
+                  {...register("lastName")}
+                  placeholder="Enter Last Name"
+                  autoFocus
+                />
+                {errors.lastName && (
+                  <FormErrorMessage>{errors.lastName.message}</FormErrorMessage>
                 )}
               </FormControl>
 
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.email}>
-                <FormLabel>Email</FormLabel>
+                <RequiredFormLabel label={"Email"} />{" "}
                 <Input {...register("email")} placeholder="Enter email" />
                 {errors.email && (
                   <FormErrorMessage>{errors.email.message}</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.contactName}>
-                <FormLabel>Contact Name</FormLabel>
+                <RequiredFormLabel label={"Contact Name"} />{" "}
                 <Input
                   {...register("contactName")}
                   placeholder="Enter contact name"
@@ -90,7 +107,7 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
                 )}
               </FormControl>
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.phoneNumber}>
-                <FormLabel>Phone Number</FormLabel>
+                <RequiredFormLabel label={"Phone Number"} />{" "}
                 <Input
                   {...register("phoneNumber")}
                   placeholder="Enter phone number"
@@ -102,26 +119,17 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
                 )}
               </FormControl>
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.role}>
-                <FormLabel>Role</FormLabel>
+                <RequiredFormLabel label={"Role"} />{" "}
                 <Select {...register("role")} placeholder="Select role">
-                  <option value="Admin">Admin</option>
-                  <option value="Client">Client</option>
-                  <option value="Engineer">Engineer</option>
+                  <option value="1">Admin</option>
+                  <option value="2">Engineer</option>
                 </Select>
                 {errors.role && (
                   <FormErrorMessage>{errors.role.message}</FormErrorMessage>
                 )}
               </FormControl>
-              <Button
-                type="submit"
-                colorScheme="blue"
-                w={"full"}
-                bg={"#294c58"}
-                my={10}
-                isLoading={isSubmitting}
-                //isDisabled={!isValid}
-              >
-                Create User
+              <Button type="submit" w={"full"} my={10} isLoading={isSubmitting}>
+                Submit
               </Button>
             </form>
           </AbsoluteCenter>

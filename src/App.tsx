@@ -39,7 +39,7 @@ import { IconChatSend } from "./assets/icons/IconChatSend";
 import { IconChatSendDisabled } from "./assets/icons/IconChatSendDisabled";
 
 import { set } from "date-fns";
-import userService from "./services/UserService/userService";
+import { getCurrentUser } from "./services/UserService/userService";
 import useAuthStore from "./hooks/Authentication/store";
 
 function App() {
@@ -65,7 +65,7 @@ function App() {
 
   const handleUserStore = () => {
     setLoading(true);
-    userService.getCurrentUser().then((res) => {
+    getCurrentUser().then((res) => {
       user.setUser(res);
       setLoading(false);
     });

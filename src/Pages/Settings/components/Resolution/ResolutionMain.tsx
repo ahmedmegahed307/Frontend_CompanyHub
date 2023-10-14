@@ -33,8 +33,6 @@ const ResolutionMain = () => {
       name: data.name,
       companyId: user?.companyId,
       createdAt: new Date(),
-      isActive: true,
-      isDeleted: false,
       createdByUserId: user?.id,
     });
   };

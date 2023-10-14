@@ -1,9 +1,11 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import Resolution from "../../../models/Resolution";
 import {
-  JobType,
-  JobTypeMutationAPI,
-} from "../../../services/JobTypeService/jobtype-service";
+  updateResolution,
+  deleteResolution,
+} from "../../../services/ResolutionService/resolutionService";
+import useAuthStore from "../../Authentication/store";
 
 const useJobTypeMutation = (
   onUpdateOrDelete: () => void,
@@ -11,32 +13,38 @@ const useJobTypeMutation = (
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<JobType, Error, JobType | number>(
-    // async (jobType: JobType | number) => {
-    //   // if (isUpdate) {
-    //   //   const id = (jobType as JobType).id;
-    //   //   return JobTypeMutationAPI.update(id, jobType);
-    //   // } else {
-    //   //   const id = jobType as number;
-    //   //   return JobTypeMutationAPI.delete(id);
-    //   // }
-    // },
+  return useMutation<ResponseData, Error, Resolution | number>(
+    async (resolution: Resolution | number): Promise<ResponseData> => {
+      if (isUpdate) {
+        const id = (resolution as Resolution).id;
+        return await updateResolution(id ?? 0, resolution);
+      } else {
+        const id = resolution as number;
+        return await deleteResolution(id);
+      }
+    },
     {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["jobTypesList"],
+          queryKey: ["jobTypeList"],
         });
+        // handle success
         Swal.fire({
           title: "Success",
           text: isUpdate
-            ? "JobType has been updated successfully"
-            : "JobType has been Deleted successfully",
+            ? "Resolution has been updated successfully!"
+            : "Resolution has been deleted successfully!",
           icon: "success",
         });
         onUpdateOrDelete();
       },
       onError: (error: any) => {
-        console.log("JobTypeError:", error);
+        console.log("errorssss", error);
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
       },
     }
   );
