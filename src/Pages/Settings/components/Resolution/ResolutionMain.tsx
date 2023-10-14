@@ -16,25 +16,28 @@ import Resolution from "../../../../models/Resolution";
 import useAuthStore from "../../../../hooks/Authentication/store";
 
 const ResolutionMain = () => {
+  //zustand state management
+  const { updateResolutionId, updateResolutionInput, deleteResolutionId } =
+    useResolutionStore();
   const { user } = useAuthStore();
 
   // get resolutionList
   const { data: resolutionList } = useResolution();
-  const { updateResolutionId, updateResolutionInput, deleteResolutionId } =
-    useResolutionStore();
 
   //create
   const createModal = useDisclosure();
   const createResolution = useCreateResolution(() => {
     createModal.onClose();
   });
-
-  const handleCreateForm = async (data: FormCreateValidation) => {
-    await createResolution({
+  const handleCreateForm = (data: FormCreateValidation) => {
+    createResolution.mutate({
       name: data.name,
-    } as Resolutions);
-
-    console.log("data", data);
+      companyId: user?.companyId,
+      createdAt: new Date(),
+      isActive: true,
+      isDeleted: false,
+      createdByUserId: user?.id,
+    });
   };
 
   //update
@@ -51,7 +54,6 @@ const ResolutionMain = () => {
       isActive: true,
       companyId: user?.companyId,
       isDeleted: false,
-      createdByUserId: user?.id,
     };
     console.log("resolutionData", resolutionData);
     updateResolution.mutate(resolutionData);
@@ -60,6 +62,8 @@ const ResolutionMain = () => {
   //delete
 
   const deleteModal = useDisclosure();
+
+  // page title
   const pageTitleStore = usePageTitleStore();
 
   useEffect(() => {

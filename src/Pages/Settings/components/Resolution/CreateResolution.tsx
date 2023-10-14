@@ -51,7 +51,7 @@ const CreateResolution = ({ onSubmit }: ResolutionFormProps) => {
           <AbsoluteCenter>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <FormControl pb={5} w={"lg"} isInvalid={!!errors.name}>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Resolution</FormLabel>
                 <Input
                   {...register("name")}
                   className="FormControl"
@@ -64,14 +64,7 @@ const CreateResolution = ({ onSubmit }: ResolutionFormProps) => {
                 )}
               </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme="blue"
-                w={"full"}
-                bg={"#294c58"}
-                my={10}
-                //isDisabled={!isValid}
-              >
+              <Button type="submit" w={"full"} my={10}>
                 Submit
               </Button>
             </form>

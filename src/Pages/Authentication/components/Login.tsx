@@ -71,6 +71,7 @@ const Login = () => {
 
     try {
       const token = await authService.login(user.email, user.password);
+      console.log(token);
       if (token) {
         sessionStorage.setItem("token", token);
         userService.getCurrentUser().then((res) => {

@@ -1,3 +1,4 @@
+import Resolution from "../../models/Resolution";
 import Api from "../api-fetch";
 
 const ResolutionApi = new Api<any>("/Resolution");
@@ -28,8 +29,8 @@ export const deleteResolution = async (
   return responseData;
 };
 
-export const createResolution = async (ResolutionData: any) => {
-  const Create = new Api<any>("/Auth/registerResolution");
+export const createResolution = async (ResolutionData: Resolution) => {
+  const Create = new Api<any>("/Resolution");
   const newResolution = await Create.post(ResolutionData);
   return newResolution;
 };

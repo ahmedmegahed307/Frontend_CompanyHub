@@ -1,5 +1,5 @@
 export class EntityBase {
-  id: number;
+  id?: number;
   createdAt?: Date;
   isDeleted?: boolean;
   isActive?: boolean;

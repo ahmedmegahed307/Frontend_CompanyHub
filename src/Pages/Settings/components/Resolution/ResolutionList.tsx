@@ -217,7 +217,7 @@ const ResolutionList = ({
                         icon={<EditIcon />}
                         onClick={() => {
                           setUpdateResolutionInput(row.original.name ?? "");
-                          setUpdateResolutionId(row.original.id.toString());
+                          setUpdateResolutionId(row.original.id ?? 0);
                           updateModal.onOpen();
                         }}
                         variant={"outline"}
@@ -229,7 +229,7 @@ const ResolutionList = ({
                         as={NavLink}
                         icon={<DeleteIcon />}
                         onClick={() => {
-                          setDeleteResolutionId(row.original.id.toString());
+                          setDeleteResolutionId(row.original.id ?? 0);
                           deleteModal.onOpen();
                         }}
                         variant={"outline"}

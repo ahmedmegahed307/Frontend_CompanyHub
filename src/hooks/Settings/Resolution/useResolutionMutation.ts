@@ -14,7 +14,7 @@ const useResolutionMutation = (
     async (resolution: Resolution | number): Promise<ResponseData> => {
       if (isUpdate) {
         const id = (resolution as Resolution).id;
-        return await resolutionService.updateResolution(id, resolution);
+        return await resolutionService.updateResolution(id ?? 0, resolution);
       } else {
         const id = resolution as number;
         return await resolutionService.deleteResolution(id);

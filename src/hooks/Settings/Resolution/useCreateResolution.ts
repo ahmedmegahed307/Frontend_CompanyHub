@@ -1,40 +1,38 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import {
-  Resolutions,
-  createResolution,
-} from "../../../services/ResolutionService/resolution-service";
+import Resolution from "../../../models/Resolution";
+import resolutionService from "../../../services/ResolutionService/resolutionService";
+import useAuthStore from "../../Authentication/store";
 
-const useCreateResolution = (onCreate: () => void) => {
+const useCreateResolution = (OnClose: () => void) => {
   const queryClient = useQueryClient();
 
-  const createResolutionMutation = useMutation<Resolutions, Error, Resolutions>(
-    createResolution.post,
+  return useMutation<ResponseData, Error, Resolution>(
+    async (resolution: Resolution): Promise<ResponseData> => {
+      return await resolutionService.createResolution(resolution);
+    },
     {
-      onSuccess: (savedResolution) => {
-        queryClient.invalidateQueries(["resolutionList"]);
-
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["resolutionList"],
+        });
+        // handle success
         Swal.fire({
-          title: "Congratulations",
-          text: "Resolutions have been saved successfully",
+          title: "Success",
+          text: "Resolution has been Created successfully!",
           icon: "success",
         });
-
-        onCreate();
-        return savedResolution;
+        OnClose();
       },
-      onError: (error) => {
-        console.log("error", error);
-        throw new Error("Failed to create resolution");
+      onError: (error: any) => {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
       },
     }
   );
-
-  const createResolutionFn = async (newResolution: Resolutions) => {
-    await createResolutionMutation.mutateAsync(newResolution);
-  };
-
-  return createResolutionFn;
 };
 
 export default useCreateResolution;

@@ -8,7 +8,7 @@ export class Resolution extends EntityBase {
     createdAt: Date = new Date(),
     isDeleted: boolean = false,
     isActive: boolean = true,
-    createdByUserId: number = 0,
+    createdByUserId: number,
     name?: string
   ) {
     super(id, createdAt, isDeleted, isActive, createdByUserId);
