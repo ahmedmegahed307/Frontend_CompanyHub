@@ -1,35 +1,38 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAuthStore from "../../Authentication/store";
 import User from "../../../models/User";
 import { createUser } from "../../../services/UserService/userService";
 
-const useCreateUser = (onCreate: () => void) => {
+const useCreateUser = (OnClose: () => void) => {
   const queryClient = useQueryClient();
 
-  const createUserMutation = useMutation<User, Error, User>(createUser.post, {
-    onSuccess: (savedUser) => {
-      queryClient.invalidateQueries(["usersList"]);
-
-      Swal.fire({
-        title: "Congratulations",
-        text: "Users have been saved successfully",
-        icon: "success",
-      });
-
-      onCreate();
-      return savedUser;
+  return useMutation<ResponseData, Error, User>(
+    async (user: User): Promise<ResponseData> => {
+      return await createUser(user);
     },
-    onError: (error) => {
-      console.log("error", error);
-      throw new Error("Failed to create User");
-    },
-  });
-
-  const createUserFn = async (newUser: User) => {
-    await createUserMutation.mutateAsync(newUser);
-  };
-
-  return createUserFn;
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["usersList"],
+        });
+        // handle success
+        Swal.fire({
+          title: "Success",
+          text: "User has been Created successfully!",
+          icon: "success",
+        });
+        OnClose();
+      },
+      onError: (error: any) => {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
+      },
+    }
+  );
 };
 
 export default useCreateUser;

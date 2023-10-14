@@ -67,7 +67,11 @@ class Api<TRequest> {
       .put<ResponseData>(`${this.endpoint}/${id}`, data)
       .then((res) => res.data);
   };
-
+  restore = (id: number): Promise<ResponseData> => {
+    return api
+      .post<ResponseData>(`${this.endpoint}/${id}`)
+      .then((res) => res.data);
+  };
   delete = (id: number): Promise<ResponseData> => {
     return api
       .delete<ResponseData>(`${this.endpoint}/${id}`)

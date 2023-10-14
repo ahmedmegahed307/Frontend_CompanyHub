@@ -24,6 +24,9 @@ import useUser from "../../../../hooks/Settings/User/useUser";
 import { useUserStore } from "../../../../hooks/Settings/User/store";
 import InactiveUsersList from "./InactiveUsersList";
 import User from "../../../../models/User";
+import useCreateUser from "../../../../hooks/Settings/User/useCreateUser";
+import useAuthStore from "../../../../hooks/Authentication/store";
+import RestoreUser from "./RestoreUser";
 
 const UsersMain = () => {
   const { isCreateModalOpen, setIsCreateModalOpen } = useUserStore();
@@ -32,21 +35,30 @@ const UsersMain = () => {
   const { data: activeUsersList } = useUser(true);
   console.log("activeUsersList", activeUsersList);
   const { data: inActiveUsersList } = useUser(false);
+  const { user } = useAuthStore();
 
   //create
   const createModal = useDisclosure();
-  // const createUserQuery = useCreateUserMutation(() => {
-  //   createModal.onClose();
-  // });
+  const createUserQuery = useCreateUser(() => {
+    createModal.onClose();
+  });
 
   const handleCreateForm = (data: CreateUserValidation) => {
     console.log("data", data);
-    // createUserQuery({
-    //   firstName: data.name,
-    //   lastName: data.name,
-    //   email: data.email,
-    //   roleName: data.role,
-    // } as User);
+    const newUser: User = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      userRoleId: parseInt(data.role),
+      companyId: user?.companyId ?? 0,
+      createdByUserId: user?.id ?? 0,
+      phone: data.phoneNumber,
+      id: 0,
+      isActive: true,
+      isDeleted: false,
+      createdAt: new Date(),
+    };
+    createUserQuery.mutate(newUser);
   };
 
   //delete
@@ -152,11 +164,11 @@ const UsersMain = () => {
       />
 
       {/* Restore Modal  */}
-      {/* <RestoreUser
-      isOpen={restoreModal.isOpen}
-      onClose={restoreModal.onClose}
-      userId={restoreUserId}
-    /> */}
+      <RestoreUser
+        isOpen={restoreModal.isOpen}
+        onClose={restoreModal.onClose}
+        userId={restoreUserId}
+      />
     </>
   );
 };

@@ -32,7 +32,6 @@ export const deleteResolution = async (
 };
 
 export const createResolution = async (ResolutionData: Resolution) => {
-  const Create = new Api<any>("/Resolution");
-  const newResolution = await Create.post(ResolutionData);
+  const newResolution = await ResolutionApi.post(ResolutionData);
   return newResolution;
 };

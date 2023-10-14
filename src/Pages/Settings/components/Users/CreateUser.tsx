@@ -50,7 +50,7 @@ const CreateUser = ({ onSubmit }: UserFormProps) => {
   });
   const handleFormSubmit = (data: CreateUserValidation) => {
     onSubmit(data);
-    reset();
+    //reset();
   };
 
   return (

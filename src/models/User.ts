@@ -1,46 +1,37 @@
 import { EntityBase } from "./EntityBase";
 
 export class User extends EntityBase {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  initials: string;
-  gender: "M" | "F"; // Assuming only Male and Female for simplicity
-  password: string;
-  passwordSalt: string;
-  generatedPassword: string;
-  email: string;
-  phone: string;
-  role: string;
-  userRoleId: number;
-  companyId: number;
-  createdDate: Date;
-  modifiedDate: Date | null;
-  passwordChangedDate: Date | null;
-  resetPasswordKey: string | null;
-  resetPasswordKeyValidToDate: Date | null;
-  timeZoneId: number;
-  cultureInfoCode: string | null;
-  addressId: number | null;
-  isConfirmed: boolean;
-  confirmationKey: string | null;
-  confirmationDate: Date | null;
-  sessionToken: string | null;
-  sessionTokenDate: Date | null;
-  profileLogoFilename: string;
-  lastDomainName: string;
-  outsourcecompanyId: number | null;
-  warrantyPeriod: number;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  initials?: string;
+  passwordHash?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+  userRoleId?: number;
+  companyId?: number;
+  createdDate?: Date;
+  modifiedDate?: Date | null;
+  passwordChangedDate?: Date | null;
+  resetPasswordKey?: string | null;
+  resetPasswordKeyValidToDate?: Date | null;
+  timeZoneId?: number;
+  cultureInfoCode?: string | null;
+  addressId?: number | null;
+  isConfirmed?: boolean;
+  confirmationKey?: string | null;
+  confirmationDate?: Date | null;
+  sessionToken?: string | null;
+  sessionTokenDate?: Date | null;
+  profileLogoFilename?: string;
 
   constructor(
     firstName = "",
     middleName = "",
     lastName = "",
     initials = "",
-    gender: "M" = "M",
-    password = "",
-    passwordSalt = "",
-    generatedPassword = "",
+    passwordHash = "",
     email = "",
     phone = "",
     userRoleId = 0,
@@ -59,20 +50,15 @@ export class User extends EntityBase {
     confirmationDate: Date | null = null,
     sessionToken: string | null = null,
     sessionTokenDate: Date | null = null,
-    profileLogoFilename = "",
-    lastDomainName = "",
-    outsourcecompanyId: number | null = null,
-    warrantyPeriod = 0
+    profileLogoFilename = ""
   ) {
     super();
     this.firstName = firstName;
     this.middleName = middleName;
     this.lastName = lastName;
     this.initials = initials;
-    this.gender = gender;
-    this.password = password;
-    this.passwordSalt = passwordSalt;
-    this.generatedPassword = generatedPassword;
+    this.passwordHash = passwordHash;
+
     this.email = email;
     this.phone = phone;
     this.userRoleId = userRoleId;
@@ -93,9 +79,6 @@ export class User extends EntityBase {
     this.sessionToken = sessionToken;
     this.sessionTokenDate = sessionTokenDate;
     this.profileLogoFilename = profileLogoFilename;
-    this.lastDomainName = lastDomainName;
-    this.outsourcecompanyId = outsourcecompanyId;
-    this.warrantyPeriod = warrantyPeriod;
   }
 }
 

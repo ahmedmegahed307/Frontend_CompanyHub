@@ -35,14 +35,22 @@ export const updateUser = async (UserId: number, updatedData: any) => {
   const updatedUser = await UserApi.update(UserId, updatedData);
   return updatedUser;
 };
+export const restoreUser = async (UserId: number) => {
+  const restoreUser = new Api<any>("/User/restore");
+  const restoredUser = await restoreUser.restore(UserId);
+  return restoredUser;
+};
 
 // Delete a User
-export const deleteUser = async (UserId: number) => {
-  await UserApi.delete(UserId);
+
+export const deleteUser = async (
+  ResolutionId: number
+): Promise<ResponseData> => {
+  const responseData = await UserApi.delete(ResolutionId);
+  return responseData;
 };
 
 export const createUser = async (userData: any) => {
-  const Create = new Api<any>("/Auth/registeruser");
-  const newUser = await Create.post(userData);
+  const newUser = await UserApi.post(userData);
   return newUser;
 };
