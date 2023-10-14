@@ -33,7 +33,7 @@ const DeleteClient: React.FC<DeleteClientModalProps> = ({
     >
       <AlertDialogOverlay />
       <AlertDialogContent>
-        <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+        <AlertDialogHeader color={"darkred"}>Warning!</AlertDialogHeader>
         <AlertDialogCloseButton />
         <AlertDialogBody>
           Are you sure you want to delete this client?

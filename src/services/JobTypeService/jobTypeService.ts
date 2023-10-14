@@ -1,13 +1,14 @@
 import JobType from "../../models/JobType";
 import Api from "../api-fetch";
 
-const JobTypeApi = new Api<any>("/JobType/GetAllJobTypes");
+const JobTypeApi = new Api<any>("/JobType");
 
 // Fetch all JobTypes
 
 export const getAllJobTypes = async ({ queryKey }: any) => {
   const [, { isActive, companyId }] = queryKey;
-  const JobTypes = await JobTypeApi.getAll(isActive, companyId);
+  const getAll = new Api<any>("/JobType/GetAllJobTypes");
+  const JobTypes = await getAll.getAll(isActive, companyId);
   return JobTypes.data.$values;
 };
 

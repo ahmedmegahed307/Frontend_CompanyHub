@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import clientService, {
-  Client,
-} from "../../../services/ClientService/client-service";
+import Resolution from "../../../models/Resolution";
+import useAuthStore from "../../Authentication/store";
+import { getAllClients } from "../../../services/ClientService/clientService";
+import Client from "../../../models/Client";
 
 const useClient = () => {
+  const { user } = useAuthStore();
+
   return useQuery<Client[], Error>({
-    queryKey: ["clientsList"], // Update the queryKey to an array of strings
-    queryFn: clientService.getAll,
+    queryKey: ["clientList", { isActive: true, companyId: user?.companyId }],
+    queryFn: getAllClients,
   });
 };
+
 export default useClient;

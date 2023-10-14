@@ -1,23 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import Client from "../../../models/Client";
-
+import Site from "../../../../models/Site";
 import {
-  deleteClient,
-  updateClient,
-} from "../../../services/ClientService/clientService";
+  deleteSite,
+  updateSite,
+} from "../../../../services/SiteService/siteService";
 
-const useClientMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
+const useSiteMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
   const queryClient = useQueryClient();
 
-  return useMutation<ResponseData, Error, Client | number>(
-    async (Client: Client | number): Promise<ResponseData> => {
+  return useMutation<ResponseData, Error, Site | number>(
+    async (site: Site | number): Promise<ResponseData> => {
       if (isUpdate) {
-        const id = (Client as Client).id;
-        return await updateClient(id ?? 0, Client);
+        const id = (site as Site).id;
+        return await updateSite(id ?? 0, site);
       } else {
-        const id = Client as number;
-        return await deleteClient(id);
+        const id = site as number;
+        return await deleteSite(id);
       }
     },
     {
@@ -29,8 +28,8 @@ const useClientMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
         Swal.fire({
           title: "Success",
           text: isUpdate
-            ? "Client has been updated successfully!"
-            : "Client has been deleted successfully!",
+            ? "Site has been updated successfully!"
+            : "Site has been deleted successfully!",
           icon: "success",
         });
         onUpdateOrDelete();
@@ -47,4 +46,4 @@ const useClientMutation = (onUpdateOrDelete: () => void, isUpdate: boolean) => {
   );
 };
 
-export default useClientMutation;
+export default useSiteMutation;

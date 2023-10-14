@@ -68,13 +68,7 @@ const UpdateResolution = ({
                 {errors.name && <Text color="red">{errors.name.message}</Text>}
               </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme="blue"
-                w={"full"}
-                bg={"#294c58"}
-                my={10}
-              >
+              <Button type="submit" w={"full"} my={10}>
                 Update
               </Button>
             </form>
