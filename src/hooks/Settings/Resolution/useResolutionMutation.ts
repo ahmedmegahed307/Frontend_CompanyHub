@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Resolution from "../../../models/Resolution";
-import resolutionService from "../../../services/ResolutionService/resolutionService";
+import {
+  updateResolution,
+  deleteResolution,
+} from "../../../services/ResolutionService/resolutionService";
 import useAuthStore from "../../Authentication/store";
 
 const useResolutionMutation = (
@@ -14,10 +17,10 @@ const useResolutionMutation = (
     async (resolution: Resolution | number): Promise<ResponseData> => {
       if (isUpdate) {
         const id = (resolution as Resolution).id;
-        return await resolutionService.updateResolution(id ?? 0, resolution);
+        return await updateResolution(id ?? 0, resolution);
       } else {
         const id = resolution as number;
-        return await resolutionService.deleteResolution(id);
+        return await deleteResolution(id);
       }
     },
     {

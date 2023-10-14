@@ -30,10 +30,21 @@ class Api<TRequest> {
     sessionStorage.removeItem("token");
   };
 
-  getAll = (isActive?: boolean): Promise<ResponseData> => {
-    const activeParam = isActive !== undefined ? `?isActive=${isActive}` : "";
+  getAll = (isActive?: boolean, companyId?: number): Promise<ResponseData> => {
+    const queryParams = new URLSearchParams();
+
+    if (isActive !== undefined) {
+      queryParams.set("isActive", isActive.toString());
+    }
+
+    if (companyId !== undefined) {
+      queryParams.set("companyId", companyId.toString());
+    }
+
+    const queryString = queryParams.toString();
+
     return api
-      .get<ResponseData>(`${this.endpoint}${activeParam}`)
+      .get<ResponseData>(`${this.endpoint}?${queryString}`)
       .then((res) => res.data);
   };
 

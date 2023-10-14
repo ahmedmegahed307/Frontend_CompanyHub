@@ -6,7 +6,6 @@ import DeleteResolution from "./DeleteResolution";
 import ResolutionList from "./ResolutionList";
 
 import { useEffect } from "react";
-import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
 import usePageTitleStore from "../../../../hooks/NavBar/PageTitleStore";
 import useResolutionStore from "../../../../hooks/Settings/Resolution/ResolutionStore";
 import useCreateResolution from "../../../../hooks/Settings/Resolution/useCreateResolution";
@@ -74,7 +73,7 @@ const ResolutionMain = () => {
     <>
       <Flex direction={"column"} w={"full"} alignItems="center">
         <ResolutionList
-          data={resolutionList?.filter((item) => item.isActive) ?? []}
+          data={resolutionList ?? []}
           updateModal={updateModal}
           deleteModal={deleteModal}
           createModal={createModal}

@@ -1,11 +1,14 @@
+import useAuthStore from "../../hooks/Authentication/store";
 import Resolution from "../../models/Resolution";
 import Api from "../api-fetch";
 
 const ResolutionApi = new Api<any>("/Resolution");
 
 // Fetch all Resolutions
-export const getAllResolutions = async () => {
-  const Resolutions = await ResolutionApi.getAll();
+
+export const getAllResolutions = async ({ queryKey }: any) => {
+  const [, { isActive, companyId }] = queryKey;
+  const Resolutions = await ResolutionApi.getAll(isActive, companyId);
   return Resolutions.data.$values;
 };
 
@@ -33,11 +36,4 @@ export const createResolution = async (ResolutionData: Resolution) => {
   const Create = new Api<any>("/Resolution");
   const newResolution = await Create.post(ResolutionData);
   return newResolution;
-};
-
-export default {
-  getAllResolutions,
-  updateResolution,
-  deleteResolution,
-  createResolution,
 };
