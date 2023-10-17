@@ -5,7 +5,6 @@ import ForgotPassword from "../Pages/Authentication/components/ForgotPassword";
 import Login from "../Pages/Authentication/components/Login";
 import Chat from "../Pages/Chat/components/Chat";
 
-import JobInfo from "../Pages/Jobs/JobDetails/JobInfo";
 import JobList from "../Pages/Jobs/JobList/JobList";
 import GoogleMap from "../Pages/Map/components/GoogleMap";
 import Operational from "../Pages/Operational/component/Operational";
@@ -89,10 +88,10 @@ const router = createBrowserRouter([
         element: <AddContract />,
       },
 
-      {
-        path: "/job/:id/jobInfo",
-        element: <JobInfo />,
-      },
+      // {
+      //   path: "/job/:id/jobInfo",
+      //   element: <JobInfo />,
+      // },
       {
         path: "/reports/jobQuery",
         element: <JobQuery />,

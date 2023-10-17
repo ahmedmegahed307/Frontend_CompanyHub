@@ -1,11 +1,11 @@
 //this file is for static data that rarely change and doesn't require backend configuration.
 export const PMFrequencyList = [
-  { name: 'Daily', value: 'daily' },
-  { name: 'Weekly', value: 'weekly' },
-  { name: 'Monthly', value: 'monthly' },
-  { name: 'Quarterly', value: 'quarterly' },
-  { name: 'Semi-Annual', value: 'semi-annual' },
-  { name: 'Annual', value: 'annual' }
+  { name: "Daily", value: "daily" },
+  { name: "Weekly", value: "weekly" },
+  { name: "Monthly", value: "monthly" },
+  { name: "Quarterly", value: "quarterly" },
+  { name: "Semi-Annual", value: "semi-annual" },
+  { name: "Annual", value: "annual" },
 ];
 export interface Contract {
   id: number;
@@ -40,12 +40,21 @@ export const ContractMockList: Contract[] = [
     nextVisitDate: "20/10/2020",
   },
 ];
- // reports
- interface Option {
+// reports
+interface Option {
   value: string;
   label: string;
 }
 
+export const filterOptions: FilterOption[] = [
+  { label: "All jobs", value: "All jobs" },
+  { label: "Open jobs", value: "OPEN" },
+  { label: "Assigned jobs", value: "ASSIGNED" },
+  { label: "Resolved jobs", value: "RESOLVED" },
+  { label: "Closed jobs", value: "CLOSED" },
+  { label: "Cancelled jobs", value: "CANCELLED" },
+  { label: "Pending jobs", value: "PENDING" },
+];
 export const Priority: Option[] = [
   { value: "Low", label: "Low " },
   { value: "Medium", label: "Medium" },
@@ -63,7 +72,6 @@ export const InvoiceDateType: Option[] = [
   { value: "issuedDate", label: "Invoice Issued Date" },
   { value: "dueDate", label: "Invoice Due Date" },
   { value: "paidDate", label: "Invoice Paid Date" },
-
 ];
 export const Status: Option[] = [
   { value: "Pending", label: "Pending" },
@@ -82,3 +90,15 @@ export const InvoiceStatus: Option[] = [
   { value: "Sent", label: "Sent" },
 ];
 
+//job
+type JobStatusStatic =
+  | "OPEN"
+  | "ASSIGNED"
+  | "RESOLVED"
+  | "CLOSED"
+  | "CANCELLED"
+  | "PENDING";
+export type FilterOption = {
+  label: string;
+  value: JobStatusStatic | "All jobs";
+};

@@ -54,7 +54,6 @@ import React, { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { IconSortArrow } from "../../../../assets/icons/IconSortArrow";
-import { Resolutions } from "../../../../services/ResolutionService/resolution-service";
 import ExportToExcel from "../../../Excel/ExportToExcel";
 import PaginationTable from "../PaginationTable/PaginationTable";
 import Resolution from "../../../../models/Resolution";

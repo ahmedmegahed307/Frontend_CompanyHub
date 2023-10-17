@@ -1,139 +1,230 @@
-import { createColumnHelper } from "@tanstack/react-table";
-import React, { useEffect, useState } from "react";
-import { DataTable } from "../../table";
-
 import {
   Tabs,
-  TabList,
-  Tab,
   TabPanels,
-  Text,
   TabPanel,
-  VStack,
   Flex,
   HStack,
   Box,
-  Heading,
-  Table,
-  TableCaption,
   TableContainer,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-  Card,
-  AbsoluteCenter,
   Button,
-  Spacer,
-  Divider,
-  FormControl,
-  FormLabel,
-  IconButton,
-  Input,
-  Select,
-  Textarea,
+  Spinner,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Checkbox,
+  Code,
 } from "@chakra-ui/react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, json } from "react-router-dom";
+import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
-import { MdAdd } from "react-icons/md";
-import { AddIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
+import { IconDownload } from "../../../assets/icons/IconDownload";
+import { IconColumn } from "../../../assets/icons/IconColumn";
+import { IconFilter } from "../../../assets/icons/IconFilter";
+import AllJobsTable from "./AllJobsTable";
+import ExportToExcel, { ExportToExcelProps } from "../../Excel/ExportToExcel";
+import usePageTitleStore from "../../../hooks/NavBar/PageTitleStore";
+import { FilterOption, filterOptions } from "../../../StaticData/StaticData";
+import useAuthStore from "../../../hooks/Authentication/store";
+import useAdminJobs from "../../../hooks/Jobs/useAdminJobs";
+import { tr } from "date-fns/locale";
 
 const JobList = () => {
-  const [jobsList, setJobsList] = useState();
+  //get jobs list
+  const { data, isLoading, isError } = useAdminJobs(true);
+  console.log("data:", data);
+  //zustand to show page title
+  const pageTitleStore = usePageTitleStore();
+  useEffect(() => {
+    pageTitleStore.setPageTitle("");
+  }, []);
 
-  // get CLients
+  //filteration
+  const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([
+    { label: "All jobs", value: "All jobs" },
+  ]);
+
+  const toggleFilter = (filter: FilterOption) => {
+    if (filter.value === "All jobs") {
+      // Selecting "All jobs" should unselect all other filters
+      setSelectedFilters([filter]);
+    } else {
+      // Selecting any other filter should unselect "All jobs"
+      setSelectedFilters((prevFilters) => {
+        if (prevFilters.some((f) => f.value === "All jobs")) {
+          return [filter];
+        } else {
+          const filterIndex = prevFilters.findIndex(
+            (f) => f.value === filter.value
+          );
+          if (filterIndex !== -1) {
+            // Filter is already in filters, so remove it
+            return prevFilters.filter((f) => f.value !== filter.value);
+          } else {
+            // Filter is not in filters, so add it
+            return [...prevFilters, filter];
+          }
+        }
+      });
+    }
+  };
+
+  const isAllJobsSelected = selectedFilters.some(
+    (filter) => filter.value === "All jobs"
+  );
+
+  const filterJobs = () => {
+    if (isAllJobsSelected) {
+      return data;
+    } else {
+      return data?.filter((job: any) =>
+        selectedFilters.some((filter) => filter.value === job.status)
+      );
+    }
+  };
+
+  //export to excel
+  const [exportedData, setExportedData] = useState<ExportToExcelProps>(
+    {} as ExportToExcelProps
+  );
+  const handleExport = (exportedData: ExportToExcelProps) => {
+    setExportedData(exportedData);
+  };
+  if (!data)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="50vh"
+      >
+        <Spinner size="xl" color="#1396ab" />
+      </Box>
+    );
+
+  if (isLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <Spinner size="xl" color="#1396ab" />
+      </Box>
+    );
+  }
 
   return (
     <>
-      <Box w={"full"} borderColor="gray.200" py={10}>
-        <Flex direction={"column"} maxW="7xl" mx="auto" px="4">
+      <Box h={"full"} w={"full"} borderColor="gray.200" py={7}>
+        <Flex
+          direction={"column"}
+          h={"full"}
+          p={0}
+          m={0}
+          maxW="10xl"
+          mx="auto"
+          px="0"
+        >
           <HStack justify={"space-between"}>
-            <Heading color={"#1396ab"} size={"lg"}>
-              Jobs List{" "}
-            </Heading>
-            <Button
-              as={NavLink}
-              to="/jobs/addJob"
-              onClick={() => {}}
-              variant={"outline"}
-              color={"#416D77"}
-              borderColor={"#416D77"}
-              _hover={{ bg: "#416D77", color: "white" }}
-              size={"sm"}
-              leftIcon={<AddIcon />}
-              // bg={"#294c58"}
-            >
-              New Order
-            </Button>
+            <HStack spacing={4}>
+              <Menu>
+                <MenuButton
+                  fontSize={"sm"}
+                  as={Button}
+                  variant={"link"}
+                  fontWeight={"bold"}
+                  color={"Primary.700"}
+                  borderRight={"0.75px solid "}
+                  borderColor={"Neutral.300"}
+                  borderRadius={0}
+                  pr={4}
+                  rightIcon={<ChevronDownIcon />}
+                >
+                  {isAllJobsSelected
+                    ? "All jobs"
+                    : selectedFilters.map((filter) => filter.label).join(", ")}
+                </MenuButton>
+                <MenuList>
+                  {filterOptions.map((option) => (
+                    <MenuItem key={option.value}>
+                      <Checkbox
+                        isChecked={selectedFilters.some(
+                          (filter) => filter.value === option.value
+                        )}
+                        onChange={() => toggleFilter(option)}
+                        colorScheme={
+                          selectedFilters.some(
+                            (filter) => filter.value === option.value
+                          )
+                            ? "Primary"
+                            : "gray"
+                        }
+                        variant="outline"
+                      >
+                        {option.label}
+                      </Checkbox>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+
+              <Button
+                fontSize={"sm"}
+                variant={"link"}
+                fontWeight={"bold"}
+                color={"black"}
+                borderRight={"0.75px solid "}
+                borderColor={"Neutral.300"}
+                borderRadius={0}
+                pr={4}
+                leftIcon={<IconFilter />}
+              >
+                Hide Filter
+              </Button>
+              <Button
+                fontSize={"sm"}
+                variant={"link"}
+                fontWeight={"bold"}
+                color={"black"}
+                leftIcon={<IconColumn />}
+              >
+                Columns
+              </Button>
+            </HStack>
+
+            <HStack spacing={4} pr={2}>
+              <ExportToExcel
+                data={exportedData.data || []}
+                headers={exportedData.headers || []}
+                keys={exportedData.keys || []}
+                sheetName={"Jobs_List"}
+              />
+              <Button
+                as={NavLink}
+                to="/job/addjob"
+                onClick={() => {}}
+                leftIcon={<AddIcon fontSize={"8"} />}
+              >
+                New job
+              </Button>
+            </HStack>
           </HStack>
 
-          <Tabs my={4} w={"full"}>
-            <TabList>
-              {/* <Tab color={"black"}>Pending ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Open ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Assigned ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Resolved ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Closed ({jobsList?.length})</Tab>
-              <Tab color={"black"}>Cancelled ({jobsList?.length})</Tab> */}
-            </TabList>
-            <Flex w={"full"} direction={"row"}>
-              {/* <Heading size={"lg"} w={"full"} py={10} textAlign={"left"}>
-            Jobs List
-          </Heading> */}
-              <Spacer />
-              {/* <Button mt={5} onClick={() => {}} variant={'outline'} size={'xs'} colorScheme="blue" color={"#294c58"}>
-         Export
-          </Button> */}
-            </Flex>
-            <TabPanels pt={5} h={"50vh"}>
-              <TabPanel>
-                <TableContainer borderRadius={"xl"}>
-                  <Card p={0} borderRadius={""} variant={"outline"}>
-                    <Table variant="simple">
-                      <TableCaption>
-                        Imperial to metric conversion factors
-                      </TableCaption>
-                      <Thead bg={"gray.100"} rounded={"xl"}>
-                        <Tr>
-                          <Th color={"gray"}>Request No.</Th>
-                          <Th color={"gray"}>Client</Th>
-                          <Th color={"gray"}>Site</Th>
-                          <Th color={"gray"}>Description</Th>
-                          <Th color={"gray"}>Logged</Th>
-                          <Th color={"gray"}></Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {/* {jobsList &&
-                          jobsList!.map((item, index) => (
-                            <Tr key={item.id}>
-                              <Link to={`/job/${item.id}/jobInfo`}>
-                                <Td>{item.jobNumber ?? "00" + index}</Td>
-                              </Link>
-                              <Td>Clint1</Td>
-                              <Td>inches</Td>
-                              <Td>{item.adress?.name}</Td>
-                              <Td>{item.createdAt}</Td>
-                              <Td> </Td>
-                            </Tr>
-                          ))} */}
-                      </Tbody>
-                    </Table>
-                  </Card>
+          <Tabs my={0} p={0} h={"full"} w={"full"}>
+            <TabPanels pt={5} height={"full"}>
+              <TabPanel height={"full"}>
+                <TableContainer height={"full"}>
+                  {!isLoading && data && (
+                    <AllJobsTable
+                      data={filterJobs() || []}
+                      exportToExcel={handleExport}
+                    />
+                  )}
                 </TableContainer>
               </TabPanel>
-              {/* <TabPanel>
-                <TableContainer>
-                  {jobsList && <OpenJobsTable data1={jobsList ?? []} />}
-                </TableContainer>{" "}
-              </TabPanel>
-              <TabPanel>
-                <TableContainer>
-                  {jobsList && <AssignedJobsTable data1={jobsList ?? []} />}
-                </TableContainer>
-              </TabPanel> */}
             </TabPanels>
           </Tabs>
         </Flex>
