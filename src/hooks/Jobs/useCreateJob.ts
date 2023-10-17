@@ -1,25 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAuthStore from "../../Authentication/store";
-import User from "../../../models/User";
-import { createUser } from "../../../services/UserService/userService";
+import { createJob } from "../../services/jobService/jobService";
+import { Job } from "../../models/Job";
 
-const useCreateUser = (OnClose: () => void) => {
+const useCreateJob = (OnClose: () => void) => {
   const queryClient = useQueryClient();
 
-  return useMutation<ResponseData, Error, User>(
-    async (user: User): Promise<ResponseData> => {
-      return await createUser(user);
+  return useMutation<ResponseData, Error, Job>(
+    async (job: Job): Promise<ResponseData> => {
+      return await createJob(job);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["usersList"],
+          queryKey: ["jobsList"],
         });
-        // handle success
+
         Swal.fire({
           title: "Success",
-          text: "User has been Created successfully!",
+          text: "Job has been Created successfully!",
           icon: "success",
         });
         OnClose();
@@ -35,4 +34,4 @@ const useCreateUser = (OnClose: () => void) => {
   );
 };
 
-export default useCreateUser;
+export default useCreateJob;
